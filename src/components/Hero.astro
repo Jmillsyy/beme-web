@@ -59,13 +59,21 @@ const appUrl = 'https://app.beme.com.au'
       </div>
 
       <div class="relative">
-        {/* Drop your real screenshot at /public/hero.png to replace
-            this placeholder. A wide aspect ratio (4:3 or 16:9) works
-            well — a 3D capture exported from the app is ideal. */}
+        {/* Hero image — a 3D capture from the app at /public/hero.png.
+            If the file is missing, the onerror swap hides the broken
+            <img> and falls back to the placeholder div, so the page
+            never renders a broken-image icon. */}
+        <img
+          src="/hero.png"
+          alt="Beme 3D view of a brick wall — every brick on screen is on the supply schedule"
+          class="block w-full h-auto aspect-[4/3] rounded-xl border border-ink-700 shadow-2xl shadow-beme-500/5 object-cover"
+          onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+        />
         <div
-          class="aspect-[4/3] rounded-xl border border-ink-700 bg-ink-800 shadow-2xl shadow-beme-500/5 overflow-hidden flex items-center justify-center text-ink-500 text-sm"
+          class="aspect-[4/3] rounded-xl border border-ink-700 bg-ink-800 shadow-2xl shadow-beme-500/5 overflow-hidden items-center justify-center text-ink-500 text-sm"
+          style="display: none;"
         >
-          [ Hero screenshot — replace /public/hero.png ]
+          Drop your hero capture at /public/hero.png
         </div>
       </div>
     </div>

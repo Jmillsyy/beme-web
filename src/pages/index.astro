@@ -4,6 +4,7 @@ import Hero from '../components/Hero.astro'
 import Pillar from '../components/Pillar.astro'
 import AudienceBlock from '../components/AudienceBlock.astro'
 import HowItWorks from '../components/HowItWorks.astro'
+import HomeFaq from '../components/HomeFaq.astro'
 import CTA from '../components/CTA.astro'
 
 // Inline SVG icons kept here so the Pillar component stays
@@ -90,6 +91,9 @@ const cubeIcon = `
     ctaHref="/for-suppliers"
     imageRight={false}
   />
+
+  {/* 4 most-asked questions — covers visitors who don't make it to /pricing. */}
+  <HomeFaq />
 
   <CTA />
 </BaseLayout>
