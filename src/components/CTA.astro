@@ -1,0 +1,55 @@
+---
+// Page-bottom CTA strip. Sits before the footer to give a clear
+// next-step to a reader who's read the whole page. Same pattern
+// on every page so visitors learn where to click.
+
+interface Props {
+  title?: string
+  body?: string
+  ctaLabel?: string
+  /** Stripe plan to start when clicked. Defaults to individual; the
+   *  suppliers page overrides to organisation. */
+  checkoutPlan?: 'individual' | 'organisation'
+  /** Source tag for analytics. Defaults from the plan. */
+  checkoutSource?: string
+}
+
+const {
+  title = 'Try it on a real job.',
+  body = 'The fastest way to know if Beme fits is to point it at a plan you\'ve already quoted. Trace it, compare the schedule. 14-day free trial.',
+  ctaLabel = 'Start free trial',
+  checkoutPlan = 'individual',
+  checkoutSource,
+} = Astro.props
+
+const source = checkoutSource ?? `cta-${checkoutPlan}`
+---
+
+<section class="container-tight" style="padding-block: clamp(5rem, 8vw, 10rem);">
+  <div
+    class="relative overflow-hidden rounded-3xl border border-beme-500/30 bg-gradient-to-br from-ink-800 to-ink-900 p-12 md:p-20 text-center"
+  >
+    <div
+      class="absolute inset-0 pointer-events-none"
+      style="background: radial-gradient(ellipse at center, rgba(255, 122, 45, 0.08), transparent 70%);"
+      aria-hidden="true"
+    >
+    </div>
+    <div class="relative">
+      <h2 class="text-3xl md:text-4xl font-bold text-ink-50">{title}</h2>
+      <p class="text-base md:text-lg text-ink-300 mt-5 max-w-xl mx-auto leading-relaxed">
+        {body}
+      </p>
+      <button
+        type="button"
+        data-checkout
+        data-plan={checkoutPlan}
+        data-source={source}
+        class="inline-block mt-10 px-7 py-3.5 rounded-md bg-beme-500 hover:bg-beme-400 transition-colors font-medium cursor-pointer"
+        style="color: #000;"
+      >
+        {ctaLabel}
+      </button>
+    </div>
+  </div>
+</section>

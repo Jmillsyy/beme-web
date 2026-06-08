@@ -1,0 +1,117 @@
+---
+// One subscription tier. Highlighted version (`featured: true`) gets
+// a brand-orange border + lifted shadow so the recommended plan
+// pulls the eye. Bullet list is flexible — pass whatever lines
+// matter for the tier.
+
+interface Props {
+  /** Short tier name. */
+  name: string
+  /** One-line who-it's-for under the name. */
+  tagline: string
+  /** Headline price (e.g. "$49"). Leave empty for "Contact us". */
+  price?: string
+  /** Cadence suffix (e.g. "/month"). Ignored when price is empty. */
+  cadence?: string
+  /** Bullet list of included features / limits. */
+  features: string[]
+  /** CTA button label. */
+  ctaLabel: string
+  /** CTA destination — used as fallback if checkoutPlan isn't set. */
+  ctaHref: string
+  /** Stripe plan id. When set, the CTA goes through Stripe Checkout
+   *  via the data-checkout hook instead of plain link navigation. */
+  checkoutPlan?: 'individual' | 'organisation'
+  /** Source tag passed to checkout for analytics. */
+  checkoutSource?: string
+  /** Visually elevate this tier as the recommended one. */
+  featured?: boolean
+}
+
+const {
+  name,
+  tagline,
+  price,
+  cadence = '/month',
+  features,
+  ctaLabel,
+  ctaHref,
+  checkoutPlan,
+  checkoutSource,
+  featured = false,
+} = Astro.props
+---
+
+<div
+  class={`relative p-8 md:p-10 rounded-2xl border lift reveal ${
+    featured
+      ? 'border-beme-500/60 bg-ink-800 shadow-2xl shadow-beme-500/10'
+      : 'border-ink-700 bg-ink-800/40'
+  }`}
+>
+  {
+    featured && (
+      <div class="absolute -top-3 left-8 px-2.5 py-0.5 rounded bg-beme-500 text-ink-900 text-[10px] font-semibold uppercase tracking-wider">
+        Most popular
+      </div>
+    )
+  }
+
+  <div class="text-xl font-semibold text-ink-50">{name}</div>
+  <div class="text-sm text-ink-400 mt-2">{tagline}</div>
+
+  <div class="mt-8">
+    {
+      price ? (
+        <div>
+          <span class="text-5xl font-bold text-ink-50">{price}</span>
+          <span class="text-sm text-ink-400 ml-1">{cadence}</span>
+        </div>
+      ) : (
+        <div class="text-2xl font-semibold text-ink-50">Contact us</div>
+      )
+    }
+  </div>
+
+  <ul class="mt-8 space-y-3 text-[15px] text-ink-200">
+    {
+      features.map((f) => (
+        <li class="flex items-start gap-2.5">
+          <span class="text-beme-400 mt-0.5">✓</span>
+          <span>{f}</span>
+        </li>
+      ))
+    }
+  </ul>
+
+  {
+    checkoutPlan ? (
+      <button
+        type="button"
+        data-checkout
+        data-plan={checkoutPlan}
+        data-source={checkoutSource ?? `pricing-${checkoutPlan}`}
+        class={`block w-full text-center mt-10 px-5 py-3 rounded-md font-medium text-sm transition-colors cursor-pointer ${
+          featured
+            ? 'bg-beme-500 hover:bg-beme-400'
+            : 'border border-ink-600 text-ink-100 hover:bg-ink-700'
+        }`}
+        style={featured ? 'color: #000;' : ''}
+      >
+        {ctaLabel}
+      </button>
+    ) : (
+      <a
+        href={ctaHref}
+        class={`block text-center mt-10 px-5 py-3 rounded-md font-medium text-sm transition-colors ${
+          featured
+            ? 'bg-beme-500 hover:bg-beme-400'
+            : 'border border-ink-600 text-ink-100 hover:bg-ink-700'
+        }`}
+        style={featured ? 'color: #000;' : ''}
+      >
+        {ctaLabel}
+      </a>
+    )
+  }
+</div>

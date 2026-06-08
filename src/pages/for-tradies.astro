@@ -1,0 +1,86 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro'
+import CTA from '../components/CTA.astro'
+
+const appUrl = 'https://app.beme.com.au'
+
+const benefits = [
+  {
+    title: 'Trace straight from the plan',
+    body: 'Load the architect\'s PDF, click two points to draw a wall, click again for the next. Wall types you set up once carry across every future job.',
+  },
+  {
+    title: 'Areas and floors built in',
+    body: 'Ground floor, first floor, garage, shed — tag walls into areas and the schedule splits automatically. One project, separate quotes when you need them.',
+  },
+  {
+    title: 'Openings without the maths',
+    body: 'Drop a window or door on a wall, type the head and sill, and Beme works out the rest from the trace. Lintels picked automatically by head height.',
+  },
+  {
+    title: 'Bond-aware counts',
+    body: 'Stretcher or stack, the count respects the bond. Corner blocks shared between two walls are counted once. Half blocks alternate where the bond needs them. No spreadsheet plumbing.',
+  },
+  {
+    title: 'See it before you order it',
+    body: 'Spin the 3D, walk the wall, spot the one you forgot to draw — before the truck gets loaded. Cheaper than finding out on Wednesday afternoon.',
+  },
+  {
+    title: 'Quote with a real document',
+    body: 'Export a multi-page PDF — assumptions, wall layout, supply schedule, 3D view. Hand it to the customer. Win the job.',
+  },
+]
+---
+
+<BaseLayout
+  title="Beme for tradies — Estimating that matches what you build"
+  description="The estimating tool for tradies quoting their own jobs. Trace the plan, see the build in 3D, get a supply schedule that matches. Today for brick and block."
+>
+  <section class="container-tight text-center max-w-3xl mx-auto" style="padding-top: clamp(5rem, 7vw, 9rem); padding-bottom: clamp(3rem, 5vw, 5rem);">
+    <div class="text-xs uppercase tracking-wider text-beme-400 font-semibold mb-4">
+      For tradies
+    </div>
+    <h1 class="text-4xl md:text-5xl font-bold text-ink-50 tracking-tight leading-[1.1]">
+      Quote more jobs. Win more work. Order right the first time.
+    </h1>
+    <p class="text-base md:text-lg text-ink-300 mt-7 leading-relaxed">
+      Beme runs on the laptop or tablet you already use. Trace the
+      plan, hand the client a 3D view of the build, hand yourself a
+      full supply schedule. From drawing to quote in twenty minutes —
+      no spreadsheet in sight.
+    </p>
+    <div class="flex flex-wrap justify-center gap-3 mt-10">
+      <button
+        type="button"
+        data-checkout
+        data-plan="individual"
+        data-source="for-tradies"
+        class="px-6 py-3 rounded-md bg-beme-500 hover:bg-beme-400 transition-colors font-medium cursor-pointer"
+        style="color: #000;"
+      >
+        Start free
+      </button>
+      <a
+        href="/pricing"
+        class="px-6 py-3 rounded-md border border-ink-600 text-ink-200 hover:bg-ink-800 transition-colors"
+      >
+        See pricing
+      </a>
+    </div>
+  </section>
+
+  <section class="container-tight" style="padding-block: clamp(4rem, 7vw, 8rem);">
+    <div class="grid md:grid-cols-2 gap-x-16 gap-y-14 max-w-5xl mx-auto">
+      {
+        benefits.map((b) => (
+          <div>
+            <h3 class="text-lg font-semibold text-ink-50">{b.title}</h3>
+            <p class="text-[15px] text-ink-300 mt-3 leading-relaxed">{b.body}</p>
+          </div>
+        ))
+      }
+    </div>
+  </section>
+
+  <CTA />
+</BaseLayout>

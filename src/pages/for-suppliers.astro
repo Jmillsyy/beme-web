@@ -1,0 +1,94 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro'
+import CTA from '../components/CTA.astro'
+
+const appUrl = 'https://app.beme.com.au'
+
+const reasons = [
+  {
+    title: 'Compete on more than price and delivery',
+    body: 'Every supplier in your patch is already competing on tonnage and turnaround. Accurate estimation and a 3D view give your reps something the competition can\'t put in front of the customer.',
+  },
+  {
+    title: 'Win the order in the same conversation',
+    body: 'Customers commit faster when they can see the build. Swap "we\'ll send a quote" for "here\'s exactly what you need, here\'s what it looks like" — without sending the job out to anyone.',
+  },
+  {
+    title: 'No estimating team needed',
+    body: 'Your existing sales team uses Beme themselves. No new hires, no QS training, no quotes sitting in someone else\'s inbox.',
+  },
+  {
+    title: 'Your branding on every export',
+    body: 'PDFs go out with your logo, your company details, your reference numbers. The customer sees your service, not ours.',
+  },
+  {
+    title: 'Shared library, consistent quotes',
+    body: 'Every estimator on the team draws from the same wall types, supply rates, and lintel catalogue. Three reps quoting the same job land on the same number.',
+  },
+  {
+    title: 'One dashboard for every job',
+    body: 'See every estimate across the team — who\'s working on what, what\'s been quoted, what\'s landed. One reference number per job, end to end.',
+  },
+]
+---
+
+<BaseLayout
+  title="Beme for suppliers — Estimation as a sales tool"
+  description="Add accurate estimation and 3D visualisation to your sales process. Win more orders without setting up an estimating team."
+>
+  <section class="container-tight text-center max-w-3xl mx-auto" style="padding-top: clamp(5rem, 7vw, 9rem); padding-bottom: clamp(3rem, 5vw, 5rem);">
+    <div class="text-xs uppercase tracking-wider text-beme-400 font-semibold mb-4">
+      For suppliers
+    </div>
+    <h1 class="text-4xl md:text-5xl font-bold text-ink-50 tracking-tight leading-[1.1]">
+      Make estimation part of how you sell.
+    </h1>
+    <p class="text-base md:text-lg text-ink-300 mt-7 leading-relaxed">
+      Your customers want certainty before they commit. Anyone can
+      quote on tonnage. The suppliers who close the order send back
+      an accurate supply schedule and a 3D walkthrough the same day —
+      with their branding on every page, without setting up an
+      estimating team. Beme adds that capability to the sales process
+      you already run — today for brick and block.
+    </p>
+    <div class="flex flex-wrap justify-center gap-3 mt-10">
+      <button
+        type="button"
+        data-checkout
+        data-plan="organisation"
+        data-source="for-suppliers"
+        class="px-6 py-3 rounded-md bg-beme-500 hover:bg-beme-400 transition-colors font-medium cursor-pointer"
+        style="color: #000;"
+      >
+        Start free trial
+      </button>
+      <a
+        href="mailto:hello@beme.com.au?subject=Beme for suppliers — chat"
+        class="px-6 py-3 rounded-md border border-ink-600 text-ink-200 hover:bg-ink-800 transition-colors"
+      >
+        Talk to us
+      </a>
+    </div>
+  </section>
+
+  <section class="container-tight" style="padding-block: clamp(4rem, 7vw, 8rem);">
+    <div class="grid md:grid-cols-2 gap-x-16 gap-y-14 max-w-5xl mx-auto">
+      {
+        reasons.map((r) => (
+          <div>
+            <h3 class="text-lg font-semibold text-ink-50">{r.title}</h3>
+            <p class="text-[15px] text-ink-300 mt-3 leading-relaxed">{r.body}</p>
+          </div>
+        ))
+      }
+    </div>
+  </section>
+
+  <CTA
+    title="See Beme in your sales pitch."
+    body="Set up a free org trial. Run it past one of your reps. Decide from there."
+    ctaLabel="Start free trial"
+    checkoutPlan="organisation"
+    checkoutSource="for-suppliers-cta"
+  />
+</BaseLayout>

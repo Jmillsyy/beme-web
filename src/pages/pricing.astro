@@ -1,0 +1,119 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro'
+import PricingCard from '../components/PricingCard.astro'
+import CTA from '../components/CTA.astro'
+
+const appUrl = 'https://app.beme.com.au'
+// Prices are placeholders — update to your real numbers once
+// Stripe is wired up in step 4.
+---
+
+<BaseLayout
+  title="Pricing — Beme"
+  description="Simple subscription plans for tradies and suppliers using Beme to estimate and sell. Today for brick and block."
+>
+  <section class="container-tight text-center" style="padding-top: clamp(5rem, 7vw, 9rem); padding-bottom: clamp(3rem, 5vw, 5rem);">
+    <div class="text-xs uppercase tracking-wider text-beme-400 font-semibold mb-4">
+      Pricing
+    </div>
+    <h1 class="text-4xl md:text-5xl font-bold text-ink-50 tracking-tight">
+      Two plans. Pick how you use it.
+    </h1>
+    <p class="text-base md:text-lg text-ink-300 mt-5 max-w-2xl mx-auto leading-relaxed">
+      Individual is for the tradie estimating their own jobs.
+      Organisation is for suppliers offering estimation as part of
+      the sale. Monthly, no contract, cancel anytime.
+    </p>
+  </section>
+
+  <section class="container-tight">
+    <div class="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+      <PricingCard
+        name="Individual"
+        tagline="For tradies estimating their own jobs."
+        price="$79"
+        features={[
+          'One user',
+          'Unlimited projects',
+          'Full estimating engine, 3D view, exports',
+          'Per-project reference numbers',
+          'Email support',
+        ]}
+        ctaLabel="Start free"
+        ctaHref={`${appUrl}?source=pricing-individual`}
+        checkoutPlan="individual"
+        checkoutSource="pricing-individual"
+      />
+
+      <PricingCard
+        name="Organisation"
+        tagline="For suppliers selling with estimation built in."
+        price="$299"
+        cadence="/month, 5 users included"
+        features={[
+          'Everything in Individual',
+          'Shared wall-type + supply library',
+          'Team dashboard + per-user projects',
+          'Org-wide reference numbers',
+          'Branded PDF exports — your logo, your details',
+          'Priority support + onboarding',
+          '$49/month per extra seat',
+        ]}
+        ctaLabel="Start free trial"
+        ctaHref={`${appUrl}?source=pricing-org&plan=org`}
+        checkoutPlan="organisation"
+        checkoutSource="pricing-org"
+        featured
+      />
+    </div>
+  </section>
+
+  {/* Plain-language FAQ to head off common pre-purchase questions. */}
+  <section class="container-tight" style="padding-block: clamp(5rem, 8vw, 10rem);">
+    <h2 class="text-2xl md:text-3xl font-bold text-ink-50 text-center mb-12">
+      Common questions.
+    </h2>
+    <div class="max-w-3xl mx-auto space-y-5">
+      {
+        [
+          {
+            q: 'Do I need a credit card to start?',
+            a: 'No. Build a full project, see the 3D view, run the exports — all without entering payment details. Pay only when you decide to keep using it.',
+          },
+          {
+            q: 'What brick sizes does Beme support?',
+            a: 'Whatever you order from. Wall types are library-agnostic: set your own brick or block dimensions per project and Beme builds the schedule around them. AU SEQ, US CMU, UK metric, custom supplier ranges — all work the same way.',
+          },
+          {
+            q: 'How is the Organisation plan different from a few Individual ones?',
+            a: 'Organisation gets you a shared library (every estimator on the team picks from the same wall types and supply rates), a team dashboard, org-wide reference numbers, and your company details + logo on every exported PDF. Individual plans are isolated per user — fine for one tradie, not for a team.',
+          },
+          {
+            q: 'Can I hand the customer a real document?',
+            a: 'Yes. Exports are a polished multi-page PDF: assumptions, wall layout diagram, per-wall-type breakdowns, supply schedule, 3D view. Branded with your details on the Organisation plan.',
+          },
+          {
+            q: 'Does Beme price the job or just count it?',
+            a: 'Count, not price. Your supplier sets the rate; Beme gives you the quantity. The Organisation plan adds a supply library so per-unit rolls (ties per m², cement per pallet, etc.) carry through automatically — you still pick the rate.',
+          },
+          {
+            q: 'Can I cancel anytime?',
+            a: 'Yes. Monthly, no contract. Cancel from your account settings; your projects stay exported and downloadable.',
+          },
+        ].map((item) => (
+          <details class="border border-ink-700 rounded-lg bg-ink-800/40 overflow-hidden group">
+            <summary class="flex items-center justify-between px-5 py-4 cursor-pointer text-ink-100 font-medium hover:bg-ink-800/70">
+              {item.q}
+              <span class="text-beme-400 transition-transform group-open:rotate-45">+</span>
+            </summary>
+            <div class="px-5 pb-4 text-sm text-ink-300 leading-relaxed">
+              {item.a}
+            </div>
+          </details>
+        ))
+      }
+    </div>
+  </section>
+
+  <CTA />
+</BaseLayout>

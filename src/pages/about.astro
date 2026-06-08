@@ -1,0 +1,65 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro'
+import CTA from '../components/CTA.astro'
+---
+
+<BaseLayout
+  title="About — Beme"
+  description="Why Beme exists, the trades it serves today, and what's coming next."
+>
+  <section class="container-tight max-w-3xl mx-auto" style="padding-top: clamp(5rem, 7vw, 9rem); padding-bottom: clamp(4rem, 6vw, 6rem);">
+    <div class="text-xs uppercase tracking-wider text-beme-400 font-semibold mb-4">
+      About
+    </div>
+    <h1 class="text-4xl md:text-5xl font-bold text-ink-50 tracking-tight">
+      When we add a trade, we build it right.
+    </h1>
+
+    <div class="mt-10 space-y-6 text-[17px] text-ink-200 leading-relaxed">
+      <p>
+        Beme is estimating software made one trade at a time. Today
+        that's <strong class="text-ink-50">brick and block</strong> —
+        the trade we know best and where general-purpose tools fall
+        down hardest. More trades follow, built the same way.
+      </p>
+
+      <p>
+        "Built right" means the estimating intelligence lives in the
+        software, not in your head. The schedule matches the build —
+        no rounding, no assumptions. And whatever the customer ends
+        up with — schedule, 3D view, PDF — is something they can
+        actually read.
+      </p>
+    </div>
+
+    <h2 class="text-xl font-semibold text-ink-50 mt-14 mb-3">Why it exists</h2>
+    <p class="text-[17px] text-ink-200 leading-relaxed">
+      Most takeoff tools cover every trade. Powerful, but not made
+      for any one of them. Estimating a brick or block wall in a
+      general-purpose tool means rebuilding the wall logic from
+      scratch every time, in a spreadsheet bolted to the side. Beme
+      goes the other way: deep on one trade at a time, every quirk
+      of how the work actually goes together built into the software
+      so it doesn't have to live in your head.
+    </p>
+
+    <h2 class="text-xl font-semibold text-ink-50 mt-12 mb-3">Who it's for</h2>
+    <p class="text-[17px] text-ink-200 leading-relaxed">
+      Individual tradies estimating their own jobs. Brick and block
+      suppliers using it as part of how they sell — sending customers
+      an accurate schedule and a 3D walkthrough back the same day,
+      without setting up an estimating team.
+    </p>
+
+    <h2 class="text-xl font-semibold text-ink-50 mt-12 mb-3">Who's behind it</h2>
+    <p class="text-[17px] text-ink-200 leading-relaxed">
+      Beme is built in Australia. If you've got feedback, found a
+      bug, or want a feature added, get in touch at
+      <a href="mailto:hello@beme.com.au" class="text-beme-400 hover:text-beme-300 underline">
+        hello@beme.com.au
+      </a>.
+    </p>
+  </section>
+
+  <CTA />
+</BaseLayout>

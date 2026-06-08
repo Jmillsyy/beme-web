@@ -1,0 +1,95 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro'
+import Hero from '../components/Hero.astro'
+import Pillar from '../components/Pillar.astro'
+import AudienceBlock from '../components/AudienceBlock.astro'
+import HowItWorks from '../components/HowItWorks.astro'
+import CTA from '../components/CTA.astro'
+
+// Inline SVG icons kept here so the Pillar component stays
+// presentational. Outline weight (1.5) reads well at the 40px
+// chip size and matches Lucide / Heroicons stroke conventions.
+const checkIcon = `
+  <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+    <polyline points="20 6 9 17 4 12"></polyline>
+  </svg>
+`
+const boltIcon = `
+  <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+    <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+  </svg>
+`
+const cubeIcon = `
+  <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+    <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+    <line x1="12" y1="22.08" x2="12" y2="12"></line>
+  </svg>
+`
+---
+
+<BaseLayout title="Beme — Brick and block estimates that match what you build">
+  <Hero />
+
+  {/* Three pillars — the positioning condensed into three cards. */}
+  <section class="container-tight" style="padding-block: clamp(5rem, 8vw, 10rem);">
+    <div class="text-center max-w-2xl mx-auto mb-16">
+      <div class="text-xs uppercase tracking-wider text-beme-400 font-semibold mb-4">
+        Why tradies use Beme
+      </div>
+      <h2 class="text-3xl md:text-4xl font-bold text-ink-50 tracking-tight">
+        When we add a trade, we build it right.
+      </h2>
+      <p class="text-base md:text-lg text-ink-300 mt-5 leading-relaxed">
+        Most takeoff tools cover every trade at the surface. Beme
+        goes deep on each one — every rule, every quirk, every
+        detail an estimator memorises over the years. Brick and
+        block today; more trades, built the same way.
+      </p>
+    </div>
+
+    <div class="grid md:grid-cols-3 gap-6 lg:gap-8">
+      <Pillar
+        title="Your input equals the output."
+        body="Every wall you draw is calculated to your specifications — bond, corners, openings, lintels and all. What's on screen is what's on the order. Nothing assumed, nothing rounded."
+        iconSvg={checkIcon}
+        iconBg="beme"
+      />
+      <Pillar
+        title="Set it up once, reuse it on every job."
+        body="Trace the architect's PDF, drop in wall types you've already saved, walk away with a full schedule. The setup work happens once. Every future job picks up where the last one left off."
+        iconSvg={boltIcon}
+        iconBg="amber"
+      />
+      <Pillar
+        title="A 3D view the customer can read."
+        body="A live model of every wall, opening, lintel and sill — built straight from your trace. Spot the wall you forgot before the order goes out. Show the build before the trucks turn up."
+        iconSvg={cubeIcon}
+        iconBg="sky"
+      />
+    </div>
+  </section>
+
+  {/* "How it works" — numbered 3-step process. */}
+  <HowItWorks />
+
+  {/* Audience blocks — one per persona. */}
+  <AudienceBlock
+    eyebrow="For tradies"
+    title="Quote more. Win more. Order right the first time."
+    body="Trace the plan, hand the client a 3D view of the build, hand yourself a full supply schedule — all from the laptop or tablet you already carry. Your input equals the output. Every wall calculated to your specifications, every brick accounted for."
+    ctaLabel="For tradies"
+    ctaHref="/for-tradies"
+  />
+
+  <AudienceBlock
+    eyebrow="For suppliers"
+    title="Sell with a schedule, not a guess."
+    body="Anyone can quote on tonnage. The suppliers who close the order send back an accurate supply schedule and a 3D walkthrough the same day — without setting up an estimating team. Beme adds that capability to the sales process you already run."
+    ctaLabel="For suppliers"
+    ctaHref="/for-suppliers"
+    imageRight={false}
+  />
+
+  <CTA />
+</BaseLayout>

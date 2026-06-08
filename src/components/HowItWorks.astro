@@ -1,0 +1,79 @@
+---
+// "How it works" — three numbered steps that walk the visitor
+// through the actual workflow: trace, build, export. Each step has
+// a big number, a short headline, and one supporting sentence.
+// Designed to feel like a horizontal product tour without needing
+// real screenshots — same pattern that high-converting product
+// pages use to demystify the workflow before the visitor commits.
+
+const steps = [
+  {
+    n: '01',
+    title: 'Trace the plan.',
+    body: 'Drop in the architect\'s PDF. Click two points for a wall. Two more for the next. The whole structure goes down in minutes.',
+    accent: 'beme',
+  },
+  {
+    n: '02',
+    title: 'Set the wall + openings.',
+    body: 'Pick the brick or block, the bond, the trim. Place doors and windows with head and sill. Save the wall type once, reuse it on every future job.',
+    accent: 'beme',
+  },
+  {
+    n: '03',
+    title: 'Export the schedule.',
+    body: 'A polished PDF — assumptions, wall layout, supply schedule, 3D view. Every brick visible on screen is on the order. Hand it to the customer.',
+    accent: 'beme',
+  },
+]
+---
+
+<section
+  class="container-tight"
+  style="padding-block: clamp(5rem, 8vw, 10rem);"
+>
+  <div class="text-center max-w-2xl mx-auto mb-16 reveal">
+    <div
+      class="text-xs uppercase tracking-wider text-beme-400 font-semibold mb-4"
+    >
+      How it works
+    </div>
+    <h2 class="text-3xl md:text-4xl font-bold text-ink-50 tracking-tight">
+      From PDF to PDF in three steps.
+    </h2>
+    <p
+      class="text-base md:text-lg text-ink-300 mt-5 leading-relaxed"
+    >
+      Architect's plan in, supply schedule out. No spreadsheet, no
+      QS software, no estimating team in the middle.
+    </p>
+  </div>
+
+  <div class="grid md:grid-cols-3 gap-6 lg:gap-8">
+    {
+      steps.map((s, i) => (
+        <div
+          class="relative p-8 md:p-10 rounded-2xl border border-ink-700 bg-ink-800/40 lift reveal"
+          style={`transition-delay: ${i * 80}ms;`}
+        >
+          {/* Massive numeral as a watermark — orange ghost. Sits behind
+              the content but creates the "numbered step" visual rhythm
+              that connects each card horizontally. */}
+          <div
+            aria-hidden="true"
+            style="position: absolute; top: 12px; right: 18px; font-size: 96px; line-height: 1; font-weight: 800; color: var(--color-beme-500); opacity: 0.12; letter-spacing: -0.05em; pointer-events: none;"
+          >
+            {s.n}
+          </div>
+          <div
+            class="text-xs uppercase tracking-wider text-beme-400 font-semibold mb-3"
+          >
+            Step {s.n}
+          </div>
+          <h3 class="text-xl font-semibold text-ink-50 mb-3">{s.title}</h3>
+          <p class="text-[15px] text-ink-300 leading-relaxed">{s.body}</p>
+        </div>
+      ))
+    }
+  </div>
+</section>

@@ -1,0 +1,59 @@
+---
+// Audience-specific section — one for tradies, one for suppliers.
+// Each is a paired headline + body + CTA, with an optional eyebrow
+// tag above the headline. Lays out as two columns on desktop with
+// the visual placeholder on alternating sides (controlled by
+// `imageRight`) so the page reads as a rhythm rather than a stack
+// of identical blocks.
+
+interface Props {
+  eyebrow: string
+  title: string
+  body: string
+  ctaLabel: string
+  ctaHref: string
+  /** Where the visual sits on desktop. Defaults to right. */
+  imageRight?: boolean
+}
+
+const {
+  eyebrow,
+  title,
+  body,
+  ctaLabel,
+  ctaHref,
+  imageRight = true,
+} = Astro.props
+---
+
+<section class="container-tight" style="padding-block: clamp(5rem, 8vw, 10rem);">
+  <div
+    class={`grid md:grid-cols-2 gap-12 lg:gap-20 items-center reveal ${
+      imageRight ? '' : 'md:flex-row-reverse md:[direction:rtl]'
+    }`}
+  >
+    <div class={imageRight ? '' : '[direction:ltr]'}>
+      <div class="text-xs uppercase tracking-wider text-beme-400 font-semibold mb-4">
+        {eyebrow}
+      </div>
+      <h2 class="text-3xl md:text-4xl font-bold text-ink-50 leading-tight">
+        {title}
+      </h2>
+      <p class="text-base md:text-lg text-ink-300 mt-5 leading-relaxed">{body}</p>
+      <a
+        href={ctaHref}
+        class="inline-block mt-8 text-sm font-medium text-beme-400 hover:text-beme-300 transition-colors"
+      >
+        {ctaLabel} →
+      </a>
+    </div>
+
+    <div class={imageRight ? '' : '[direction:ltr]'}>
+      <div
+        class="aspect-[4/3] rounded-xl border border-ink-700 bg-ink-800 flex items-center justify-center text-ink-500 text-sm"
+      >
+        [ Screenshot / video ]
+      </div>
+    </div>
+  </div>
+</section>

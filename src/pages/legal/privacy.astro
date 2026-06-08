@@ -1,0 +1,138 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro'
+
+// Plain-language privacy policy. Reasonable starter for an
+// Australian SaaS using Supabase (Sydney region) for storage and
+// Stripe for payments. Before going live for real money, get a
+// lawyer to review — Australian Privacy Principles compliance is
+// straightforward but the GDPR / overseas-user angle deserves
+// professional language if you sell internationally.
+---
+
+<BaseLayout
+  title="Privacy Policy — Beme"
+  description="What data Beme collects, why, and what you can do about it."
+>
+  <article class="container-tight max-w-3xl mx-auto" style="padding-top: clamp(5rem, 7vw, 9rem); padding-bottom: clamp(4rem, 6vw, 6rem);">
+    <div class="text-xs uppercase tracking-wider text-beme-400 font-semibold mb-4">
+      Legal
+    </div>
+    <h1 class="text-4xl md:text-5xl font-bold text-ink-50 tracking-tight">
+      Privacy Policy
+    </h1>
+    <p class="text-sm text-ink-400 mt-3">
+      Last updated: June 2026
+    </p>
+
+    <div class="mt-10 space-y-10 text-[16px] text-ink-200 leading-relaxed">
+      <section>
+        <p>
+          Short version: we collect what we need to run Beme and
+          nothing more. We don't sell your data, we don't share it
+          with advertisers, and you can see, export, or delete it
+          whenever you want.
+        </p>
+      </section>
+
+      <section>
+        <h2 class="text-xl font-semibold text-ink-50 mb-3">What we collect</h2>
+        <p>
+          <strong class="text-ink-50">Account info.</strong> Your
+          email address, name, and (if you sign in with Microsoft)
+          the basic profile details Microsoft passes back.
+        </p>
+        <p class="mt-3">
+          <strong class="text-ink-50">Project data.</strong> Everything
+          you build inside Beme — projects, wall types, supply rates,
+          PDF references. We store it so the software works and so
+          your work is there when you log back in.
+        </p>
+        <p class="mt-3">
+          <strong class="text-ink-50">Usage data.</strong> Basic
+          information about how you use the app (pages visited,
+          features used, browser type) so we can fix bugs and improve
+          the product. We don't track you across the web.
+        </p>
+        <p class="mt-3">
+          <strong class="text-ink-50">Payment info.</strong> If you
+          subscribe, payment details are handled by Stripe — we
+          never see your card number. We only see whether your
+          subscription is active and the email you paid with.
+        </p>
+      </section>
+
+      <section>
+        <h2 class="text-xl font-semibold text-ink-50 mb-3">Where it's stored</h2>
+        <p>
+          Project and account data are stored in Supabase's Sydney
+          region. Payment data is handled by Stripe. Both providers
+          use industry-standard encryption in transit and at rest.
+        </p>
+      </section>
+
+      <section>
+        <h2 class="text-xl font-semibold text-ink-50 mb-3">Who sees it</h2>
+        <p>
+          Only the team that runs Beme, and only when needed (e.g.
+          if you ask for support and we need to look at your account
+          to help). We don't sell your data, share it with
+          advertisers, or use it for anything beyond running the
+          service.
+        </p>
+        <p class="mt-3">
+          If you're on the Organisation plan, other users on your
+          team can see the shared library and team-level projects
+          per the role you've assigned them.
+        </p>
+      </section>
+
+      <section>
+        <h2 class="text-xl font-semibold text-ink-50 mb-3">Your rights</h2>
+        <p>
+          You can access, export, correct, or delete your data at
+          any time from your account settings. If you'd prefer we
+          handle a request directly, email
+          <a href="mailto:hello@beme.com.au" class="text-beme-400 hover:text-beme-300 underline">
+            hello@beme.com.au
+          </a>
+          and we'll act within a reasonable timeframe.
+        </p>
+        <p class="mt-3">
+          If you cancel your subscription, your data stays
+          accessible for 30 days so you can export. After that it
+          may be deleted from active storage. Backups roll over on
+          a longer schedule.
+        </p>
+      </section>
+
+      <section>
+        <h2 class="text-xl font-semibold text-ink-50 mb-3">Cookies</h2>
+        <p>
+          We use cookies (and similar local storage) for two things:
+          keeping you logged in, and remembering your preferences
+          (theme, last-opened project). We don't use third-party
+          tracking cookies.
+        </p>
+      </section>
+
+      <section>
+        <h2 class="text-xl font-semibold text-ink-50 mb-3">Updates</h2>
+        <p>
+          If we update this policy in a meaningful way, we'll let
+          active users know by email. The "Last updated" date at the
+          top of this page is always current.
+        </p>
+      </section>
+
+      <section>
+        <h2 class="text-xl font-semibold text-ink-50 mb-3">Contact</h2>
+        <p>
+          Questions or requests:
+          <a href="mailto:hello@beme.com.au" class="text-beme-400 hover:text-beme-300 underline">
+            hello@beme.com.au
+          </a>.
+        </p>
+      </section>
+    </div>
+  </article>
+</BaseLayout>

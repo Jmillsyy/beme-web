@@ -1,0 +1,66 @@
+---
+const year = new Date().getFullYear()
+const cols = [
+  {
+    heading: 'Product',
+    links: [
+      { href: '/for-tradies', label: 'For tradies' },
+      { href: '/for-suppliers', label: 'For suppliers' },
+      { href: '/pricing', label: 'Pricing' },
+    ],
+  },
+  {
+    heading: 'Company',
+    links: [
+      { href: '/about', label: 'About' },
+      { href: 'mailto:hello@beme.com.au', label: 'Contact' },
+    ],
+  },
+  {
+    heading: 'Legal',
+    links: [
+      { href: '/legal/terms', label: 'Terms' },
+      { href: '/legal/privacy', label: 'Privacy' },
+    ],
+  },
+]
+---
+
+<footer class="border-t border-ink-700/60 bg-ink-900/80" style="margin-top: clamp(4rem, 7vw, 8rem);">
+  <div class="container-tight" style="padding-block: clamp(3rem, 5vw, 5rem);">
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-10">
+      <div class="col-span-2 md:col-span-1">
+        <div class="font-bold text-ink-50 text-lg">Beme</div>
+        <p class="text-sm text-ink-400 mt-2 leading-relaxed">
+          Estimates that match what you build. Today for brick and block.
+        </p>
+      </div>
+      {
+        cols.map((col) => (
+          <div>
+            <div class="text-xs uppercase tracking-wider text-ink-500 font-semibold mb-3">
+              {col.heading}
+            </div>
+            <ul class="space-y-2 text-sm">
+              {col.links.map((l) => (
+                <li>
+                  <a
+                    href={l.href}
+                    class="text-ink-300 hover:text-ink-50 transition-colors"
+                  >
+                    {l.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))
+      }
+    </div>
+
+    <div class="mt-16 pt-8 border-t border-ink-800 flex items-center justify-between text-xs text-ink-500">
+      <div>© {year} Beme. All rights reserved.</div>
+      <div>Built in Australia.</div>
+    </div>
+  </div>
+</footer>

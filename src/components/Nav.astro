@@ -1,0 +1,155 @@
+---
+// Top navigation — same visual treatment as the Beme app header so a
+// visitor lands here and into the app feeling like one product. Brand
+// mark (orange rounded square with dark inset), wordmark, tagline on
+// the left; marketing-specific nav links + auth CTAs on the right.
+
+const links = [
+  { href: '/for-tradies', label: 'For tradies' },
+  { href: '/for-suppliers', label: 'For suppliers' },
+  { href: '/pricing', label: 'Pricing' },
+  { href: '/about', label: 'About' },
+]
+const appUrl = 'https://app.beme.com.au'
+---
+
+<header
+  class="bg-ink-800 border-b border-ink-600 sticky top-0 z-40"
+  style="zoom: 0.79;"
+>
+  {/* Same full-bleed px-20 the app header uses so the brand mark sits
+      at the same horizontal edge as every page in the app. py-6 matches
+      the app's tall header so the visual rhythm carries through. */}
+  <div
+    class="flex items-center justify-between gap-6"
+    style="padding-inline: clamp(1.5rem, 8vw, 5rem); padding-block: 1.5rem;"
+  >
+    <a
+      href="/"
+      class="group shrink-0"
+      style="display: flex; align-items: center; gap: 12px;"
+    >
+      {/* Brand mark — beme-500 rounded square with an ink-900 inset to
+          create the outlined-tile look that matches the app exactly.
+          All inline so the geometry can't be lost to Tailwind utility
+          generation; values mirror the app's Header.tsx 1:1. */}
+      <div
+        class="group-hover:brightness-110 transition-all"
+        style="position: relative; width: 32px; height: 32px; border-radius: 6px; background: var(--color-beme-500); flex-shrink: 0;"
+      >
+        <div
+          style="position: absolute; top: 6px; right: 6px; bottom: 6px; left: 6px; background: var(--color-ink-900); border-radius: 2px;"
+        ></div>
+      </div>
+      {/* line-height 1.25 = Tailwind's `leading-tight`. Font sizes
+          mirror the app's theme overrides: text-2xl → 30px (not
+          Tailwind's default 24px), text-xs → 15px (not 12px). Without
+          this match the marketing wordmark renders smaller than the
+          app's even when the rest of the scale matches. */}
+      <div style="line-height: 1.25;">
+        <div
+          style="font-size: 30px; font-weight: 800; letter-spacing: -0.025em; color: var(--color-ink-50);"
+        >
+          Beme
+        </div>
+        <div style="font-size: 15px; color: var(--color-ink-300);">
+          Building estimates made easy
+        </div>
+      </div>
+    </a>
+
+    <div class="flex items-center gap-6">
+      <nav class="hidden md:flex items-center gap-6 text-sm text-ink-300">
+        {
+          links.map((l) => (
+            <a
+              href={l.href}
+              class="hover:text-ink-50 transition-colors"
+            >
+              {l.label}
+            </a>
+          ))
+        }
+      </nav>
+
+      <div class="flex items-center gap-3 shrink-0">
+        <a
+          href={appUrl}
+          class="hidden sm:inline-block text-sm text-ink-300 hover:text-ink-50 px-3 py-1.5 transition-colors"
+        >
+          Sign in
+        </a>
+        <button
+          type="button"
+          data-checkout
+          data-plan="individual"
+          data-source="nav"
+          class="inline-block text-sm font-medium px-3 py-1.5 rounded-md bg-beme-500 hover:bg-beme-400 transition-colors cursor-pointer"
+          style="color: #000;"
+        >
+          Start free
+        </button>
+
+        {/* Theme toggle — same pill geometry as the app's ThemeSwitch
+            (h-8 w-[60px] rounded-full, beme-500 thumb that slides
+            translateX(28px)). Hydrated with a small inline script that
+            flips `.light` on <html> and persists to localStorage. */}
+        <button
+          id="theme-toggle"
+          type="button"
+          role="switch"
+          aria-checked="true"
+          aria-label="Toggle dark / light mode"
+          title="Toggle theme"
+          class="relative inline-flex items-center hover:bg-ink-700 transition-colors cursor-pointer"
+          style="height: 32px; width: 60px; border-radius: 9999px; border: 1px solid var(--color-ink-600); background: color-mix(in srgb, var(--color-ink-700) 60%, transparent);"
+        >
+          <span
+            style="position: absolute; left: 6px; font-size: 12px; color: var(--color-ink-400);"
+            >🌙</span
+          >
+          <span
+            style="position: absolute; right: 6px; font-size: 12px; color: var(--color-ink-400);"
+            >☀️</span
+          >
+          <span
+            id="theme-toggle-thumb"
+            style="position: absolute; top: 2px; left: 2px; width: 24px; height: 24px; border-radius: 9999px; background: var(--color-beme-500); box-shadow: 0 1px 2px rgba(0,0,0,0.2); transition: transform 0.2s ease; display: flex; align-items: center; justify-content: center; font-size: 11px;"
+            >☀️</span
+          >
+        </button>
+      </div>
+    </div>
+  </div>
+</header>
+
+{/* Theme toggle wiring — flips `.light` on <html>, slides the thumb,
+    swaps the icon, persists choice. Runs once on page load to sync
+    the button visual to whatever the theme bootstrap script picked. */}
+<script is:inline>
+  ;(function () {
+    var btn = document.getElementById('theme-toggle')
+    var thumb = document.getElementById('theme-toggle-thumb')
+    if (!btn || !thumb) return
+
+    function sync() {
+      var isLight = document.documentElement.classList.contains('light')
+      btn.setAttribute('aria-checked', String(isLight))
+      thumb.style.transform = isLight ? 'translateX(28px)' : 'translateX(0)'
+      thumb.textContent = isLight ? '☀️' : '🌙'
+    }
+
+    btn.addEventListener('click', function () {
+      var next = document.documentElement.classList.contains('light')
+        ? 'dark'
+        : 'light'
+      document.documentElement.classList.toggle('light', next === 'light')
+      try {
+        localStorage.setItem('beme-web-theme', next)
+      } catch (e) {}
+      sync()
+    })
+
+    sync()
+  })()
+</script>

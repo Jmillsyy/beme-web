@@ -1,0 +1,168 @@
+@import "tailwindcss";
+
+/* Tailwind v4 auto-content detection occasionally misses .astro files
+   when they live alongside non-source folders. Explicit @source ensures
+   every utility class we write in an Astro template gets generated. */
+@source "../**/*.{astro,html,js,jsx,ts,tsx,md,mdx}";
+
+/* ────────────────────────────────────────────────────────────────────
+   Beme palette — matches the app's tailwind theme exactly so any
+   class (bg-beme-500, text-ink-200, etc.) reads the same way here as
+   it does inside the workspace. Add new shades to BOTH files if you
+   ever extend the palette so the brand stays consistent.
+   ────────────────────────────────────────────────────────────────── */
+
+@theme {
+  /* Primary brand orange */
+  --color-beme-50: #fff7ed;
+  --color-beme-100: #ffedd5;
+  --color-beme-200: #fed7aa;
+  --color-beme-300: #fdba74;
+  --color-beme-400: #fb923c;
+  --color-beme-500: #ff7a2d;
+  --color-beme-600: #ed6d1a;
+  --color-beme-700: #c25411;
+  --color-beme-800: #9a3f08;
+  --color-beme-900: #431407;
+
+  /* Neutral / dark chrome — same scale the app's dark mode uses */
+  --color-ink-50: #f3f3f4;
+  --color-ink-100: #d9d9dc;
+  --color-ink-200: #b4b4b9;
+  --color-ink-300: #9ca0a8;
+  --color-ink-400: #6d717a;
+  --color-ink-500: #4a4d54;
+  --color-ink-600: #2e3036;
+  --color-ink-700: #232328;
+  --color-ink-800: #18181c;
+  --color-ink-900: #0e0e10;
+
+  /* Warm off-white tones for hero / panel backgrounds */
+  --color-paper-50: #fdfcf9;
+  --color-paper-100: #fafaf7;
+  --color-paper-200: #efece4;
+  --color-paper-300: #e5e2dc;
+}
+
+/* ── Light mode ─────────────────────────────────────────────────────────
+   Mirror of the app's light-mode override: flip the ink ramp so the same
+   `bg-ink-800` / `text-ink-50` utilities resolve correctly in either
+   theme. Applied via the `light` class on <html>, set by the inline
+   theme script in BaseLayout before first paint to avoid FOUC. */
+:root.light {
+  --color-ink-50: #0e0c0a;   /* strongest text */
+  --color-ink-100: #1f1d1a;
+  --color-ink-200: #3d3b38;
+  --color-ink-300: #5c5a57;  /* secondary text */
+  --color-ink-400: #8a8782;
+  --color-ink-500: #b8b4ac;
+  --color-ink-600: #e2dfd8;  /* borders */
+  --color-ink-700: #f0ede5;
+  --color-ink-800: #ffffff;  /* panels / chrome */
+  --color-ink-900: #f7f4ec;  /* page background — warm off-white */
+}
+
+/* ── Light-mode accent overrides ───────────────────────────────────────
+   The faint-tint-on-dark pattern (`bg-beme-500/10` + `text-beme-300`)
+   reads as orange-on-orange in light mode. Same trick the app uses:
+   override those specific utilities to a saturated pale + dark-orange
+   text combo so pills / eyebrows / badges stay readable on white. */
+:root.light .bg-beme-500\/10,
+:root.light .bg-beme-500\/15 {
+  background-color: #ffedd5; /* beme-100 */
+}
+:root.light .text-beme-300,
+:root.light .text-beme-400 {
+  color: #9a3f08; /* beme-800 — dark burnt orange, strong contrast on cream */
+}
+:root.light .border-beme-500\/30,
+:root.light .border-beme-500\/40 {
+  border-color: #fdba74; /* beme-300 */
+}
+:root.light .hover\:text-beme-300:hover {
+  color: #c25411; /* beme-700 */
+}
+
+/* Body — uses ink-900 for the page bg and ink-100 for body text.
+   Both flip automatically when the `.light` class is added to <html>. */
+html,
+body {
+  background: var(--color-ink-900);
+  color: var(--color-ink-100);
+  transition: background 0.18s ease, color 0.18s ease;
+  font-family:
+    Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI',
+    Roboto, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ── Scroll-reveal ──────────────────────────────────────────────────
+   Elements with the `.reveal` class start invisible + slightly offset,
+   and fade up into place once they scroll into view (toggled by the
+   IntersectionObserver script in BaseLayout). `prefers-reduced-motion`
+   respected — users who've asked for less motion see no animation. */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition:
+    opacity 0.6s ease,
+    transform 0.6s ease;
+  will-change: opacity, transform;
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+/* ── Card hover lift ────────────────────────────────────────────────
+   Applied to interactive cards (pillar, audience block image, pricing
+   card) so they tilt up subtly on hover — small affordance that
+   tells the visitor the page is alive without going overboard. */
+.lift {
+  transition:
+    transform 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.25s ease;
+}
+.lift:hover {
+  transform: translateY(-3px);
+  border-color: var(--color-beme-500);
+  box-shadow: 0 12px 32px rgba(255, 122, 45, 0.08);
+}
+@media (prefers-reduced-motion: reduce) {
+  .lift:hover {
+    transform: none;
+  }
+}
+
+/* Container helper — caps content width but lets full-bleed sections
+   (gradient hero strips, footer band) span edge-to-edge. Generous
+   max-width so the page reads as premium / spacious on wide
+   monitors; side padding scales up at larger breakpoints so the
+   gutter feels deliberate rather than accidental. */
+.container-tight {
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .container-tight {
+    padding: 0 2.5rem;
+  }
+}
+
+@media (min-width: 1280px) {
+  .container-tight {
+    padding: 0 3rem;
+  }
+}

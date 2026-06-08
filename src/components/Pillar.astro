@@ -1,0 +1,40 @@
+---
+// One of the three landing-page pillars (Accurate / Fast / Visual).
+// Compact card with an icon, a tight headline, and a couple of
+// supporting sentences. Optional `iconBg` lets each card pick its
+// own subtle tint (orange / amber / sky) so the three feel
+// distinct without being noisy.
+
+interface Props {
+  /** Short, action-y headline (3–5 words). */
+  title: string
+  /** 1–2 sentences. Plain language, specifics over claims. */
+  body: string
+  /** Inline SVG body — pass as raw HTML to set:html. */
+  iconSvg?: string
+  /** Optional tint for the icon chip. Defaults to brand orange. */
+  iconBg?: 'beme' | 'amber' | 'sky'
+}
+
+const { title, body, iconSvg, iconBg = 'beme' } = Astro.props
+
+const iconBgClass =
+  iconBg === 'amber'
+    ? 'bg-amber-500/10 text-amber-300 border-amber-500/30'
+    : iconBg === 'sky'
+      ? 'bg-sky-500/10 text-sky-300 border-sky-500/30'
+      : 'bg-beme-500/10 text-beme-300 border-beme-500/30'
+---
+
+<div class="p-8 md:p-10 rounded-2xl border border-ink-700 bg-ink-800/40 lift reveal">
+  {
+    iconSvg && (
+      <div
+        class={`inline-flex items-center justify-center w-12 h-12 rounded-xl border mb-6 ${iconBgClass}`}
+        set:html={iconSvg}
+      />
+    )
+  }
+  <h3 class="text-xl font-semibold text-ink-50 mb-3">{title}</h3>
+  <p class="text-[15px] text-ink-300 leading-relaxed">{body}</p>
+</div>

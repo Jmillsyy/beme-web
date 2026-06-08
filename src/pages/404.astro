@@ -1,0 +1,70 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro'
+// Astro renders src/pages/404.astro for any unmatched route in
+// production. Keep it short, branded, and route the visitor back
+// somewhere useful.
+---
+
+<BaseLayout
+  title="Page not found — Beme"
+  description="The page you're after doesn't exist (or moved). Try one of these links."
+>
+  <section
+    class="container-tight max-w-2xl mx-auto text-center"
+    style="padding-top: clamp(6rem, 10vw, 12rem); padding-bottom: clamp(5rem, 8vw, 10rem);"
+  >
+    <div
+      class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-beme-500/10 border border-beme-500/30 text-beme-300 text-xs font-medium mb-8"
+    >
+      <span class="w-1.5 h-1.5 rounded-full bg-beme-500"></span>
+      404
+    </div>
+
+    <h1 class="text-4xl md:text-5xl font-bold text-ink-50 tracking-tight">
+      We can't find that page.
+    </h1>
+    <p class="text-base md:text-lg text-ink-300 mt-5 leading-relaxed">
+      Either the link is stale or we moved something around. Here's
+      where you might be headed:
+    </p>
+
+    <div class="flex flex-wrap justify-center gap-3 mt-10">
+      <a
+        href="/"
+        class="inline-block px-6 py-3 rounded-md bg-beme-500 hover:bg-beme-400 transition-colors text-sm font-medium"
+        style="color: #000;"
+      >
+        Home
+      </a>
+      <a
+        href="/pricing"
+        class="inline-block px-6 py-3 rounded-md border border-ink-600 text-ink-200 hover:bg-ink-800 transition-colors text-sm font-medium"
+      >
+        Pricing
+      </a>
+      <a
+        href="/for-tradies"
+        class="inline-block px-6 py-3 rounded-md border border-ink-600 text-ink-200 hover:bg-ink-800 transition-colors text-sm font-medium"
+      >
+        For tradies
+      </a>
+      <a
+        href="/for-suppliers"
+        class="inline-block px-6 py-3 rounded-md border border-ink-600 text-ink-200 hover:bg-ink-800 transition-colors text-sm font-medium"
+      >
+        For suppliers
+      </a>
+    </div>
+
+    <p class="text-sm text-ink-400 mt-12">
+      Think this link should work? Email
+      <a
+        href="mailto:hello@beme.com.au"
+        class="text-beme-400 hover:text-beme-300 underline"
+      >
+        hello@beme.com.au
+      </a>
+      and we'll fix it.
+    </p>
+  </section>
+</BaseLayout>

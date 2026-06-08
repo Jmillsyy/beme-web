@@ -1,0 +1,372 @@
+---
+// Annotated SVG of a brick wall with a window opening. Each
+// annotation pin shows a tooltip on hover.
+//
+// IMPORTANT — Astro's template compiler does a naive scan for `<` and
+// `>` and gets tripped up by comparison operators inside `{...}`
+// blocks (even when they're inside callbacks). All geometry is
+// computed here in the frontmatter (pure TS, never JSX-parsed) and
+// the template just iterates the finished arrays.
+
+const BRICK_W = 78
+const BRICK_H = 24
+const COURSES = 12
+const WIN_ROW_TOP = 2
+const WIN_ROW_BOTTOM = 6
+const WIN_X_LEFT = 240
+const WIN_X_RIGHT = 480
+
+type Brick = { x: number; y: number }
+
+// Body bricks — stretcher bond, carved around the window void.
+const bodyBricks: Brick[] = []
+for (let row = 0; row < COURSES; row++) {
+  const y = 60 + row * 28
+  const rowOffset = row % 2 === 0 ? 0 : -40
+  for (let col = 0; col < 10; col++) {
+    const x = 40 + rowOffset + col * 80
+    const tooFarLeft = x < 30
+    const tooFarRight = x > 700
+    if (tooFarLeft || tooFarRight) continue
+    const inWindowRowRange = row >= WIN_ROW_TOP && row <= WIN_ROW_BOTTOM
+    const xRight = x + BRICK_W
+    const overlapsWindowX = xRight > WIN_X_LEFT && x < WIN_X_RIGHT
+    if (inWindowRowRange && overlapsWindowX) continue
+    bodyBricks.push({ x, y })
+  }
+}
+
+// Soldier course (bricks on end above window).
+const soldierBricks: number[] = []
+for (let i = 0; i < 11; i++) {
+  const x = WIN_X_LEFT + i * 22
+  const xRight = x + 20
+  if (xRight > WIN_X_RIGHT) break
+  soldierBricks.push(x)
+}
+
+// Rowlock sill bricks (tilted, slight overhang).
+const sillBricks: number[] = []
+for (let i = 0; i < 12; i++) {
+  const x = 235 + i * 21
+  const xRight = x + 19
+  if (xRight > 485) break
+  sillBricks.push(x)
+}
+
+// Y positions pre-computed so the template has no arithmetic.
+const SOLDIER_Y = 60 + 1 * 28   // 88
+const SILL_Y = 60 + 7 * 28      // 256
+const WIN_Y_TOP = 60 + 2 * 28   // 116
+const WIN_HEIGHT = 5 * 28       // 140
+const WIN_FRAME_Y = WIN_Y_TOP + 4
+const WIN_FRAME_HEIGHT = WIN_HEIGHT - 8
+const WIN_FRAME_BOTTOM = WIN_FRAME_Y + WIN_FRAME_HEIGHT
+const MULLION_X = (WIN_X_LEFT + WIN_X_RIGHT) / 2
+---
+
+<div class="annotated-diagram relative w-full">
+  <svg
+    viewBox="0 0 700 520"
+    xmlns="http://www.w3.org/2000/svg"
+    class="w-full h-auto rounded-xl border border-ink-700"
+    style="background: linear-gradient(135deg, var(--color-ink-800), var(--color-ink-900)); shape-rendering: geometricPrecision;"
+    role="img"
+    aria-label="Annotated diagram of a brick wall with a window, showing bond pattern, lintel, sill course, and supply count"
+  >
+    {/* Body bricks — stretcher bond, carved around window. */}
+    {
+      bodyBricks.map((b) => (
+        <rect
+          x={b.x}
+          y={b.y}
+          width={BRICK_W}
+          height={BRICK_H}
+          rx={1}
+          fill="var(--color-beme-600)"
+          stroke="var(--color-ink-900)"
+          stroke-width="1"
+        />
+      ))
+    }
+
+    {/* Soldier course — bricks on end above window. */}
+    {
+      soldierBricks.map((x) => (
+        <rect
+          x={x}
+          y={SOLDIER_Y}
+          width={20}
+          height={24}
+          rx={1}
+          fill="var(--color-beme-500)"
+          stroke="var(--color-ink-900)"
+          stroke-width="1"
+        />
+      ))
+    }
+
+    {/* Rowlock sill — bricks tilted, slight overhang. */}
+    {
+      sillBricks.map((x) => (
+        <rect
+          x={x}
+          y={SILL_Y}
+          width={19}
+          height={26}
+          rx={1}
+          fill="var(--color-beme-700)"
+          stroke="var(--color-ink-900)"
+          stroke-width="1"
+        />
+      ))
+    }
+
+    {/* Window void + frame. */}
+    <rect
+      x={WIN_X_LEFT}
+      y={WIN_Y_TOP}
+      width={240}
+      height={WIN_HEIGHT}
+      fill="var(--color-ink-900)"
+    />
+    <rect
+      x={WIN_X_LEFT + 4}
+      y={WIN_FRAME_Y}
+      width={232}
+      height={WIN_FRAME_HEIGHT}
+      fill="none"
+      stroke="var(--color-ink-600)"
+      stroke-width="2"
+      rx={2}
+    />
+    <line
+      x1={MULLION_X}
+      y1={WIN_FRAME_Y}
+      x2={MULLION_X}
+      y2={WIN_FRAME_BOTTOM}
+      stroke="var(--color-ink-600)"
+      stroke-width="2"
+    />
+
+    {/* Annotation pins — animated ripple via SMIL <animate>. */}
+    <g class="pin" data-pin="1">
+      <circle cx="360" cy="91" r="8" fill="var(--color-beme-500)" />
+      <circle
+        cx="360"
+        cy="91"
+        r="14"
+        fill="var(--color-beme-500)"
+        opacity="0.25"
+      >
+        <animate
+          attributeName="r"
+          values="10;18;10"
+          dur="2s"
+          repeatCount="indefinite"
+        />
+        <animate
+          attributeName="opacity"
+          values="0.4;0;0.4"
+          dur="2s"
+          repeatCount="indefinite"
+        />
+      </circle>
+    </g>
+
+    <g class="pin" data-pin="2">
+      <circle cx="360" cy="271" r="8" fill="var(--color-beme-500)" />
+      <circle
+        cx="360"
+        cy="271"
+        r="14"
+        fill="var(--color-beme-500)"
+        opacity="0.25"
+      >
+        <animate
+          attributeName="r"
+          values="10;18;10"
+          dur="2s"
+          begin="0.5s"
+          repeatCount="indefinite"
+        />
+        <animate
+          attributeName="opacity"
+          values="0.4;0;0.4"
+          dur="2s"
+          begin="0.5s"
+          repeatCount="indefinite"
+        />
+      </circle>
+    </g>
+
+    <g class="pin" data-pin="3">
+      <circle cx="120" cy="200" r="8" fill="var(--color-beme-500)" />
+      <circle
+        cx="120"
+        cy="200"
+        r="14"
+        fill="var(--color-beme-500)"
+        opacity="0.25"
+      >
+        <animate
+          attributeName="r"
+          values="10;18;10"
+          dur="2s"
+          begin="1s"
+          repeatCount="indefinite"
+        />
+        <animate
+          attributeName="opacity"
+          values="0.4;0;0.4"
+          dur="2s"
+          begin="1s"
+          repeatCount="indefinite"
+        />
+      </circle>
+    </g>
+
+    <g class="pin" data-pin="4">
+      <circle cx="600" cy="400" r="8" fill="var(--color-beme-500)" />
+      <circle
+        cx="600"
+        cy="400"
+        r="14"
+        fill="var(--color-beme-500)"
+        opacity="0.25"
+      >
+        <animate
+          attributeName="r"
+          values="10;18;10"
+          dur="2s"
+          begin="1.5s"
+          repeatCount="indefinite"
+        />
+        <animate
+          attributeName="opacity"
+          values="0.4;0;0.4"
+          dur="2s"
+          begin="1.5s"
+          repeatCount="indefinite"
+        />
+      </circle>
+    </g>
+  </svg>
+
+  {/* HTML tooltip overlays — positioned to match each pin's SVG
+      coordinate via percentage offsets. */}
+  <div
+    class="pin-tip"
+    data-pin-tip="1"
+    style="position: absolute; top: 9%; left: 56%; max-width: 240px;"
+  >
+    <strong>Soldier course head.</strong>
+    Trim brick choice + orientation set per wall type.
+  </div>
+  <div
+    class="pin-tip"
+    data-pin-tip="2"
+    style="position: absolute; top: 51%; left: 56%; max-width: 240px;"
+  >
+    <strong>Rowlock sill.</strong>
+    Auto-applied below window openings.
+  </div>
+  <div
+    class="pin-tip"
+    data-pin-tip="3"
+    style="position: absolute; top: 36%; left: 20%; max-width: 240px;"
+  >
+    <strong>Stretcher bond.</strong>
+    Counted with the bond — half bricks at every corner.
+  </div>
+  <div
+    class="pin-tip"
+    data-pin-tip="4"
+    style="position: absolute; top: 75%; left: 79%; max-width: 240px;"
+  >
+    <strong>Every brick on the schedule.</strong>
+    What you see is what you order.
+  </div>
+</div>
+
+<style>
+  .annotated-diagram {
+    position: relative;
+  }
+  .annotated-diagram svg .pin {
+    cursor: pointer;
+    transition: transform 0.15s ease;
+    transform-origin: center;
+    transform-box: fill-box;
+  }
+  .annotated-diagram svg .pin:hover {
+    transform: scale(1.15);
+  }
+  .pin-tip {
+    pointer-events: none;
+    background: var(--color-ink-800);
+    color: var(--color-ink-100);
+    border: 1px solid var(--color-beme-500);
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-size: 13px;
+    line-height: 1.45;
+    box-shadow:
+      0 8px 24px rgba(0, 0, 0, 0.25),
+      0 2px 6px rgba(0, 0, 0, 0.15);
+    opacity: 0;
+    transform: translateY(6px);
+    transition:
+      opacity 0.18s ease,
+      transform 0.18s ease;
+    z-index: 5;
+  }
+  .pin-tip strong {
+    display: block;
+    color: var(--color-beme-400);
+    font-weight: 600;
+    margin-bottom: 2px;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .pin-tip.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+</style>
+
+<script is:inline>
+  ;(function () {
+    var diagrams = document.querySelectorAll('.annotated-diagram')
+    diagrams.forEach(function (root) {
+      var pins = root.querySelectorAll('.pin')
+      var tips = root.querySelectorAll('.pin-tip')
+      function showTip(id) {
+        tips.forEach(function (t) {
+          if (t.getAttribute('data-pin-tip') === id) {
+            t.classList.add('is-visible')
+          } else {
+            t.classList.remove('is-visible')
+          }
+        })
+      }
+      function clearTips() {
+        tips.forEach(function (t) {
+          t.classList.remove('is-visible')
+        })
+      }
+      pins.forEach(function (p) {
+        var id = p.getAttribute('data-pin')
+        p.addEventListener('mouseenter', function () {
+          showTip(id)
+        })
+        p.addEventListener('mouseleave', clearTips)
+        p.addEventListener('focus', function () {
+          showTip(id)
+        })
+        p.addEventListener('blur', clearTips)
+      })
+    })
+  })()
+</script>
