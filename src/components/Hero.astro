@@ -3,18 +3,12 @@
 // desktop with the lede on the left and a hero image on the right.
 // Drop your real screenshot at /public/hero.png and it'll render
 // here. A wide 3D capture from the app works well.
+import SectionGlow from './SectionGlow.astro'
 const appUrl = 'https://app.beme.com.au'
 ---
 
 <section class="relative overflow-hidden">
-  {/* Soft brand-orange glow behind the headline — gives the hero
-      depth without needing a hero image to lift the page. */}
-  <div
-    class="absolute inset-x-0 top-0 h-[600px] pointer-events-none"
-    style="background: radial-gradient(ellipse 800px 400px at 30% 0%, rgba(255, 122, 45, 0.12), transparent 70%);"
-    aria-hidden="true"
-  >
-  </div>
+  <SectionGlow color="beme" position="top-left" />
 
   <div class="container-tight pb-28 md:pb-40 relative" style="padding-top: clamp(5rem, 7vw, 9rem);">
     <div class="grid md:grid-cols-2 gap-12 lg:gap-20 items-center">

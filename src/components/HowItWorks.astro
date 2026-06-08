@@ -6,26 +6,41 @@
 // real screenshots — same pattern that high-converting product
 // pages use to demystify the workflow before the visitor commits.
 
+// Each step gets its own tint so the three cards read as a
+// progression rather than three identical boxes. Same orange →
+// amber → sky pattern the index-page pillars use, picked up
+// throughout the site to give the design a consistent rhythm.
 const steps = [
   {
     n: '01',
     title: 'Trace the plan.',
     body: 'Drop in the architect\'s PDF. Click two points for a wall. Two more for the next. The whole structure goes down in minutes.',
-    accent: 'beme',
+    accent: 'beme' as const,
   },
   {
     n: '02',
     title: 'Set the wall + openings.',
     body: 'Pick the brick or block, the bond, the trim. Place doors and windows with head and sill. Save the wall type once, reuse it on every future job.',
-    accent: 'beme',
+    accent: 'amber' as const,
   },
   {
     n: '03',
     title: 'Export the schedule.',
     body: 'A polished PDF — assumptions, wall layout, supply schedule, 3D view. Every brick visible on screen is on the order. Hand it to the customer.',
-    accent: 'beme',
+    accent: 'sky' as const,
   },
 ]
+
+function accentVar(a: 'beme' | 'amber' | 'sky'): string {
+  if (a === 'amber') return 'var(--color-amber-500, #f59e0b)'
+  if (a === 'sky') return 'var(--color-sky-500, #0ea5e9)'
+  return 'var(--color-beme-500)'
+}
+function accentTextClass(a: 'beme' | 'amber' | 'sky'): string {
+  if (a === 'amber') return 'text-amber-400'
+  if (a === 'sky') return 'text-sky-400'
+  return 'text-beme-400'
+}
 ---
 
 <section
@@ -56,17 +71,17 @@ const steps = [
           class="relative p-8 md:p-10 rounded-2xl border border-ink-700 bg-ink-800/40 lift reveal"
           style={`transition-delay: ${i * 80}ms;`}
         >
-          {/* Massive numeral as a watermark — orange ghost. Sits behind
-              the content but creates the "numbered step" visual rhythm
-              that connects each card horizontally. */}
+          {/* Massive numeral as a watermark — tinted per step
+              (orange → amber → sky) so the three cards read as a
+              progression rather than three identical boxes. */}
           <div
             aria-hidden="true"
-            style="position: absolute; top: 12px; right: 18px; font-size: 96px; line-height: 1; font-weight: 800; color: var(--color-beme-500); opacity: 0.12; letter-spacing: -0.05em; pointer-events: none;"
+            style={`position: absolute; top: 12px; right: 18px; font-size: 96px; line-height: 1; font-weight: 800; color: ${accentVar(s.accent)}; opacity: 0.14; letter-spacing: -0.05em; pointer-events: none;`}
           >
             {s.n}
           </div>
           <div
-            class="text-xs uppercase tracking-wider text-beme-400 font-semibold mb-3"
+            class={`text-xs uppercase tracking-wider font-semibold mb-3 ${accentTextClass(s.accent)}`}
           >
             Step {s.n}
           </div>

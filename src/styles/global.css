@@ -147,10 +147,14 @@ body {
    (gradient hero strips, footer band) span edge-to-edge. Generous
    max-width so the page reads as premium / spacious on wide
    monitors; side padding scales up at larger breakpoints so the
-   gutter feels deliberate rather than accidental. */
+   gutter feels deliberate rather than accidental.
+   Bumped from 1280 → 1440px so hero screenshots / 3D captures /
+   product videos have meaningfully more room to breathe on
+   desktop without the text columns becoming unreadably wide
+   (max-w-2xl / max-w-3xl wrappers inside still cap prose). */
 .container-tight {
   width: 100%;
-  max-width: 1280px;
+  max-width: 1440px;
   margin: 0 auto;
   padding: 0 1.5rem;
 }
@@ -163,6 +167,29 @@ body {
 
 @media (min-width: 1280px) {
   .container-tight {
+    padding: 0 3rem;
+  }
+}
+
+/* Wider container variant for sections where the visual itself
+   IS the content — full-width hero screenshots, product demo
+   videos, the 3D-view captures the user wants to show off. Use
+   sparingly: prose still belongs inside .container-tight. */
+.container-wide {
+  width: 100%;
+  max-width: 1680px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .container-wide {
+    padding: 0 2.5rem;
+  }
+}
+
+@media (min-width: 1280px) {
+  .container-wide {
     padding: 0 3rem;
   }
 }

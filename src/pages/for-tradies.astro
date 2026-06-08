@@ -1,84 +1,86 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro'
 import CTA from '../components/CTA.astro'
+import SectionGlow from '../components/SectionGlow.astro'
+import Pillar from '../components/Pillar.astro'
 
-const appUrl = 'https://app.beme.com.au'
+const planIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v16H4z"></path><path d="M4 9h16"></path><path d="M9 4v16"></path></svg>`
+const cubeIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>`
+const docIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="9" y1="13" x2="15" y2="13"></line><line x1="9" y1="17" x2="13" y2="17"></line></svg>`
 
-const benefits = [
-  {
-    title: 'Trace straight from the plan',
-    body: 'Load the architect\'s PDF, click two points to draw a wall, click again for the next. Wall types you set up once carry across every future job.',
-  },
-  {
-    title: 'Areas and floors built in',
-    body: 'Ground floor, first floor, garage, shed — tag walls into areas and the schedule splits automatically. One project, separate quotes when you need them.',
-  },
-  {
-    title: 'Openings without the maths',
-    body: 'Drop a window or door on a wall, type the head and sill, and Beme works out the rest from the trace. Lintels picked automatically by head height.',
-  },
-  {
-    title: 'Bond-aware counts',
-    body: 'Stretcher or stack, the count respects the bond. Corner blocks shared between two walls are counted once. Half blocks alternate where the bond needs them. No spreadsheet plumbing.',
-  },
-  {
-    title: 'See it before you order it',
-    body: 'Spin the 3D, walk the wall, spot the one you forgot to draw — before the truck gets loaded. Cheaper than finding out on Wednesday afternoon.',
-  },
-  {
-    title: 'Quote with a real document',
-    body: 'Export a multi-page PDF — assumptions, wall layout, supply schedule, 3D view. Hand it to the customer. Win the job.',
-  },
+const steps = [
+  { n: '01', title: 'Drop the plan in.', body: 'Load the architect\'s PDF. Calibrate the scale once. Two clicks per wall.', accent: 'beme' as const },
+  { n: '02', title: 'Set the wall up.', body: 'Pick the block or brick, the bond, the trim. Drop windows and doors. Save the wall type for next time.', accent: 'amber' as const },
+  { n: '03', title: 'Hand it to the customer.', body: 'A polished PDF — wall layout, supply schedule, 3D view. Every brick on screen is on the order.', accent: 'sky' as const },
 ]
+function stepColor(a: 'beme' | 'amber' | 'sky'): string {
+  if (a === 'amber') return 'var(--color-amber-500, #f59e0b)'
+  if (a === 'sky') return 'var(--color-sky-500, #0ea5e9)'
+  return 'var(--color-beme-500)'
+}
+function stepText(a: 'beme' | 'amber' | 'sky'): string {
+  if (a === 'amber') return 'text-amber-400'
+  if (a === 'sky') return 'text-sky-400'
+  return 'text-beme-400'
+}
 ---
 
-<BaseLayout
-  title="Beme for tradies — Estimating that matches what you build"
-  description="The estimating tool for tradies quoting their own jobs. Trace the plan, see the build in 3D, get a supply schedule that matches. Today for brick and block."
->
-  <section class="container-tight text-center max-w-3xl mx-auto" style="padding-top: clamp(5rem, 7vw, 9rem); padding-bottom: clamp(3rem, 5vw, 5rem);">
-    <div class="text-xs uppercase tracking-wider text-beme-400 font-semibold mb-4">
-      For tradies
-    </div>
-    <h1 class="text-4xl md:text-5xl font-bold text-ink-50 tracking-tight leading-[1.1]">
-      Quote more jobs. Win more work. Order right the first time.
-    </h1>
-    <p class="text-base md:text-lg text-ink-300 mt-7 leading-relaxed">
-      Beme runs on the laptop or tablet you already use. Trace the
-      plan, hand the client a 3D view of the build, hand yourself a
-      full supply schedule. From drawing to quote in twenty minutes —
-      no spreadsheet in sight.
-    </p>
-    <div class="flex flex-wrap justify-center gap-3 mt-10">
-      <button
-        type="button"
-        data-checkout
-        data-plan="individual"
-        data-source="for-tradies"
-        class="px-6 py-3 rounded-md bg-beme-500 hover:bg-beme-400 transition-colors font-medium cursor-pointer"
-        style="color: #000;"
-      >
-        Start free
-      </button>
-      <a
-        href="/pricing"
-        class="px-6 py-3 rounded-md border border-ink-600 text-ink-200 hover:bg-ink-800 transition-colors"
-      >
-        See pricing
-      </a>
+<BaseLayout title="Beme for tradies" description="The estimating tool for tradies quoting their own jobs.">
+  <section class="relative overflow-hidden">
+    <SectionGlow color="beme" position="top-left" />
+    <div class="container-tight pb-28 md:pb-40 relative" style="padding-top: clamp(5rem, 7vw, 9rem);">
+      <div class="grid md:grid-cols-2 gap-12 lg:gap-20 items-center">
+        <div>
+          <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-beme-500/10 border border-beme-500/30 text-beme-300 text-xs font-medium mb-8">
+            <span class="w-1.5 h-1.5 rounded-full bg-beme-500"></span>
+            For tradies
+          </div>
+          <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-ink-50 leading-[1.05] tracking-tight">Quote more. Win more. Order right the first time.</h1>
+          <p class="text-lg md:text-xl text-ink-300 mt-8 leading-relaxed max-w-xl">Beme runs on the laptop or tablet you already use. Trace the plan, hand the client a 3D view of the build, hand yourself a full supply schedule — from drawing to quote in twenty minutes.</p>
+          <div class="flex flex-wrap gap-3 mt-10">
+            <button type="button" data-checkout data-plan="starter" data-source="for-tradies" class="inline-block px-6 py-3 rounded-md bg-beme-500 hover:bg-beme-400 transition-colors font-medium cursor-pointer" style="color: #000;">Start free</button>
+            <a href="/pricing" class="inline-block px-6 py-3 rounded-md border border-ink-600 text-ink-200 hover:bg-ink-800 transition-colors">See pricing</a>
+          </div>
+          <p class="text-xs text-ink-500 mt-5">No credit card to start. Cancel anytime.</p>
+        </div>
+        <div class="relative">
+          <div class="aspect-[4/3] rounded-xl border border-ink-700 bg-ink-800 shadow-2xl shadow-beme-500/5 overflow-hidden flex items-center justify-center text-ink-500 text-sm">
+            [ Tradies screenshot — replace /public/tradies-hero.png ]
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 
-  <section class="container-tight" style="padding-block: clamp(4rem, 7vw, 8rem);">
-    <div class="grid md:grid-cols-2 gap-x-16 gap-y-14 max-w-5xl mx-auto">
-      {
-        benefits.map((b) => (
-          <div>
-            <h3 class="text-lg font-semibold text-ink-50">{b.title}</h3>
-            <p class="text-[15px] text-ink-300 mt-3 leading-relaxed">{b.body}</p>
+  <section class="container-tight" style="padding-block: clamp(5rem, 8vw, 10rem);">
+    <div class="text-center max-w-2xl mx-auto mb-16">
+      <div class="text-xs uppercase tracking-wider text-beme-400 font-semibold mb-4">Why tradies use Beme</div>
+      <h2 class="text-3xl md:text-4xl font-bold text-ink-50 tracking-tight">Your input equals the output.</h2>
+      <p class="text-base md:text-lg text-ink-300 mt-5 leading-relaxed">Beme isn't a generic takeoff tool with a brick mode tacked on. Every rule a brickie or blocklayer knows is baked in — bond, corners, openings, lintels, the lot — so what's on screen is what's on the order.</p>
+    </div>
+    <div class="grid md:grid-cols-3 gap-6 lg:gap-8">
+      <Pillar title="Set up once, reuse forever." body="Wall types you build today carry across every future job. Save your standard makeup once, drop it onto the next plan, the next, the next. Zero setup tax per quote." iconSvg={planIcon} iconBg="beme" />
+      <Pillar title="Areas and floors built in." body="Ground floor, first floor, garage, shed — tag walls into areas and the schedule splits automatically. One project, separate quotes when you need them." iconSvg={docIcon} iconBg="amber" />
+      <Pillar title="See it before you order it." body="Spin the 3D, walk the walls, spot the one you forgot to draw — before the truck gets loaded. Cheaper than finding out on Wednesday afternoon." iconSvg={cubeIcon} iconBg="sky" />
+    </div>
+  </section>
+
+  <section class="container-tight" style="padding-block: clamp(5rem, 8vw, 10rem);">
+    <div class="text-center max-w-2xl mx-auto mb-16">
+      <div class="text-xs uppercase tracking-wider text-beme-400 font-semibold mb-4">How a tradie uses Beme</div>
+      <h2 class="text-3xl md:text-4xl font-bold text-ink-50 tracking-tight">Quote in three steps. Not three days.</h2>
+    </div>
+    <div class="grid md:grid-cols-3 gap-6 lg:gap-8">
+      {steps.map((s, i) => (
+        <div class="relative p-8 md:p-10 rounded-2xl border border-ink-700 bg-ink-800/40 lift reveal" style={`transition-delay: ${i * 80}ms;`}>
+          <div aria-hidden="true" style={`position: absolute; top: 12px; right: 18px; font-size: 96px; line-height: 1; font-weight: 800; color: ${stepColor(s.accent)}; opacity: 0.14; letter-spacing: -0.05em; pointer-events: none;`}>
+            {s.n}
           </div>
-        ))
-      }
+          <div class={`text-xs uppercase tracking-wider font-semibold mb-3 ${stepText(s.accent)}`}>Step {s.n}</div>
+          <h3 class="text-xl font-semibold text-ink-50 mb-3">{s.title}</h3>
+          <p class="text-[15px] text-ink-300 leading-relaxed">{s.body}</p>
+        </div>
+      ))}
     </div>
   </section>
 

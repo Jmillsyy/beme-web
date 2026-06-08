@@ -20,8 +20,10 @@ interface Props {
   /** CTA destination — used as fallback if checkoutPlan isn't set. */
   ctaHref: string
   /** Stripe plan id. When set, the CTA goes through Stripe Checkout
-   *  via the data-checkout hook instead of plain link navigation. */
-  checkoutPlan?: 'individual' | 'organisation'
+   *  via the data-checkout hook instead of plain link navigation.
+   *  Adding a new plan id here is fine — the Stripe wiring upstream
+   *  just reads `data-plan` off the button. */
+  checkoutPlan?: 'starter' | 'pro' | 'team' | 'enterprise' | 'individual' | 'organisation'
   /** Source tag passed to checkout for analytics. */
   checkoutSource?: string
   /** Visually elevate this tier as the recommended one. */

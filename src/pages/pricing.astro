@@ -2,118 +2,94 @@
 import BaseLayout from '../layouts/BaseLayout.astro'
 import PricingCard from '../components/PricingCard.astro'
 import CTA from '../components/CTA.astro'
+import SectionGlow from '../components/SectionGlow.astro'
 
 const appUrl = 'https://app.beme.com.au'
-// Prices are placeholders — update to your real numbers once
-// Stripe is wired up in step 4.
+const faqs = [
+  { q: 'What counts as an active project?', a: 'A project you opened, edited, or exported in the current billing month. Old projects sitting untouched do not count toward the Starter cap.' },
+  { q: 'What happens if I hit the Starter cap?', a: 'Beme prompts you to upgrade to Pro before letting you open a sixth active project that month. Existing projects keep working.' },
+  { q: 'Do I need a credit card to start?', a: 'No. Build a full project, see the 3D view, run the exports — all without entering payment details.' },
+  { q: 'What brick and block sizes does Beme support?', a: 'Whatever you order from. Wall types are library-agnostic: set your own dimensions per project and Beme builds the schedule around them.' },
+  { q: 'How is Team different from a few Pro plans?', a: 'Team gives you a shared library, team dashboard, org-wide reference numbers, and branded PDFs across all estimators. Pro plans are isolated per user.' },
+  { q: 'Does Beme price the job or just count it?', a: 'Count, not price. Your supplier sets the rate; Beme gives you the quantity.' },
+  { q: 'Can I cancel anytime?', a: 'Yes. Monthly, no contract. Cancel from your account settings; your projects stay exported and downloadable.' },
+]
 ---
 
-<BaseLayout
-  title="Pricing — Beme"
-  description="Simple subscription plans for tradies and suppliers using Beme to estimate and sell. Today for brick and block."
->
-  <section class="container-tight text-center" style="padding-top: clamp(5rem, 7vw, 9rem); padding-bottom: clamp(3rem, 5vw, 5rem);">
-    <div class="text-xs uppercase tracking-wider text-beme-400 font-semibold mb-4">
-      Pricing
-    </div>
-    <h1 class="text-4xl md:text-5xl font-bold text-ink-50 tracking-tight">
-      Two plans. Pick how you use it.
-    </h1>
+<BaseLayout title="Pricing — Beme" description="Plans for tradies and suppliers using Beme.">
+  <section class="relative overflow-hidden container-tight text-center" style="padding-top: clamp(5rem, 7vw, 9rem); padding-bottom: clamp(3rem, 5vw, 5rem);">
+    <SectionGlow color="beme" position="top" intensity="subtle" />
+    <div class="text-xs uppercase tracking-wider text-beme-400 font-semibold mb-4">Pricing</div>
+    <h1 class="text-4xl md:text-5xl font-bold text-ink-50 tracking-tight">Pick how you use it.</h1>
     <p class="text-base md:text-lg text-ink-300 mt-5 max-w-2xl mx-auto leading-relaxed">
-      Individual is for the tradie estimating their own jobs.
-      Organisation is for suppliers offering estimation as part of
-      the sale. Monthly, no contract, cancel anytime.
+      Individual plans are for tradies estimating their own jobs. Organisation plans are for suppliers and teams selling with estimation built in. Monthly, no contract, cancel anytime.
     </p>
   </section>
 
   <section class="container-tight">
-    <div class="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-      <PricingCard
-        name="Individual"
-        tagline="For tradies estimating their own jobs."
-        price="$79"
-        features={[
-          'One user',
-          'Unlimited projects',
-          'Full estimating engine, 3D view, exports',
-          'Per-project reference numbers',
-          'Email support',
-        ]}
-        ctaLabel="Start free"
-        ctaHref={`${appUrl}?source=pricing-individual`}
-        checkoutPlan="individual"
-        checkoutSource="pricing-individual"
-      />
+    <div class="inline-flex items-stretch gap-1 p-1 rounded-xl border border-ink-700 bg-ink-800/70 mb-12" role="tablist" aria-label="Pricing audience" style="display: flex; margin-left: auto; margin-right: auto; max-width: 22rem;">
+      <button type="button" data-pricing-tab="individual" class="pricing-tab pricing-tab-active flex-1 px-4 py-2 rounded-lg text-sm font-semibold transition-colors" role="tab" aria-selected="true">Individual</button>
+      <button type="button" data-pricing-tab="organisation" class="pricing-tab flex-1 px-4 py-2 rounded-lg text-sm font-semibold transition-colors" role="tab" aria-selected="false">Organisation</button>
+    </div>
 
-      <PricingCard
-        name="Organisation"
-        tagline="For suppliers selling with estimation built in."
-        price="$299"
-        cadence="/month, 5 users included"
-        features={[
-          'Everything in Individual',
-          'Shared wall-type + supply library',
-          'Team dashboard + per-user projects',
-          'Org-wide reference numbers',
-          'Branded PDF exports — your logo, your details',
-          'Priority support + onboarding',
-          '$49/month per extra seat',
-        ]}
-        ctaLabel="Start free trial"
-        ctaHref={`${appUrl}?source=pricing-org&plan=org`}
-        checkoutPlan="organisation"
-        checkoutSource="pricing-org"
-        featured
-      />
+    <div data-pricing-panel="individual" class="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+      <PricingCard name="Starter" tagline="For tradies estimating their own jobs." price="$49" features={['One user', 'Up to 5 active projects per month', 'Full estimating engine, 3D view, PDF exports', 'Per-project reference numbers', 'Email support']} ctaLabel="Start free" ctaHref={`${appUrl}?source=pricing-starter`} checkoutPlan="starter" checkoutSource="pricing-starter" />
+      <PricingCard name="Pro" tagline="For full-time estimators running serious volume." price="$199" features={['One user', 'Unlimited active projects', 'Branded PDF exports', 'Saved templates + supply library', 'Priority email support', 'Best-fit for 20+ estimates a week']} ctaLabel="Start free trial" ctaHref={`${appUrl}?source=pricing-pro&plan=pro`} checkoutPlan="pro" checkoutSource="pricing-pro" featured />
+    </div>
+
+    <div data-pricing-panel="organisation" class="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto" style="display: none;">
+      <PricingCard name="Team" tagline="For suppliers selling with estimation built in." price="$349" cadence="/month, 5 users included" features={['Everything in Pro for every user', 'Shared wall-type + supply library', 'Team dashboard + per-user projects', 'Org-wide reference numbers', 'Branded PDF exports for the team', 'Priority support + onboarding', '$59/month per extra seat']} ctaLabel="Start free trial" ctaHref={`${appUrl}?source=pricing-team&plan=team`} checkoutPlan="team" checkoutSource="pricing-team" featured />
+      <PricingCard name="Enterprise" tagline="For larger suppliers, distributors and franchises." features={['Everything in Team', 'Unlimited seats', 'White-label exports + custom domain', 'Dedicated onboarding + training', 'SLA-backed uptime + support', 'Annual billing + invoicing']} ctaLabel="Contact us" ctaHref="mailto:[email protected]?subject=Beme%20Enterprise%20enquiry" />
     </div>
   </section>
 
-  {/* Plain-language FAQ to head off common pre-purchase questions. */}
+  {/* Plain-language FAQ to head off common pre-purchase questions.
+      `id="faq"` matches the nav anchor (#faq) added on main. */}
   <section id="faq" class="container-tight" style="padding-block: clamp(5rem, 8vw, 10rem);">
-    <h2 class="text-2xl md:text-3xl font-bold text-ink-50 text-center mb-12">
-      Common questions.
-    </h2>
+    <h2 class="text-2xl md:text-3xl font-bold text-ink-50 text-center mb-12">Common questions.</h2>
     <div class="max-w-3xl mx-auto space-y-5">
-      {
-        [
-          {
-            q: 'Do I need a credit card to start?',
-            a: 'No. Build a full project, see the 3D view, run the exports — all without entering payment details. Pay only when you decide to keep using it.',
-          },
-          {
-            q: 'What brick sizes does Beme support?',
-            a: 'Whatever you order from. Wall types are library-agnostic: set your own brick or block dimensions per project and Beme builds the schedule around them. AU SEQ, US CMU, UK metric, custom supplier ranges — all work the same way.',
-          },
-          {
-            q: 'How is the Organisation plan different from a few Individual ones?',
-            a: 'Organisation gets you a shared library (every estimator on the team picks from the same wall types and supply rates), a team dashboard, org-wide reference numbers, and your company details + logo on every exported PDF. Individual plans are isolated per user — fine for one tradie, not for a team.',
-          },
-          {
-            q: 'Can I hand the customer a real document?',
-            a: 'Yes. Exports are a polished multi-page PDF: assumptions, wall layout diagram, per-wall-type breakdowns, supply schedule, 3D view. Branded with your details on the Organisation plan.',
-          },
-          {
-            q: 'Does Beme price the job or just count it?',
-            a: 'Count, not price. Your supplier sets the rate; Beme gives you the quantity. The Organisation plan adds a supply library so per-unit rolls (ties per m², cement per pallet, etc.) carry through automatically — you still pick the rate.',
-          },
-          {
-            q: 'Can I cancel anytime?',
-            a: 'Yes. Monthly, no contract. Cancel from your account settings; your projects stay exported and downloadable.',
-          },
-        ].map((item) => (
-          <details class="border border-ink-700 rounded-lg bg-ink-800/40 overflow-hidden group">
-            <summary class="flex items-center justify-between px-5 py-4 cursor-pointer text-ink-100 font-medium hover:bg-ink-800/70">
-              {item.q}
-              <span class="text-beme-400 transition-transform group-open:rotate-45">+</span>
-            </summary>
-            <div class="px-5 pb-4 text-sm text-ink-300 leading-relaxed">
-              {item.a}
-            </div>
-          </details>
-        ))
-      }
+      {faqs.map((item) => (
+        <details class="border border-ink-700 rounded-lg bg-ink-800/40 overflow-hidden group">
+          <summary class="flex items-center justify-between px-5 py-4 cursor-pointer text-ink-100 font-medium hover:bg-ink-800/70">{item.q}<span class="text-beme-400 transition-transform group-open:rotate-45">+</span></summary>
+          <div class="px-5 pb-4 text-sm text-ink-300 leading-relaxed">{item.a}</div>
+        </details>
+      ))}
     </div>
   </section>
 
   <CTA />
 </BaseLayout>
+
+<style>
+  .pricing-tab { color: #cbd5e1; background: transparent; }
+  .pricing-tab:hover { color: #f1f5f9; background: rgba(51, 65, 85, 0.5); }
+  .pricing-tab-active { background: #ed7d31; color: #0f172a !important; }
+  .pricing-tab-active:hover { background: #f59e0b; color: #0f172a !important; }
+</style>
+
+<script>
+  function setupPricingTabs() {
+    const tabs = document.querySelectorAll<HTMLButtonElement>('[data-pricing-tab]')
+    const panels = document.querySelectorAll<HTMLElement>('[data-pricing-panel]')
+    if (!tabs.length || !panels.length) return
+    panels.forEach((p) => { p.style.display = p.dataset.pricingPanel === 'individual' ? '' : 'none' })
+    tabs.forEach((tab) => {
+      tab.addEventListener('click', () => {
+        const target = tab.dataset.pricingTab
+        if (!target) return
+        tabs.forEach((t) => {
+          const active = t.dataset.pricingTab === target
+          t.classList.toggle('pricing-tab-active', active)
+          t.setAttribute('aria-selected', String(active))
+        })
+        panels.forEach((p) => { p.style.display = p.dataset.pricingPanel === target ? '' : 'none' })
+      })
+    })
+  }
+  document.addEventListener('astro:page-load', setupPricingTabs)
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', setupPricingTabs)
+  } else {
+    setupPricingTabs()
+  }
+</script>

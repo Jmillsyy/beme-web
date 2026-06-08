@@ -1,13 +1,18 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro'
 import CTA from '../components/CTA.astro'
+import SectionGlow from '../components/SectionGlow.astro'
 ---
 
 <BaseLayout
   title="About — Beme"
   description="Why Beme exists, the trades it serves today, and what's coming next."
 >
-  <section class="container-tight max-w-3xl mx-auto" style="padding-top: clamp(5rem, 7vw, 9rem); padding-bottom: clamp(4rem, 6vw, 6rem);">
+  <section class="relative overflow-hidden">
+    {/* Amber glow on About — a warmer, story-page feel that
+        distinguishes it from the orange-led product pages. */}
+    <SectionGlow color="amber" position="top-right" intensity="subtle" />
+    <div class="container-tight max-w-3xl mx-auto relative" style="padding-top: clamp(5rem, 7vw, 9rem); padding-bottom: clamp(4rem, 6vw, 6rem);">
     <div class="text-xs uppercase tracking-wider text-beme-400 font-semibold mb-4">
       About
     </div>
@@ -59,6 +64,7 @@ import CTA from '../components/CTA.astro'
         hello@beme.com.au
       </a>.
     </p>
+    </div>
   </section>
 
   <CTA />

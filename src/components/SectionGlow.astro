@@ -1,0 +1,83 @@
+---
+// Reusable radial glow used behind hero / feature sections to give
+// a page depth without needing a hero image. Same effect the
+// landing-page hero uses (the orange ellipse at the top), packaged
+// so we can drop variations across the site.
+//
+// Variants:
+//   - color: beme (orange, default), amber, or sky — matches the
+//     site-wide tri-colour accent system.
+//   - position: top (default), bottom, left, right, top-right,
+//     top-left, center — controls where the ellipse sits.
+//   - size: md (default, 800×400px), sm, lg — scales the ellipse.
+//   - intensity: 'subtle' (0.08), 'normal' (0.12), 'strong' (0.18)
+//     — controls the alpha. Subtle is the right default for pages
+//     that already have plenty going on visually.
+//
+// Always rendered with `pointer-events: none` + `aria-hidden` so
+// it never blocks clicks or hits the accessibility tree.
+
+interface Props {
+  color?: 'beme' | 'amber' | 'sky'
+  position?: 'top' | 'bottom' | 'left' | 'right' | 'top-right' | 'top-left' | 'center'
+  size?: 'sm' | 'md' | 'lg'
+  intensity?: 'subtle' | 'normal' | 'strong'
+}
+
+const {
+  color = 'beme',
+  position = 'top',
+  size = 'md',
+  intensity = 'normal',
+} = Astro.props
+
+// RGB triplet for each accent. Matches the colour tokens used
+// elsewhere in the site (orange = #FF7A2D, amber = #F59E0B,
+// sky = #0EA5E9). RGB-as-string so we can interpolate into the
+// rgba() inside the gradient without messy template-literal
+// concatenation.
+const rgb =
+  color === 'amber'
+    ? '245, 158, 11'
+    : color === 'sky'
+      ? '14, 165, 233'
+      : '255, 122, 45'
+
+const alpha =
+  intensity === 'subtle' ? 0.08 : intensity === 'strong' ? 0.18 : 0.12
+
+const dims =
+  size === 'sm'
+    ? { w: 500, h: 280, h_css: '380px' }
+    : size === 'lg'
+      ? { w: 1100, h: 550, h_css: '750px' }
+      : { w: 800, h: 400, h_css: '600px' }
+
+// Map the position name to a CSS background-position value (where
+// the ellipse centre sits) + container anchor. Top variants pin
+// the wrapper to the page top; bottom variants to the bottom;
+// side variants centre vertically but anchor horizontally.
+const anchorMap: Record<
+  NonNullable<Props['position']>,
+  { center: string; container: string }
+> = {
+  top: { center: '50% 0%', container: 'inset-x-0 top-0' },
+  // 30% / 70% (rather than 15 / 85) sits the ellipse closer to
+  // the centred copy on a typical two-column hero so the glow
+  // anchors behind the headline rather than off in the margin.
+  'top-left': { center: '30% 0%', container: 'inset-x-0 top-0' },
+  'top-right': { center: '70% 0%', container: 'inset-x-0 top-0' },
+  bottom: { center: '50% 100%', container: 'inset-x-0 bottom-0' },
+  left: { center: '0% 50%', container: 'inset-y-0 left-0' },
+  right: { center: '100% 50%', container: 'inset-y-0 right-0' },
+  center: { center: '50% 50%', container: 'inset-0' },
+}
+const anchor = anchorMap[position]
+---
+
+<div
+  class={`absolute ${anchor.container} pointer-events-none`}
+  style={`height: ${dims.h_css}; background: radial-gradient(ellipse ${dims.w}px ${dims.h}px at ${anchor.center}, rgba(${rgb}, ${alpha}), transparent 70%);`}
+  aria-hidden="true"
+>
+</div>
