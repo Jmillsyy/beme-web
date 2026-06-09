@@ -156,19 +156,12 @@ body {
   width: 100%;
   max-width: 1440px;
   margin: 0 auto;
-  padding: 0 1.5rem;
-}
-
-@media (min-width: 768px) {
-  .container-tight {
-    padding: 0 2.5rem;
-  }
-}
-
-@media (min-width: 1280px) {
-  .container-tight {
-    padding: 0 3rem;
-  }
+  /* Same clamp the Nav uses (`padding-inline: clamp(1.5rem, 8vw, 5rem)`)
+     so the page content gutters line up with the nav gutters on every
+     viewport. Without this, content sits visibly wider than the header
+     on typical desktop widths (where the nav caps at 5rem but the old
+     container-tight stopped at 3rem). */
+  padding-inline: clamp(1.5rem, 8vw, 5rem);
 }
 
 /* Wider container variant for sections where the visual itself
@@ -179,17 +172,7 @@ body {
   width: 100%;
   max-width: 1680px;
   margin: 0 auto;
-  padding: 0 1.5rem;
-}
-
-@media (min-width: 768px) {
-  .container-wide {
-    padding: 0 2.5rem;
-  }
-}
-
-@media (min-width: 1280px) {
-  .container-wide {
-    padding: 0 3rem;
-  }
+  /* Same clamp as .container-tight and the Nav so any container,
+     wherever it appears, lines up with the others gutter-for-gutter. */
+  padding-inline: clamp(1.5rem, 8vw, 5rem);
 }

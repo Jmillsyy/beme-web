@@ -9,8 +9,18 @@ interface Props {
   name: string
   /** One-line who-it's-for under the name. */
   tagline: string
-  /** Headline price (e.g. "$49"). Leave empty for "Contact us". */
+  /** Single-price headline (legacy / Enterprise "Contact us" mode).
+   *  When the card supports both monthly + annual billing, use
+   *  priceMonthly + priceAnnual instead. Leave empty for "Contact us". */
   price?: string
+  /** Monthly billing price (e.g. "$49"). Shown when the page's
+   *  billing toggle is on Monthly. */
+  priceMonthly?: string
+  /** Annual billing price as an amortised monthly figure (e.g. "$39"
+   *  for $39/mo when billed annually). Shown when the page's billing
+   *  toggle is on Annual. Same visual shape as the monthly price —
+   *  just the digit changes — so the eye latches on the saving. */
+  priceAnnual?: string
   /** Cadence suffix (e.g. "/month"). Ignored when price is empty. */
   cadence?: string
   /** Bullet list of included features / limits. */
@@ -23,7 +33,7 @@ interface Props {
    *  via the data-checkout hook instead of plain link navigation.
    *  Adding a new plan id here is fine — the Stripe wiring upstream
    *  just reads `data-plan` off the button. */
-  checkoutPlan?: 'starter' | 'pro' | 'team' | 'enterprise' | 'individual' | 'organisation'
+  checkoutPlan?: 'starter' | 'pro' | 'team' | 'enterprise'
   /** Source tag passed to checkout for analytics. */
   checkoutSource?: string
   /** Visually elevate this tier as the recommended one. */
@@ -34,6 +44,8 @@ const {
   name,
   tagline,
   price,
+  priceMonthly,
+  priceAnnual,
   cadence = '/month',
   features,
   ctaLabel,
@@ -42,6 +54,12 @@ const {
   checkoutSource,
   featured = false,
 } = Astro.props
+
+// Dual-price mode shows both monthly + annual values; the page-level
+// billing toggle picks which is visible via the [data-billing-show]
+// hook below. Single-price mode is the legacy path (still used by
+// Enterprise where there's no annual rate to show).
+const hasDualPrice = !!priceMonthly && !!priceAnnual
 ---
 
 <div
@@ -64,7 +82,25 @@ const {
 
   <div class="mt-8">
     {
-      price ? (
+      hasDualPrice ? (
+        <>
+          {/* Monthly price — visible when [data-billing-mode="monthly"].
+              The data-billing-show hook is targeted by the toggle JS in
+              pricing.astro; CSS in the page picks which row shows. */}
+          <div data-billing-show="monthly">
+            <span class="text-5xl font-bold text-ink-50">{priceMonthly}</span>
+            <span class="text-sm text-ink-400 ml-1">{cadence}</span>
+          </div>
+          {/* Annual price — amortised monthly. Same visual weight so the
+              jump reads as a digit change, not a layout shift. The
+              "billed annually" line below clarifies the cadence. */}
+          <div data-billing-show="annual">
+            <span class="text-5xl font-bold text-ink-50">{priceAnnual}</span>
+            <span class="text-sm text-ink-400 ml-1">{cadence}</span>
+            <p class="text-xs text-emerald-300 mt-1 font-medium">billed annually</p>
+          </div>
+        </>
+      ) : price ? (
         <div>
           <span class="text-5xl font-bold text-ink-50">{price}</span>
           <span class="text-sm text-ink-400 ml-1">{cadence}</span>
@@ -74,7 +110,7 @@ const {
       )
     }
     {
-      price && (
+      (price || hasDualPrice) && (
         <p class="text-xs text-ink-400 mt-2">
           14-day free trial. Card required, cancel anytime.
         </p>

@@ -7,9 +7,9 @@ interface Props {
   title?: string
   body?: string
   ctaLabel?: string
-  /** Stripe plan to start when clicked. Defaults to individual; the
-   *  suppliers page overrides to organisation. */
-  checkoutPlan?: 'individual' | 'organisation'
+  /** Stripe plan to start when clicked. Defaults to starter (the
+   *  individual entry tier); for-suppliers overrides to team. */
+  checkoutPlan?: 'starter' | 'pro' | 'team' | 'enterprise'
   /** Source tag for analytics. Defaults from the plan. */
   checkoutSource?: string
 }
@@ -18,7 +18,7 @@ const {
   title = 'Try it on a real job.',
   body = 'The fastest way to know if Beme fits is to point it at a plan you\'ve already quoted. Trace it, compare the schedule. 14-day free trial.',
   ctaLabel = 'Start free trial',
-  checkoutPlan = 'individual',
+  checkoutPlan = 'starter',
   checkoutSource,
 } = Astro.props
 

@@ -76,22 +76,22 @@ const {
 
     {/* Stripe Checkout wiring — every button with [data-checkout] POSTs
         to the create-checkout-session Edge Function and redirects to
-        Stripe. Single delegated listener, no per-button JS. */}
+        Stripe. Single delegated listener, no per-button JS. Accepted
+        plan values mirror the four pricing-page tiers exactly. */}
     <script>
-      import { startCheckout } from '../lib/checkout'
+      import { startCheckout, type Plan } from '../lib/checkout'
+      const VALID_PLANS: readonly Plan[] = ['starter', 'pro', 'team', 'enterprise']
       document.addEventListener('click', (e) => {
         const target = (e.target as HTMLElement)?.closest('[data-checkout]')
         if (!target) return
         e.preventDefault()
-        const plan = target.getAttribute('data-plan') as
-          | 'individual'
-          | 'organisation'
-          | null
+        const planAttr = target.getAttribute('data-plan')
         const source = target.getAttribute('data-source') ?? 'unknown'
-        if (plan !== 'individual' && plan !== 'organisation') {
+        if (!planAttr || !VALID_PLANS.includes(planAttr as Plan)) {
           console.warn('[checkout] missing or invalid data-plan', target)
           return
         }
+        const plan = planAttr as Plan
         // Disable the button to prevent double-clicks while we hit
         // the endpoint. Re-enable in the rare case of failure (the
         // helper redirects on success so re-enabling never runs).

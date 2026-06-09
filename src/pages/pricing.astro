@@ -6,8 +6,10 @@ import SectionGlow from '../components/SectionGlow.astro'
 
 const appUrl = 'https://app.beme.com.au'
 const faqs = [
-  { q: 'What counts as an active project?', a: 'A project you opened, edited, or exported in the current billing month. Old projects sitting untouched do not count toward the Starter cap.' },
-  { q: 'What happens if I hit the Starter cap?', a: 'Beme prompts you to upgrade to Pro before letting you open a sixth active project that month. Existing projects keep working.' },
+  { q: 'What counts as an export?', a: 'Each PDF you generate from the export modal — the supply schedule + 3D view + wall layout — counts as one export. Browsing projects, editing walls, viewing the 3D model, none of that counts. Only the moment you hit Export and a PDF gets created.' },
+  { q: 'What happens if I hit the Starter export cap?', a: 'Beme prompts you to upgrade to Pro for unlimited exports before generating the 11th. Your existing projects keep working — you can still edit, view, and prepare estimates. You just can\'t export new PDFs that month until you upgrade or the cap resets next billing cycle.' },
+  { q: 'Do re-exports count toward the cap?', a: 'Yes — every PDF export uses one credit, including re-exports after a typo fix or price update. 10 exports per month is generous enough to absorb a few re-exports per quote. Heavy re-exporters should look at Pro.' },
+  { q: 'Monthly or annual billing?', a: 'Either. Monthly is no-contract, cancel anytime. Annual gives you ~20% off (roughly two months free) and is billed once a year upfront. You can switch from monthly to annual anytime from your account settings.' },
   { q: 'Do I need a credit card to start?', a: 'No. Build a full project, see the 3D view, run the exports — all without entering payment details.' },
   { q: 'What brick and block sizes does Beme support?', a: 'Whatever you order from. Wall types are library-agnostic: set your own dimensions per project and Beme builds the schedule around them.' },
   { q: 'How is Team different from a few Pro plans?', a: 'Team gives you a shared library, team dashboard, org-wide reference numbers, and branded PDFs across all estimators. Pro plans are isolated per user.' },
@@ -22,24 +24,45 @@ const faqs = [
     <div class="text-xs uppercase tracking-wider text-beme-400 font-semibold mb-4">Pricing</div>
     <h1 class="text-4xl md:text-5xl font-bold text-ink-50 tracking-tight">Pick how you use it.</h1>
     <p class="text-base md:text-lg text-ink-300 mt-5 max-w-2xl mx-auto leading-relaxed">
-      Individual plans are for tradies estimating their own jobs. Organisation plans are for suppliers and teams selling with estimation built in. Monthly, no contract, cancel anytime.
+      Individual plans are for tradies estimating their own jobs. Organisation plans are for suppliers and teams selling with estimation built in. Monthly or annual, no contract, cancel anytime.
     </p>
   </section>
 
-  <section class="container-tight">
+  {/* Both billing-period toggle + audience-tab toggle live inside the
+      same wrapper so the page-level data-billing-mode attribute can
+      flow down to every PricingCard's [data-billing-show] pricing
+      blocks. Default to monthly so visitors see the raw rate first. */}
+  <section class="container-tight" data-billing-mode="monthly">
+
+    {/* Billing-period toggle. Sits above the audience tabs because
+        most pricing comparisons start with cadence ("can I save
+        money by paying annually?") before zoning in on a tier.
+        Equal-width pills — the "Save ~20%" nudge sits as a small
+        line BELOW the toggle so the pills stay tidy and the saving
+        is still visible at a glance. */}
+    <div class="flex flex-col items-center mb-5">
+      <div class="inline-flex items-stretch gap-1 p-1 rounded-xl border border-ink-700 bg-ink-800/70" role="tablist" aria-label="Billing period" style="display: flex;">
+        <button type="button" data-billing-tab="monthly" class="billing-tab billing-tab-active px-6 py-2 rounded-lg text-sm font-semibold transition-colors" role="tab" aria-selected="true" style="min-width: 7rem;">Monthly</button>
+        <button type="button" data-billing-tab="annual" class="billing-tab px-6 py-2 rounded-lg text-sm font-semibold transition-colors" role="tab" aria-selected="false" style="min-width: 7rem;">Annual</button>
+      </div>
+      <p class="text-xs text-emerald-300 font-medium mt-2">Save ~20% with annual billing.</p>
+    </div>
+
+    {/* Audience-tab toggle (Individual / Organisation). Existing
+        pattern from before, unchanged. */}
     <div class="inline-flex items-stretch gap-1 p-1 rounded-xl border border-ink-700 bg-ink-800/70 mb-12" role="tablist" aria-label="Pricing audience" style="display: flex; margin-left: auto; margin-right: auto; max-width: 22rem;">
       <button type="button" data-pricing-tab="individual" class="pricing-tab pricing-tab-active flex-1 px-4 py-2 rounded-lg text-sm font-semibold transition-colors" role="tab" aria-selected="true">Individual</button>
       <button type="button" data-pricing-tab="organisation" class="pricing-tab flex-1 px-4 py-2 rounded-lg text-sm font-semibold transition-colors" role="tab" aria-selected="false">Organisation</button>
     </div>
 
     <div data-pricing-panel="individual" class="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-      <PricingCard name="Starter" tagline="For tradies estimating their own jobs." price="$49" features={['One user', 'Up to 5 active projects per month', 'Full estimating engine, 3D view, PDF exports', 'Per-project reference numbers', 'Email support']} ctaLabel="Start free" ctaHref={`${appUrl}?source=pricing-starter`} checkoutPlan="starter" checkoutSource="pricing-starter" />
-      <PricingCard name="Pro" tagline="For full-time estimators running serious volume." price="$199" features={['One user', 'Unlimited active projects', 'Branded PDF exports', 'Saved templates + supply library', 'Priority email support', 'Best-fit for 20+ estimates a week']} ctaLabel="Start free trial" ctaHref={`${appUrl}?source=pricing-pro&plan=pro`} checkoutPlan="pro" checkoutSource="pricing-pro" featured />
+      <PricingCard name="Starter" tagline="For tradies estimating their own jobs." priceMonthly="$49" priceAnnual="$39" features={['One user', 'Up to 10 PDF exports per month', 'Full estimating engine, 3D view, supply schedule', 'Per-project reference numbers', 'Email support']} ctaLabel="Start free" ctaHref={`${appUrl}?source=pricing-starter`} checkoutPlan="starter" checkoutSource="pricing-starter" />
+      <PricingCard name="Pro" tagline="For full-time estimators running serious volume." priceMonthly="$199" priceAnnual="$159" features={['One user', 'Unlimited active projects', 'Branded PDF exports', 'Saved templates + supply library', 'Priority email support', 'Best-fit for 20+ estimates a week']} ctaLabel="Start free trial" ctaHref={`${appUrl}?source=pricing-pro&plan=pro`} checkoutPlan="pro" checkoutSource="pricing-pro" featured />
     </div>
 
     <div data-pricing-panel="organisation" class="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto" style="display: none;">
-      <PricingCard name="Team" tagline="For suppliers selling with estimation built in." price="$349" cadence="/month, 5 users included" features={['Everything in Pro for every user', 'Shared wall-type + supply library', 'Team dashboard + per-user projects', 'Org-wide reference numbers', 'Branded PDF exports for the team', 'Priority support + onboarding', '$59/month per extra seat']} ctaLabel="Start free trial" ctaHref={`${appUrl}?source=pricing-team&plan=team`} checkoutPlan="team" checkoutSource="pricing-team" featured />
-      <PricingCard name="Enterprise" tagline="For larger suppliers, distributors and franchises." features={['Everything in Team', 'Unlimited seats', 'White-label exports + custom domain', 'Dedicated onboarding + training', 'SLA-backed uptime + support', 'Annual billing + invoicing']} ctaLabel="Contact us" ctaHref="mailto:[email protected]?subject=Beme%20Enterprise%20enquiry" />
+      <PricingCard name="Team" tagline="For suppliers selling with estimation built in." priceMonthly="$349" priceAnnual="$279" cadence="/month, 5 users included" features={['Everything in Pro for every user', 'Shared wall-type + supply library', 'Team dashboard + per-user projects', 'Org-wide reference numbers', 'Branded PDF exports for the team', 'Priority support + onboarding', '$59/month per extra seat']} ctaLabel="Start free trial" ctaHref={`${appUrl}?source=pricing-team&plan=team`} checkoutPlan="team" checkoutSource="pricing-team" featured />
+      <PricingCard name="Enterprise" tagline="For larger suppliers, distributors and franchises." features={['Everything in Team', 'Unlimited seats', 'White-label exports + custom domain', 'Dedicated onboarding + training', 'SLA-backed uptime + support', 'Annual billing + invoicing']} ctaLabel="Contact us" ctaHref="mailto:hello@beme.com.au?subject=Beme%20Enterprise%20enquiry" />
     </div>
   </section>
 
@@ -60,14 +83,33 @@ const faqs = [
   <CTA />
 </BaseLayout>
 
-<style>
-  .pricing-tab { color: #cbd5e1; background: transparent; }
-  .pricing-tab:hover { color: #f1f5f9; background: rgba(51, 65, 85, 0.5); }
+{/* is:global because the billing-show / billing-mode selectors need
+    to reach [data-billing-show] elements rendered inside the
+    PricingCard component, which sits behind Astro's default style
+    scoping. Without is:global both prices show up stacked. The tab
+    styles travel with it for consistency. */}
+<style is:global>
+  /* Audience tab + billing tab share the same visual treatment —
+     two pill toggles, brand orange when active, soft hover when not. */
+  .pricing-tab, .billing-tab { color: #cbd5e1; background: transparent; }
+  .pricing-tab:hover, .billing-tab:hover { color: #f1f5f9; background: rgba(51, 65, 85, 0.5); }
   .pricing-tab-active { background: #ed7d31; color: #0f172a !important; }
   .pricing-tab-active:hover { background: #f59e0b; color: #0f172a !important; }
+  .billing-tab-active { background: #ed7d31; color: #0f172a !important; }
+  .billing-tab-active:hover { background: #f59e0b; color: #0f172a !important; }
+
+  /* Billing-period show/hide. The page-level [data-billing-mode]
+     attribute (monthly | annual) drives which price block renders
+     inside each PricingCard. */
+  [data-billing-mode="monthly"] [data-billing-show="annual"] { display: none; }
+  [data-billing-mode="annual"] [data-billing-show="monthly"] { display: none; }
 </style>
 
 <script>
+  /**
+   * Audience tabs (Individual / Organisation). Show / hide the
+   * matching pricing panel.
+   */
   function setupPricingTabs() {
     const tabs = document.querySelectorAll<HTMLButtonElement>('[data-pricing-tab]')
     const panels = document.querySelectorAll<HTMLElement>('[data-pricing-panel]')
@@ -86,10 +128,41 @@ const faqs = [
       })
     })
   }
-  document.addEventListener('astro:page-load', setupPricingTabs)
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', setupPricingTabs)
-  } else {
+
+  /**
+   * Billing-period tabs (Monthly / Annual). Set the
+   * data-billing-mode attribute on the section wrapper so the CSS
+   * show/hide rules pick the correct price block. Toggle state
+   * persists across audience switches because the attribute lives
+   * on the wrapper, not on individual cards.
+   */
+  function setupBillingTabs() {
+    const tabs = document.querySelectorAll<HTMLButtonElement>('[data-billing-tab]')
+    const wrapper = document.querySelector<HTMLElement>('[data-billing-mode]')
+    if (!tabs.length || !wrapper) return
+    tabs.forEach((tab) => {
+      tab.addEventListener('click', () => {
+        const target = tab.dataset.billingTab
+        if (!target) return
+        wrapper.setAttribute('data-billing-mode', target)
+        tabs.forEach((t) => {
+          const active = t.dataset.billingTab === target
+          t.classList.toggle('billing-tab-active', active)
+          t.setAttribute('aria-selected', String(active))
+        })
+      })
+    })
+  }
+
+  function init() {
     setupPricingTabs()
+    setupBillingTabs()
+  }
+
+  document.addEventListener('astro:page-load', init)
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init)
+  } else {
+    init()
   }
 </script>

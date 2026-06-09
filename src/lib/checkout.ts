@@ -18,7 +18,13 @@ const CHECKOUT_ENDPOINT =
 
 const APP_SIGN_IN_URL = 'https://app.beme.com.au'
 
-export type Plan = 'individual' | 'organisation'
+/** Stripe plan tier the visitor is selecting. Mirrors the four
+ *  pricing-page tiers exactly — Starter ($49) and Pro ($199) are the
+ *  Individual-tab plans; Team ($349) is the Organisation default;
+ *  Enterprise is contact-sales and never starts a checkout (it routes
+ *  to mailto: instead). The app's create-checkout-session Edge Function
+ *  resolves the tier to the matching Stripe price id. */
+export type Plan = 'starter' | 'pro' | 'team' | 'enterprise'
 
 interface StartCheckoutOptions {
   plan: Plan
