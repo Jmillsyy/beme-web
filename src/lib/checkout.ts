@@ -14,9 +14,9 @@
 // can at least reach Beme (no dead-end click).
 
 const CHECKOUT_ENDPOINT =
-  'https://app.beme.com.au/functions/v1/create-checkout-session'
+  'https://app.bemeapp.app/functions/v1/create-checkout-session'
 
-const APP_SIGN_IN_URL = 'https://app.beme.com.au'
+const APP_SIGN_IN_URL = 'https://app.bemeapp.app'
 
 /** Stripe plan tier the visitor is selecting. Mirrors the four
  *  pricing-page tiers exactly, Starter ($49) and Pro ($199) are the

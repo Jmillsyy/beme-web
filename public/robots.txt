@@ -1,4 +1,4 @@
-# https://beme.com.au marketing site.
+# https://bemeapp.app marketing site.
 #
 # Allow all crawlers everywhere. Point them at the sitemap for fast
 # discovery.
@@ -6,4 +6,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://beme.com.au/sitemap.xml
+Sitemap: https://bemeapp.app/sitemap.xml

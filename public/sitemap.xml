@@ -1,97 +1,97 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  Sitemap for beme.com.au. Hand-written (small static site) — Astro
+  Sitemap for bemeapp.app. Hand-written (small static site) — Astro
   has @astrojs/sitemap if pages start multiplying. Update lastmod
   whenever you make material content changes; Google reads it to
   prioritise re-crawl.
 -->
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://beme.com.au/</loc>
+    <loc>https://bemeapp.app/</loc>
     <lastmod>2026-06-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://beme.com.au/features</loc>
+    <loc>https://bemeapp.app/features</loc>
     <lastmod>2026-06-24</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://beme.com.au/pricing</loc>
+    <loc>https://bemeapp.app/pricing</loc>
     <lastmod>2026-06-08</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://beme.com.au/for-tradies</loc>
+    <loc>https://bemeapp.app/for-tradies</loc>
     <lastmod>2026-06-08</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://beme.com.au/for-suppliers</loc>
+    <loc>https://bemeapp.app/for-suppliers</loc>
     <lastmod>2026-06-08</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://beme.com.au/about</loc>
+    <loc>https://bemeapp.app/about</loc>
     <lastmod>2026-06-08</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://beme.com.au/contact</loc>
+    <loc>https://bemeapp.app/contact</loc>
     <lastmod>2026-06-08</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://beme.com.au/guides</loc>
+    <loc>https://bemeapp.app/guides</loc>
     <lastmod>2026-06-24</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://beme.com.au/guides/trace-a-plan</loc>
+    <loc>https://bemeapp.app/guides/trace-a-plan</loc>
     <lastmod>2026-06-24</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://beme.com.au/guides/set-up-a-wall-type</loc>
+    <loc>https://bemeapp.app/guides/set-up-a-wall-type</loc>
     <lastmod>2026-06-24</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://beme.com.au/guides/openings-and-lintels</loc>
+    <loc>https://bemeapp.app/guides/openings-and-lintels</loc>
     <lastmod>2026-06-24</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://beme.com.au/guides/footing-levels</loc>
+    <loc>https://bemeapp.app/guides/footing-levels</loc>
     <lastmod>2026-06-24</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://beme.com.au/guides/export-a-quote</loc>
+    <loc>https://bemeapp.app/guides/export-a-quote</loc>
     <lastmod>2026-06-24</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://beme.com.au/legal/terms</loc>
+    <loc>https://bemeapp.app/legal/terms</loc>
     <lastmod>2026-06-08</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.2</priority>
   </url>
   <url>
-    <loc>https://beme.com.au/legal/privacy</loc>
+    <loc>https://bemeapp.app/legal/privacy</loc>
     <lastmod>2026-06-08</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.2</priority>

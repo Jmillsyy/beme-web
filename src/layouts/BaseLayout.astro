@@ -26,7 +26,7 @@ const {
 
 // Resolve absolute URLs against the configured site so canonical +
 // social tags are always fully-qualified, whatever the page path.
-const siteUrl = Astro.site ?? new URL('https://beme.com.au')
+const siteUrl = Astro.site ?? new URL('https://bemeapp.app')
 const canonical = new URL(Astro.url.pathname, siteUrl).href
 const ogImage = image.startsWith('http') ? image : new URL(image, siteUrl).href
 

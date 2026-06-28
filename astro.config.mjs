@@ -5,7 +5,7 @@ import tailwindcss from '@tailwindcss/vite'
 // uses, so any class you write here behaves the same way as in the
 // app. No PostCSS config needed; the plugin handles it.
 export default defineConfig({
-  site: 'https://beme.com.au',
+  site: 'https://bemeapp.app',
   vite: {
     plugins: [tailwindcss()],
   },
