@@ -26,3 +26,7 @@ yarn-error.log*
 # misc
 .cache/
 *.log
+
+# local dev scratch (not part of the site)
+/basement.js
+hero-prototype*.html

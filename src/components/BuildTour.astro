@@ -1,0 +1,333 @@
+---
+// The annotated 3D build tour. A normal content-width panel in the flow:
+// no sticky, no scroll-jacking, no resizing on scroll, so you scroll past
+// it freely. While it's on screen it auto-plays through the masonry areas,
+// starting zoomed out and moving area to area with a gentle orbit and
+// typewriter captions. Geometry comes from the app's REAL layout engine
+// (baked to /basement.js) and renders with Three.js. Production-safe:
+// Three.js + geometry load only once the section nears the viewport; the
+// loop pauses when it leaves; pixel ratio is capped on small screens;
+// `prefers-reduced-motion` holds a static frame. The nav carries the brand
+// mark, so this view doesn't repeat it.
+---
+
+<section class="relative" style="padding-block: clamp(4rem, 7vw, 8rem);">
+  <div class="container-tight">
+    <div
+      id="build-tour"
+      style="position: relative; width: 100%; height: min(82vh, 840px); overflow: hidden; background: var(--color-ink-900); border: 1px solid var(--color-ink-600); border-radius: 18px; box-shadow: 0 30px 80px -30px rgba(60,48,34,0.3);"
+    >
+      <canvas id="tour-canvas" style="display: block; width: 100%; height: 100%;"></canvas>
+
+      <div
+        id="tour-poster"
+        style="position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; color: var(--color-ink-400); font-family: var(--font-sans); font-size: 0.9rem; background: var(--color-ink-900);"
+      >
+        Loading the 3D build…
+      </div>
+
+      <div style="position: absolute; inset: 0; pointer-events: none; background: radial-gradient(125% 90% at 50% 38%, rgba(247,244,236,0) 58%, rgba(120,104,84,0.12) 100%);"></div>
+
+      <div
+        id="tour-caption"
+        class="tour-caption"
+        style="position: absolute; left: clamp(18px, 4vw, 56px); bottom: clamp(22px, 6vh, 56px); max-width: min(380px, 80%); background: rgba(247,244,236,0.5); -webkit-backdrop-filter: blur(22px); backdrop-filter: blur(22px); border-radius: 14px; padding: 16px 18px; pointer-events: none;"
+      ></div>
+
+      <div
+        id="tour-dots"
+        style="position: absolute; right: clamp(14px, 2.4vw, 26px); bottom: clamp(22px, 6vh, 56px); display: flex; flex-direction: column; gap: 12px; pointer-events: auto;"
+      ></div>
+    </div>
+  </div>
+
+  <style is:global>
+    .tour-eyebrow { display: inline-block; font-family: var(--font-sans); text-transform: uppercase; letter-spacing: 0.05em; font-size: 0.64rem; font-weight: 700; color: #fff; background: var(--color-beme-500); padding: 4px 9px; border-radius: 6px; }
+    .tour-caption { transition: opacity 0.3s ease, transform 0.3s ease; }
+    .tour-title { font-family: var(--font-serif); font-weight: 700; font-size: clamp(1.2rem, 1.8vw, 1.55rem); line-height: 1.15; color: var(--color-ink-50); margin-top: 11px; }
+    .tour-body { color: var(--color-ink-300); margin-top: 7px; font-size: 0.95rem; line-height: 1.5; min-height: 3em; }
+    .tour-body.typing::after { content: ''; display: inline-block; width: 2.5px; height: 1.1em; background: var(--color-ink-100); margin-left: 3px; vertical-align: -2px; animation: tourcaret 1s infinite; }
+    @keyframes tourcaret { 0%, 49% { opacity: 1; } 50%, 100% { opacity: 0; } }
+    .tour-dot { width: 11px; height: 11px; border-radius: 50%; border: 0; padding: 0; margin: 0; cursor: pointer; appearance: none; -webkit-appearance: none; background: rgba(120,104,84,0.32); transition: all 0.2s ease; }
+    .tour-dot:hover { background: rgba(120,104,84,0.62); }
+    .tour-dot.on { background: var(--color-beme-500); transform: scale(1.4); }
+  </style>
+
+  <script is:inline>
+    window.__bemeTourInit = function () {
+      if (window.__bemeTourStarted || !window.THREE) return
+      window.__bemeTourStarted = true
+      var THREE = window.THREE
+      var canvas = document.getElementById('tour-canvas')
+      var frame = document.getElementById('build-tour')
+      var captionEl = document.getElementById('tour-caption')
+      var dotsEl = document.getElementById('tour-dots')
+      var poster = document.getElementById('tour-poster')
+      if (!canvas || !frame) return
+
+      var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+      var BOXES = window.BEME_BOXES || []
+      var META = window.BEME_META || { bounds: { x: [-6, 0], y: [0, 2.4], z: [-4, 0] } }
+      var midX = -3, midZ = -2
+
+      var STAGES = [
+        { eyebrow: 'Your library', title: 'Set your blocks once', body: 'Name the blocks you lay in your library, and Beme builds the whole job from them, course by course.' },
+        { eyebrow: 'Bottom course', title: 'The course you start on', body: 'Pick the block your bottom course runs in and it lays along the base of every wall.' },
+        { eyebrow: 'Body courses', title: 'The block that fills the wall', body: 'Your body block stacks up each wall, course on course, counted as it climbs.' },
+        { eyebrow: 'Top course', title: 'Bond beam, capping, your call', body: 'The top course is whatever you nominate, a bond beam, a capping block, however you finish a wall.' },
+        { eyebrow: 'Half ends', title: 'Where a course breaks', body: 'At an end or a jamb your half block closes the course, counted in with the rest.' },
+        { eyebrow: 'Full ends', title: 'Corners and returns', body: 'Corners and full ends take the full block you set, dropped in on every course.' },
+        { eyebrow: 'Windows', title: 'Counted around the opening', body: 'Cut a window and Beme works the jambs and lintel around it, every block tallied to the opening.' }
+      ]
+      var N = STAGES.length
+
+      var renderer
+      try { renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true }) } catch (err) { return }
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, window.innerWidth < 700 ? 1.5 : 2))
+      renderer.outputEncoding = THREE.sRGBEncoding
+      renderer.toneMapping = THREE.NoToneMapping
+
+      function s2l(x) { return x <= 0.04045 ? x / 12.92 : Math.pow((x + 0.055) / 1.055, 2.4) }
+      function colr(hex) { var c = new THREE.Color(hex); c.r = s2l(c.r); c.g = s2l(c.g); c.b = s2l(c.b); return c }
+
+      var scene = new THREE.Scene()
+      scene.background = colr('#f7f4ec')
+      var camera = new THREE.PerspectiveCamera(42, 1, 0.1, 360)
+      scene.add(new THREE.AmbientLight(0xffffff, 0.6))
+      var dir = new THREE.DirectionalLight(0xffffff, 0.8)
+      dir.position.set(10, 20, 10)
+      scene.add(dir)
+
+      var unit = new THREE.BoxGeometry(1, 1, 1)
+      var group = new THREE.Group()
+      scene.add(group)
+      // Each block owns its material so its colour can cross-fade between grey
+      // (resting) and its Beme legend colour (base amber, body blue, corners
+      // red, half green, top violet, lintel orange, makeup cyan). Mortar stays
+      // a fixed grey and shares one material.
+      var GREY = colr('#cbc7bf')
+      var BLACK = new THREE.Color(0, 0, 0)
+      var mortarMat = new THREE.MeshLambertMaterial({ color: colr('#a39e95') })
+      var blockMeshes = []
+      for (var i = 0; i < BOXES.length; i++) {
+        var b = BOXES[i]
+        if (b.role === 'mortar') {
+          var mm = new THREE.Mesh(unit, mortarMat)
+          mm.scale.set(b.l, b.h, b.t); mm.position.set(b.cx, b.cy, b.cz); mm.rotation.y = b.ry || 0
+          group.add(mm)
+          continue
+        }
+        var mat = new THREE.MeshLambertMaterial({ color: GREY.clone() })
+        var m = new THREE.Mesh(unit, mat)
+        m.scale.set(b.l, b.h, b.t); m.position.set(b.cx, b.cy, b.cz); m.rotation.y = b.ry || 0
+        group.add(m)
+        blockMeshes.push({
+          mesh: m, box: b, mat: mat,
+          featC: colr(b.color), featE: colr(b.color).multiplyScalar(0.14),
+          fromC: new THREE.Color(), toC: GREY, fromE: new THREE.Color(), toE: BLACK
+        })
+      }
+      // Which blocks a stage lights up. Stage 0 is the zoomed-out overview, so
+      // it shows every part at once, each in its own colour; the rest zoom in
+      // on one library choice (or specialty) at a time.
+      function isHL(stage, b) {
+        if (stage === 0) return true
+        switch (stage) {
+          case 1: return b.role === 'base'   // bottom course
+          case 2: return b.role === 'body'   // body courses
+          case 3: return b.role === 'top'    // top course (bond beam etc.)
+          case 4: return b.role === 'half'   // half ends
+          case 5: return b.role === 'corner' // full ends / corners
+          case 6: return b.role === 'lintel' && b.op === 'window' // window lintel
+          default: return false
+        }
+      }
+      // Cross-fade colours when the stage changes: applyHighlight records each
+      // block's from/to colour, stepFade eases them across over FADE seconds.
+      // Reduced-motion users snap straight to the target.
+      var FADE = 0.8, fadeT = 1, fading = false
+      function applyHighlight(stage) {
+        for (var k = 0; k < blockMeshes.length; k++) {
+          var bm = blockMeshes[k]
+          var hl = isHL(stage, bm.box)
+          bm.fromC.copy(bm.mat.color); bm.toC = hl ? bm.featC : GREY
+          bm.fromE.copy(bm.mat.emissive); bm.toE = hl ? bm.featE : BLACK
+        }
+        if (reduced) {
+          for (var j = 0; j < blockMeshes.length; j++) {
+            blockMeshes[j].mat.color.copy(blockMeshes[j].toC)
+            blockMeshes[j].mat.emissive.copy(blockMeshes[j].toE)
+          }
+          fading = false
+        } else { fadeT = 0; fading = true }
+      }
+      function stepFade(dt) {
+        if (!fading) return
+        fadeT += dt / FADE
+        var u = fadeT >= 1 ? 1 : fadeT
+        var e = u * u * (3 - 2 * u)
+        for (var k = 0; k < blockMeshes.length; k++) {
+          var bm = blockMeshes[k]
+          bm.mat.color.copy(bm.fromC).lerp(bm.toC, e)
+          bm.mat.emissive.copy(bm.fromE).lerp(bm.toE, e)
+        }
+        if (u >= 1) fading = false
+      }
+
+      function V(x, y, z) { return new THREE.Vector3(x, y, z) }
+      var KEYS = [
+        { pos: V(midX + 5.5, 6.0, 9.5), tgt: V(midX, 1.2, midZ + 0.6) }, // 0 overview
+        { pos: V(midX + 1.8, 0.8, 2.9), tgt: V(midX - 0.2, 0.25, 0.0) }, // 1 bottom course (y0.09)
+        { pos: V(midX + 1.5, 1.5, 3.5), tgt: V(midX, 1.3, 0.0) },        // 2 body courses
+        { pos: V(midX + 1.5, 2.9, 2.9), tgt: V(midX, 2.28, 0.0) },       // 3 top course (y2.31)
+        { pos: V(-5.0, 1.5, 2.5), tgt: V(-3.4, 1.25, 0.0) },             // 4 half ends (window jamb)
+        { pos: V(2.3, 1.5, 2.4), tgt: V(-0.1, 1.1, -0.2) },              // 5 full ends / corners
+        { pos: V(midX + 1.1, 1.95, 3.0), tgt: V(midX, 1.9, 0.0) }        // 6 windows (400mm lintel y1.8-2.19, opening below)
+      ]
+
+      var camPos = new THREE.Vector3().copy(KEYS[0].pos)
+      var camTgt = new THREE.Vector3().copy(KEYS[0].tgt)
+      var fromP = new THREE.Vector3().copy(KEYS[0].pos)
+      var fromT = new THREE.Vector3().copy(KEYS[0].tgt)
+      var toS = 0, t = 1, holding = true, hold = 3.6
+      var TRAVEL = 2.0, HOLD = 3.6
+      var manualUntil = -1, curNow = 0
+      function smooth(x) { return x * x * (3 - 2 * x) }
+
+      var dots = []
+      for (var s = 0; s < N; s++) {
+        (function (s) {
+          var d = document.createElement('button')
+          d.type = 'button'
+          d.className = 'tour-dot' + (s === 0 ? ' on' : '')
+          d.setAttribute('aria-label', STAGES[s].eyebrow)
+          d.addEventListener('click', function () { goTo(s) })
+          dotsEl.appendChild(d)
+          dots.push(d)
+        })(s)
+      }
+
+      var shown = -1, typeTimer = null
+      function setCaption(s) {
+        if (s === shown) return
+        shown = s
+        applyHighlight(s)
+        if (typeTimer) { clearInterval(typeTimer); typeTimer = null }
+        var st = STAGES[s]
+        captionEl.innerHTML =
+          '<div class="tour-eyebrow">' + st.eyebrow + '</div>' +
+          '<div class="tour-title">' + st.title + '</div>' +
+          '<div class="tour-body" id="tour-body-text"></div>'
+        var bodyEl = document.getElementById('tour-body-text')
+        if (reduced) {
+          bodyEl.textContent = st.body
+        } else {
+          bodyEl.className = 'tour-body typing'
+          var full = st.body, idx = 0
+          typeTimer = setInterval(function () {
+            idx++
+            bodyEl.textContent = full.slice(0, idx)
+            if (idx >= full.length) { clearInterval(typeTimer); typeTimer = null }
+          }, 26)
+        }
+        for (var k = 0; k < dots.length; k++) dots[k].classList.toggle('on', k === s)
+      }
+      setCaption(0)
+
+      function goTo(s) {
+        setCaption(s)
+        if (reduced) { toS = s; t = 1; holding = true; renderOnce(); return }
+        fromP.copy(camPos); fromT.copy(camTgt)
+        toS = s; t = 0; holding = false
+        manualUntil = curNow + 6
+        ensureLoop()
+      }
+
+      function frameStep(dt, now) {
+        curNow = now
+        if (reduced) {
+          camera.position.copy(KEYS[toS].pos)
+          camera.lookAt(KEYS[toS].tgt)
+          return
+        }
+        stepFade(dt)
+        if (holding) {
+          if (now > manualUntil) { hold -= dt; if (hold <= 0) { fromP.copy(camPos); fromT.copy(camTgt); toS = (toS + 1) % N; t = 0; holding = false; setCaption(toS) } }
+        } else {
+          t += dt / TRAVEL
+          if (t >= 1) { t = 1; holding = true; hold = HOLD }
+        }
+        camPos.lerpVectors(fromP, KEYS[toS].pos, holding ? 1 : smooth(t))
+        camTgt.lerpVectors(fromT, KEYS[toS].tgt, holding ? 1 : smooth(t))
+        var ox = camPos.x - camTgt.x, oz = camPos.z - camTgt.z
+        var ang = Math.sin(now * 0.20) * 0.028
+        var ca = Math.cos(ang), sa = Math.sin(ang)
+        camera.position.set(camTgt.x + ox * ca - oz * sa, camPos.y + Math.sin(now * 0.16) * 0.03, camTgt.z + ox * sa + oz * ca)
+        camera.lookAt(camTgt)
+      }
+
+      var lastW = 0, lastH = 0
+      function resize() {
+        var w = frame.clientWidth, h = frame.clientHeight
+        if (!w || !h || (w === lastW && h === lastH)) return
+        lastW = w; lastH = h
+        renderer.setSize(w, h, false)
+        camera.aspect = w / h
+        camera.updateProjectionMatrix()
+      }
+      function renderOnce() { resize(); frameStep(0, 0); renderer.render(scene, camera) }
+
+      var running = false, rafId = null, lastTime = 0
+      function loop(ms) {
+        if (!running || reduced) { rafId = null; return }
+        var now = ms * 0.001
+        var dt = lastTime ? Math.min(0.05, now - lastTime) : 0
+        lastTime = now
+        frameStep(dt, now)
+        renderer.render(scene, camera)
+        rafId = requestAnimationFrame(loop)
+      }
+      function ensureLoop() { if (!reduced && running && rafId === null) { lastTime = 0; rafId = requestAnimationFrame(loop) } }
+
+      window.addEventListener('resize', function () { lastW = 0; lastH = 0; resize(); if (!running || reduced) renderOnce() })
+
+      if (poster) poster.style.display = 'none'
+      resize()
+      renderOnce()
+
+      window.__bemeTourVisible = function (v) { running = v; if (v) { reduced ? renderOnce() : ensureLoop() } }
+      window.__bemeTourVisible(window.__bemeTourWanted !== false)
+    }
+  </script>
+
+  <script is:inline>
+    ;(function () {
+      var frame = document.getElementById('build-tour')
+      if (!frame || !('IntersectionObserver' in window)) return
+      var started = false
+      function load(src) {
+        return new Promise(function (res, rej) {
+          var s = document.createElement('script')
+          s.src = src; s.async = true; s.onload = res; s.onerror = rej
+          document.head.appendChild(s)
+        })
+      }
+      function start() {
+        if (started) return
+        started = true
+        load('https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js')
+          .then(function () { return load('/basement.js') })
+          .then(function () { if (window.__bemeTourInit) window.__bemeTourInit() })
+          .catch(function () {})
+      }
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          window.__bemeTourWanted = e.isIntersecting
+          if (e.isIntersecting) start()
+          if (window.__bemeTourVisible) window.__bemeTourVisible(e.isIntersecting)
+        })
+      }, { rootMargin: '300px 0px' })
+      io.observe(frame)
+    })()
+  </script>
+</section>

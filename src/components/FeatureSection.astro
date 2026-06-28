@@ -1,0 +1,134 @@
+---
+// A full-width feature row used on the product tour page. Text on one
+// side, a screenshot/gif slot on the other, alternating per section so
+// the page reads like a walk through the app. Chrome matches the rest
+// of the site: ink cards, soft borders, the tri-colour accent system
+// (beme / amber / sky) picked per section so each capability feels
+// distinct without the page turning into a rainbow.
+//
+// Media is a styled placeholder box by default (same look as the
+// screenshot stand-ins on the other pages). Drop a real image in by
+// setting `mediaSrc` once the captures exist.
+
+interface Point {
+  title: string
+  body: string
+}
+
+interface Props {
+  /** Small label above the heading, e.g. "Trace". */
+  eyebrow: string
+  /** Section headline. */
+  title: string
+  /** 1-2 sentence lead under the heading. */
+  lead: string
+  /** Feature bullets, each a short title plus a line of detail. */
+  points: Point[]
+  /** Placeholder caption shown in the media box. */
+  mediaLabel: string
+  /** Real image path once captured (e.g. /features/trace.png). */
+  mediaSrc?: string
+  /** Accent tint for the eyebrow + bullet ticks. */
+  accent?: 'beme' | 'amber' | 'sky'
+  /** Flip the layout so media sits on the left. */
+  flip?: boolean
+}
+
+const {
+  eyebrow,
+  title,
+  lead,
+  points,
+  mediaLabel,
+  mediaSrc,
+  accent = 'beme',
+  flip = false,
+} = Astro.props
+
+// A short screen recording (mp4 / mov / webm) renders as an autoplaying
+// muted loop; anything else (gif / png) renders as a still image.
+const isVideo = mediaSrc ? /\.(mp4|mov|webm)$/i.test(mediaSrc) : false
+
+const eyebrowClass =
+  accent === 'amber'
+    ? 'text-amber-400'
+    : accent === 'sky'
+      ? 'text-sky-400'
+      : 'text-beme-400'
+
+const tickClass =
+  accent === 'amber'
+    ? 'text-amber-400'
+    : accent === 'sky'
+      ? 'text-sky-400'
+      : 'text-beme-400'
+---
+
+<section class="container-tight" style="padding-block: clamp(3.5rem, 6vw, 6.5rem);">
+  <div class="grid md:grid-cols-2 gap-12 lg:gap-20 items-center">
+    <div class={`reveal ${flip ? 'md:order-2' : ''}`}>
+      <div class={`flex items-center gap-2 text-xs uppercase tracking-wider font-semibold mb-4 ${eyebrowClass}`}>
+        <svg width="16" height="9" viewBox="0 0 104 56" aria-hidden="true"><path fill-rule="evenodd" clip-rule="evenodd" fill="currentColor" d="M9 0 H95 A9 9 0 0 1 104 9 V47 A9 9 0 0 1 95 56 H9 A9 9 0 0 1 0 47 V9 A9 9 0 0 1 9 0 Z M15 11 H42 A4 4 0 0 1 46 15 V41 A4 4 0 0 1 42 45 H15 A4 4 0 0 1 11 41 V15 A4 4 0 0 1 15 11 Z M62 11 H89 A4 4 0 0 1 93 15 V41 A4 4 0 0 1 89 45 H62 A4 4 0 0 1 58 41 V15 A4 4 0 0 1 62 11 Z"/></svg>
+        {eyebrow}
+      </div>
+      <h2 class="text-2xl md:text-3xl lg:text-[2.1rem] font-bold text-ink-50 tracking-tight leading-tight">{title}</h2>
+      <p class="text-base md:text-lg text-ink-300 mt-5 leading-relaxed measure">{lead}</p>
+      <ul class="mt-8 space-y-4">
+        {
+          points.map((p) => (
+            <li class="flex gap-3.5">
+              <svg
+                class={`mt-1 shrink-0 ${tickClass}`}
+                xmlns="http://www.w3.org/2000/svg"
+                width="18"
+                height="18"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2.4"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+              >
+                <polyline points="20 6 9 17 4 12" />
+              </svg>
+              <div>
+                <div class="font-semibold text-ink-100">{p.title}</div>
+                <div class="text-ink-300 mt-0.5">{p.body}</div>
+              </div>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+
+    <div class={`reveal ${flip ? 'md:order-1' : ''}`}>
+      {
+        mediaSrc ? (
+          isVideo ? (
+            <video
+              src={mediaSrc}
+              class="w-full h-auto rounded-xl border border-ink-700 bg-ink-800 shadow-2xl shadow-beme-500/5"
+              autoplay
+              loop
+              muted
+              playsinline
+              onerror="this.style.display='none'"
+            />
+          ) : (
+            <img
+              src={mediaSrc}
+              alt={mediaLabel}
+              class="w-full h-auto rounded-xl border border-ink-700 bg-ink-800 shadow-2xl shadow-beme-500/5"
+              loading="lazy"
+            />
+          )
+        ) : (
+          <div class="relative aspect-[19/10] rounded-xl border border-ink-700 bg-ink-800 shadow-2xl shadow-beme-500/5 overflow-hidden">
+            <span class="absolute inset-0 flex items-center justify-center text-ink-500 text-sm px-6 text-center">{mediaLabel}</span>
+          </div>
+        )
+      }
+    </div>
+  </div>
+</section>

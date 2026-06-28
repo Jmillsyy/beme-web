@@ -1,0 +1,168 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro'
+import CTA from '../components/CTA.astro'
+import SectionGlow from '../components/SectionGlow.astro'
+import Pillar from '../components/Pillar.astro'
+import FeatureSection from '../components/FeatureSection.astro'
+
+const traceIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><path d="m9 15 2 2 4-4"></path></svg>`
+const cubeIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>`
+const tallyIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>`
+
+// The product tour, section by section. Each maps to a real part of
+// the app, written plainly: what it does and why it matters on a
+// real job, not feature-list filler.
+const sections = [
+  {
+    eyebrow: 'Trace',
+    title: 'From the architect\'s PDF to drawn walls in minutes.',
+    lead: 'Load the plan you were sent. Set the scale once against a known dimension and every measurement from there is true. Then walk the walls.',
+    points: [
+      { title: 'Any PDF', body: 'Drop in the drawing as-is. No exporting or converting first.' },
+      { title: 'Calibrate once', body: 'Click a known length, type the real distance, done. Scale holds for the whole project.' },
+      { title: 'Two clicks a wall', body: 'Click each end. Straight runs and curved walls both, snapping to ends and corners as you go.' },
+      { title: 'Live ruler', body: 'Measure anything on the plan without committing a wall to it.' },
+    ],
+    mediaLabel: '[ Tracing a plan. Add /features/trace.png ]',
+    mediaSrc: '/features/trace.mp4',
+    accent: 'beme' as const,
+    flip: false,
+  },
+  {
+    eyebrow: 'Build',
+    title: 'Set the wall up exactly how you lay it.',
+    lead: 'A wall in Beme knows its block, its bond, and its trim courses. Build it once the way you actually build it and the count follows the real coursing, not a flat area divided by a block face.',
+    points: [
+      { title: 'Block or brick, any bond', body: 'Stretcher, stack, your standard makeup. Corners resolve automatically.' },
+      { title: 'Base and top courses', body: 'Set the bottom and finishing courses per wall.' },
+      { title: 'Height makeup, sized for you', body: 'Odd wall heights get the right makeup block picked and the joint sized to suit, automatically.' },
+      { title: 'Block libraries', body: 'Australian, US and UK ranges built in, plus your own custom blocks and dimensions.' },
+    ],
+    mediaLabel: '[ Wall setup panel. Add /features/wall-setup.png ]',
+    mediaSrc: '/features/wall-setup.mp4',
+    accent: 'amber' as const,
+    flip: true,
+  },
+  {
+    eyebrow: 'Detail',
+    title: 'Openings, lintels, piers and joints, all counted.',
+    lead: 'The things that throw a manual takeoff are the things Beme handles on its own. Drop them in and the schedule keeps up.',
+    points: [
+      { title: 'Windows and doors', body: 'Set sill and head heights; the coursing works around the opening.' },
+      { title: 'Lintels, picked for the span', body: 'Add an opening and the right lintel is selected to suit it.' },
+      { title: 'Piers', body: 'Tied and freestanding piers, counted in the supply.' },
+      { title: 'Control joints', body: 'Split a long run where you need the movement joint.' },
+    ],
+    mediaLabel: '[ Openings and lintels. Add /features/openings.png ]',
+    mediaSrc: '/features/openings.mp4',
+    accent: 'sky' as const,
+    flip: false,
+  },
+  {
+    eyebrow: 'Visualise',
+    title: 'See the whole build in 3D before you order a thing.',
+    lead: 'Every wall, opening, lintel, sill and pier renders into a live model. Spin it, walk it, and catch the wall you forgot to draw while it\'s still cheap to fix.',
+    points: [
+      { title: 'Live model', body: 'The 3D updates as you draw. Nothing to export or re-render.' },
+      { title: 'Orbit, pan, zoom', body: 'Get around the build from any angle.' },
+      { title: 'A second pair of eyes', body: 'The view that finds the missed return or the wrong opening before the truck loads.' },
+    ],
+    mediaLabel: '[ 3D model. Add /features/3d.png ]',
+    mediaSrc: '/features/3d.mp4',
+    accent: 'amber' as const,
+    flip: false,
+  },
+  {
+    eyebrow: 'Order',
+    title: 'A takeoff that matches the model, block for block.',
+    lead: 'The schedule counts straight off what\'s drawn. If it\'s on the screen it\'s on the order, and if it\'s not drawn it\'s not in the count. No spreadsheet to keep in sync.',
+    points: [
+      { title: 'Counted by code', body: 'Every block listed by its real product code, cut blocks and all.' },
+      { title: 'Special units handled', body: 'Every special shape and cut block your system uses, worked out and de-duplicated.' },
+      { title: 'Areas and floors', body: 'Tag walls into ground floor, first floor, garage; the schedule splits to match.' },
+      { title: 'Render-aligned', body: 'The tally and the 3D are the same source of truth, never drifting apart.' },
+    ],
+    mediaLabel: '[ Block schedule. Add /features/schedule.png ]',
+    mediaSrc: '/features/schedule.mp4',
+    accent: 'sky' as const,
+    flip: true,
+  },
+  {
+    eyebrow: 'Hand over',
+    title: 'A quote that looks like you know what you\'re doing.',
+    lead: 'Export a clean, branded PDF the client and the supplier can both read: the wall layout, the supply schedule and the 3D view in one document.',
+    points: [
+      { title: 'One document', body: 'Layout, schedule and 3D together, formatted and ready to send.' },
+      { title: 'Branded', body: 'Goes out looking like your business, not a raw printout.' },
+      { title: 'Reference numbers', body: 'Every job and quote tracked so you can find it again.' },
+    ],
+    mediaLabel: '[ Exported PDF. Add /features/export.png ]',
+    mediaSrc: '/features/export.mp4',
+    accent: 'beme' as const,
+    flip: false,
+  },
+  {
+    eyebrow: 'Reuse',
+    title: 'Set it up once. Carry it across every job after.',
+    lead: 'The setup work you do today is not work you do again. Wall types, blocks and supply items live with your account and drop onto the next plan.',
+    points: [
+      { title: 'Saved wall types', body: 'Build your standard makeups once and reuse them everywhere.' },
+      { title: 'Your supply library', body: 'Keep the blocks and items you actually order at hand.' },
+      { title: 'On every device', body: 'Your library follows your account, on the laptop in the office and the tablet on site.' },
+    ],
+    mediaLabel: '[ Wall type library. Add /features/library.png ]',
+    mediaSrc: '/features/library.gif',
+    accent: 'amber' as const,
+    flip: true,
+  },
+]
+---
+
+<BaseLayout
+  title="Features: the full Beme tour"
+  description="A walk through everything Beme does: trace the plan, set up walls the way you build them, see it in 3D, and order a takeoff that matches block for block."
+>
+  <section class="relative overflow-hidden">
+    <SectionGlow color="beme" position="top" />
+    <div class="container-tight text-center relative" style="padding-top: clamp(5rem, 7vw, 8rem); padding-bottom: clamp(3rem, 5vw, 4.5rem);">
+      <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-beme-500/10 border border-beme-500/30 text-beme-300 text-xs font-medium mb-8">
+        <span class="w-1.5 h-1.5 rounded-full bg-beme-500"></span>
+        The full tour
+      </div>
+      <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-ink-50 leading-[1.05] tracking-tight max-w-4xl mx-auto">Every rule of the trade, built into the estimate.</h1>
+      <p class="text-lg md:text-xl text-ink-300 mt-8 leading-relaxed max-w-2xl mx-auto">Beme is a brick and block estimator that thinks in courses, not square metres. Trace the plan, set the walls up the way you lay them, and the count, the 3D and the quote all come out of the same drawing.</p>
+      <div class="flex flex-wrap gap-3 mt-10 justify-center">
+        <button type="button" data-checkout data-plan="starter" data-source="features-hero" class="inline-block px-6 py-3 rounded-md bg-beme-500 hover:bg-beme-400 transition-colors font-medium cursor-pointer" style="color: #000;">Start free</button>
+        <a href="/pricing" class="inline-block px-6 py-3 rounded-md border border-ink-600 text-ink-200 hover:bg-ink-800 transition-colors">See pricing</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="container-tight" style="padding-block: clamp(2rem, 4vw, 4rem);">
+    <div class="grid md:grid-cols-3 gap-6 lg:gap-8">
+      <Pillar title="Trace" body="Load the PDF, calibrate the scale once, and draw walls in two clicks each, straight or curved, snapping as you go." iconSvg={traceIcon} iconBg="beme" />
+      <Pillar title="Model" body="Walls, openings, lintels and piers render into a live 3D build you can spin and check before you order." iconSvg={cubeIcon} iconBg="sky" />
+      <Pillar title="Order" body="A schedule that counts straight off the model, by block code, split by area, branded and ready to send." iconSvg={tallyIcon} iconBg="amber" />
+    </div>
+  </section>
+
+  {
+    sections.map((s, i) => (
+      <FeatureSection
+        eyebrow={s.eyebrow}
+        title={s.title}
+        lead={s.lead}
+        points={s.points}
+        mediaLabel={s.mediaLabel}
+        mediaSrc={s.mediaSrc}
+        accent={s.accent}
+        flip={i % 2 === 1}
+      />
+    ))
+  }
+
+  <CTA
+    title="See it on one of your own plans."
+    body="The quickest way to trust the count is to point Beme at a job you've already quoted and compare. 14-day free trial, no card to start."
+  />
+</BaseLayout>

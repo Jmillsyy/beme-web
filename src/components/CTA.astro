@@ -1,14 +1,16 @@
 ---
 // Page-bottom CTA strip. Sits before the footer to give a clear
 // next-step to a reader who's read the whole page. Same pattern
-// on every page so visitors learn where to click.
+// on every page so visitors learn where to click. Card chrome
+// matches the dashboard's stat tiles + project cards, white-on-
+// cream with a subtle border, accent stripe along the top.
 
 interface Props {
   title?: string
   body?: string
   ctaLabel?: string
   /** Stripe plan to start when clicked. Defaults to starter (the
-   *  individual entry tier); for-suppliers overrides to team. */
+   *  entry tier). */
   checkoutPlan?: 'starter' | 'pro' | 'team' | 'enterprise'
   /** Source tag for analytics. Defaults from the plan. */
   checkoutSource?: string
@@ -27,16 +29,24 @@ const source = checkoutSource ?? `cta-${checkoutPlan}`
 
 <section class="container-tight" style="padding-block: clamp(5rem, 8vw, 10rem);">
   <div
-    class="relative overflow-hidden rounded-3xl border border-beme-500/30 bg-gradient-to-br from-ink-800 to-ink-900 p-12 md:p-20 text-center"
+    class="relative overflow-hidden rounded-3xl border border-ink-600 bg-ink-800 p-12 md:p-20 text-center"
+    style="box-shadow: 0 16px 48px -16px rgba(0, 0, 0, 0.12);"
   >
+    {/* Brand accent stripe, same as the app's dashboard accent bar. */}
+    <div
+      class="absolute top-0 left-0 right-0"
+      style="height: 4px; background: linear-gradient(90deg, var(--color-beme-500), var(--color-beme-300));"
+      aria-hidden="true"
+    ></div>
+    {/* Subtle radial glow so the card has SOME warmth without going dark. */}
     <div
       class="absolute inset-0 pointer-events-none"
-      style="background: radial-gradient(ellipse at center, rgba(255, 122, 45, 0.08), transparent 70%);"
+      style="background: radial-gradient(ellipse at center, rgba(255, 122, 45, 0.04), transparent 70%);"
       aria-hidden="true"
     >
     </div>
     <div class="relative">
-      <h2 class="text-3xl md:text-4xl font-bold text-ink-50">{title}</h2>
+      <h2 class="text-3xl md:text-4xl font-bold text-ink-50 tracking-tight">{title}</h2>
       <p class="text-base md:text-lg text-ink-300 mt-5 max-w-xl mx-auto leading-relaxed">
         {body}
       </p>
@@ -45,7 +55,7 @@ const source = checkoutSource ?? `cta-${checkoutPlan}`
         data-checkout
         data-plan={checkoutPlan}
         data-source={source}
-        class="inline-block mt-10 px-7 py-3.5 rounded-md bg-beme-500 hover:bg-beme-400 transition-colors font-medium cursor-pointer"
+        class="inline-block mt-10 px-7 py-3.5 rounded-lg bg-beme-500 hover:bg-beme-400 transition-colors font-semibold cursor-pointer"
         style="color: #000;"
       >
         {ctaLabel}

@@ -1,7 +1,10 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <!-- Brand mark mirror of the app's nav logo: beme-500 rounded
-       square with an ink-900 inset that creates the outlined-tile
-       look. Same geometry, scaled up for favicon clarity. -->
-  <rect width="64" height="64" rx="12" fill="#ff7a2d"/>
-  <rect x="12" y="12" width="40" height="40" rx="4" fill="#0e0e10"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 104 56">
+  <!-- Brand mark: a two-cell masonry block (the unit Beme estimates).
+       Orange shell with two TRUE transparent cells (fill-rule="evenodd"
+       knocks them out), so the browser tab background shows through and
+       the mark reads on light or dark UA chrome. -->
+  <path fill-rule="evenodd" clip-rule="evenodd" fill="#ff7a2d"
+    d="M9 0 H95 A9 9 0 0 1 104 9 V47 A9 9 0 0 1 95 56 H9 A9 9 0 0 1 0 47 V9 A9 9 0 0 1 9 0 Z
+       M15 11 H42 A4 4 0 0 1 46 15 V41 A4 4 0 0 1 42 45 H15 A4 4 0 0 1 11 41 V15 A4 4 0 0 1 15 11 Z
+       M62 11 H89 A4 4 0 0 1 93 15 V41 A4 4 0 0 1 89 45 H62 A4 4 0 0 1 58 41 V15 A4 4 0 0 1 62 11 Z"/>
 </svg>

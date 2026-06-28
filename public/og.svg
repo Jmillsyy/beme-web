@@ -11,38 +11,30 @@
   </defs>
   <rect width="1200" height="630" fill="url(#glow)"/>
 
-  <!-- Brand mark — orange rounded square with dark inset, scaled up -->
-  <g transform="translate(80 80)">
-    <rect width="96" height="96" rx="18" fill="#ff7a2d"/>
-    <rect x="18" y="18" width="60" height="60" rx="6" fill="#0e0e10"/>
-  </g>
-
-  <!-- Wordmark — "Beme" -->
+  <!-- Stacked logo lockup: the wordmark sits on top of the two-cell
+       masonry block, which rests beneath it like a footing. The dark
+       page bg (#0e0e10) shows through the two transparent cells. -->
   <text
-    x="200"
-    y="155"
-    font-family="Inter, system-ui, sans-serif"
-    font-size="72"
+    x="80"
+    y="126"
+    font-family="'Source Serif 4', Georgia, 'Times New Roman', serif"
+    font-size="66"
     font-weight="800"
     fill="#f3f3f4"
-    letter-spacing="-2"
+    letter-spacing="-1"
   >Beme</text>
-
-  <!-- Tagline under wordmark -->
-  <text
-    x="200"
-    y="190"
-    font-family="Inter, system-ui, sans-serif"
-    font-size="20"
-    font-weight="400"
-    fill="#9ca0a8"
-  >Building estimates made easy</text>
+  <g transform="translate(80 146) scale(1.44)">
+    <path fill-rule="evenodd" clip-rule="evenodd" fill="#ff7a2d"
+      d="M9 0 H95 A9 9 0 0 1 104 9 V47 A9 9 0 0 1 95 56 H9 A9 9 0 0 1 0 47 V9 A9 9 0 0 1 9 0 Z
+         M15 11 H42 A4 4 0 0 1 46 15 V41 A4 4 0 0 1 42 45 H15 A4 4 0 0 1 11 41 V15 A4 4 0 0 1 15 11 Z
+         M62 11 H89 A4 4 0 0 1 93 15 V41 A4 4 0 0 1 89 45 H62 A4 4 0 0 1 58 41 V15 A4 4 0 0 1 62 11 Z"/>
+  </g>
 
   <!-- Headline — main value prop -->
   <text
     x="80"
     y="370"
-    font-family="Inter, system-ui, sans-serif"
+    font-family="'Source Serif 4', Georgia, 'Times New Roman', serif"
     font-size="68"
     font-weight="800"
     fill="#f3f3f4"
@@ -51,7 +43,7 @@
   <text
     x="80"
     y="445"
-    font-family="Inter, system-ui, sans-serif"
+    font-family="'Source Serif 4', Georgia, 'Times New Roman', serif"
     font-size="68"
     font-weight="800"
     fill="#f3f3f4"

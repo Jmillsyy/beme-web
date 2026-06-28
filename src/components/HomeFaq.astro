@@ -1,28 +1,11 @@
 ---
-// Homepage FAQ — the 4 questions visitors most often ask before
-// they click Start free. Pricing page has the full FAQ; this is the
+// Homepage FAQ: the 4 questions visitors most often ask before they
+// click Start free. Pricing page has the full FAQ; this is the
 // scroll-friendly subset that catches people on the homepage who
 // won't make it to /pricing. Each item is a native <details> for
-// zero-JS expand/collapse — fast, accessible, no library.
-
-const items = [
-  {
-    q: 'Do I need a credit card to start?',
-    a: 'Yes — Stripe collects card details upfront for the 14-day free trial. You\'re not charged until the trial ends, and you can cancel anytime from your account settings without being billed.',
-  },
-  {
-    q: 'What brick and block sizes does Beme support?',
-    a: 'Whatever you order from. Wall types are library-agnostic: set your own brick or block dimensions per project and Beme builds the schedule around them. AU SEQ, US CMU, UK metric, custom supplier ranges — all work the same way.',
-  },
-  {
-    q: 'How is Team different from a few Pro plans?',
-    a: 'Team gives you a shared library (every estimator on the team picks from the same wall types and supply rates), a team dashboard, org-wide reference numbers, and your company details and logo on every exported PDF. Pro plans are isolated per user — fine for one tradie, not for a team.',
-  },
-  {
-    q: 'Can I hand the customer a real document?',
-    a: 'Yes. Exports are a polished multi-page PDF — assumptions, wall layout diagram, per-wall-type breakdowns, supply schedule, 3D view. Branded with your details on Team and Enterprise.',
-  },
-]
+// zero-JS expand/collapse: fast, accessible, no library. Content is
+// shared with the FAQ structured data via src/data/faqs.ts.
+import { homeFaqs as items } from '../data/faqs'
 ---
 
 <section
@@ -31,8 +14,9 @@ const items = [
 >
   <div class="text-center max-w-2xl mx-auto mb-12 reveal">
     <div
-      class="text-xs uppercase tracking-wider text-beme-400 font-semibold mb-4"
+      class="flex items-center justify-center gap-2 text-xs uppercase tracking-wider text-beme-400 font-semibold mb-4"
     >
+      <svg width="16" height="9" viewBox="0 0 104 56" aria-hidden="true" style="color: var(--color-beme-500);"><path fill-rule="evenodd" clip-rule="evenodd" fill="currentColor" d="M9 0 H95 A9 9 0 0 1 104 9 V47 A9 9 0 0 1 95 56 H9 A9 9 0 0 1 0 47 V9 A9 9 0 0 1 9 0 Z M15 11 H42 A4 4 0 0 1 46 15 V41 A4 4 0 0 1 42 45 H15 A4 4 0 0 1 11 41 V15 A4 4 0 0 1 15 11 Z M62 11 H89 A4 4 0 0 1 93 15 V41 A4 4 0 0 1 89 45 H62 A4 4 0 0 1 58 41 V15 A4 4 0 0 1 62 11 Z"/></svg>
       Frequently asked
     </div>
     <h2 class="text-3xl md:text-4xl font-bold text-ink-50 tracking-tight">

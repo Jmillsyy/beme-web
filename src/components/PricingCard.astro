@@ -1,7 +1,7 @@
 ---
 // One subscription tier. Highlighted version (`featured: true`) gets
 // a brand-orange border + lifted shadow so the recommended plan
-// pulls the eye. Bullet list is flexible — pass whatever lines
+// pulls the eye. Bullet list is flexible, pass whatever lines
 // matter for the tier.
 
 interface Props {
@@ -18,8 +18,8 @@ interface Props {
   priceMonthly?: string
   /** Annual billing price as an amortised monthly figure (e.g. "$39"
    *  for $39/mo when billed annually). Shown when the page's billing
-   *  toggle is on Annual. Same visual shape as the monthly price —
-   *  just the digit changes — so the eye latches on the saving. */
+   *  toggle is on Annual. Same visual shape as the monthly price, 
+   *  just the digit changes, so the eye latches on the saving. */
   priceAnnual?: string
   /** Cadence suffix (e.g. "/month"). Ignored when price is empty. */
   cadence?: string
@@ -27,11 +27,11 @@ interface Props {
   features: string[]
   /** CTA button label. */
   ctaLabel: string
-  /** CTA destination — used as fallback if checkoutPlan isn't set. */
+  /** CTA destination, used as fallback if checkoutPlan isn't set. */
   ctaHref: string
   /** Stripe plan id. When set, the CTA goes through Stripe Checkout
    *  via the data-checkout hook instead of plain link navigation.
-   *  Adding a new plan id here is fine — the Stripe wiring upstream
+   *  Adding a new plan id here is fine, the Stripe wiring upstream
    *  just reads `data-plan` off the button. */
   checkoutPlan?: 'starter' | 'pro' | 'team' | 'enterprise'
   /** Source tag passed to checkout for analytics. */
@@ -84,14 +84,14 @@ const hasDualPrice = !!priceMonthly && !!priceAnnual
     {
       hasDualPrice ? (
         <>
-          {/* Monthly price — visible when [data-billing-mode="monthly"].
+          {/* Monthly price, visible when [data-billing-mode="monthly"].
               The data-billing-show hook is targeted by the toggle JS in
               pricing.astro; CSS in the page picks which row shows. */}
           <div data-billing-show="monthly">
             <span class="text-5xl font-bold text-ink-50">{priceMonthly}</span>
             <span class="text-sm text-ink-400 ml-1">{cadence}</span>
           </div>
-          {/* Annual price — amortised monthly. Same visual weight so the
+          {/* Annual price, amortised monthly. Same visual weight so the
               jump reads as a digit change, not a layout shift. The
               "billed annually" line below clarifies the cadence. */}
           <div data-billing-show="annual">

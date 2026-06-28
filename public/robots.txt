@@ -1,7 +1,7 @@
-# https://beme.com.au — marketing site
+# https://beme.com.au marketing site.
 #
-# Allow all crawlers everywhere except the legal pages (low SEO value,
-# just compliance docs). Point them at the sitemap for fast discovery.
+# Allow all crawlers everywhere. Point them at the sitemap for fast
+# discovery.
 
 User-agent: *
 Allow: /

@@ -1,9 +1,9 @@
 ---
-// "How it works" — three numbered steps that walk the visitor
+// "How it works", three numbered steps that walk the visitor
 // through the actual workflow: trace, build, export. Each step has
 // a big number, a short headline, and one supporting sentence.
 // Designed to feel like a horizontal product tour without needing
-// real screenshots — same pattern that high-converting product
+// real screenshots, same pattern that high-converting product
 // pages use to demystify the workflow before the visitor commits.
 
 // Each step gets its own tint so the three cards read as a
@@ -26,7 +26,7 @@ const steps = [
   {
     n: '03',
     title: 'Export the schedule.',
-    body: 'A polished PDF — assumptions, wall layout, supply schedule, 3D view. Every brick visible on screen is on the order. Hand it to the customer.',
+    body: 'A polished PDF: assumptions, wall layout, supply schedule, 3D view. Every brick visible on screen is on the order. Hand it to the customer.',
     accent: 'sky' as const,
   },
 ]
@@ -49,8 +49,9 @@ function accentTextClass(a: 'beme' | 'amber' | 'sky'): string {
 >
   <div class="text-center max-w-2xl mx-auto mb-16 reveal">
     <div
-      class="text-xs uppercase tracking-wider text-beme-400 font-semibold mb-4"
+      class="flex items-center justify-center gap-2 text-xs uppercase tracking-wider text-beme-400 font-semibold mb-4"
     >
+      <svg width="16" height="9" viewBox="0 0 104 56" aria-hidden="true" style="color: var(--color-beme-500);"><path fill-rule="evenodd" clip-rule="evenodd" fill="currentColor" d="M9 0 H95 A9 9 0 0 1 104 9 V47 A9 9 0 0 1 95 56 H9 A9 9 0 0 1 0 47 V9 A9 9 0 0 1 9 0 Z M15 11 H42 A4 4 0 0 1 46 15 V41 A4 4 0 0 1 42 45 H15 A4 4 0 0 1 11 41 V15 A4 4 0 0 1 15 11 Z M62 11 H89 A4 4 0 0 1 93 15 V41 A4 4 0 0 1 89 45 H62 A4 4 0 0 1 58 41 V15 A4 4 0 0 1 62 11 Z"/></svg>
       How it works
     </div>
     <h2 class="text-3xl md:text-4xl font-bold text-ink-50 tracking-tight">
@@ -71,7 +72,7 @@ function accentTextClass(a: 'beme' | 'amber' | 'sky'): string {
           class="relative p-8 md:p-10 rounded-2xl border border-ink-700 bg-ink-800/40 lift reveal"
           style={`transition-delay: ${i * 80}ms;`}
         >
-          {/* Massive numeral as a watermark — tinted per step
+          {/* Massive numeral as a watermark, tinted per step
               (orange → amber → sky) so the three cards read as a
               progression rather than three identical boxes. */}
           <div

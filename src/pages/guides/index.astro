@@ -1,0 +1,93 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro'
+import SectionGlow from '../../components/SectionGlow.astro'
+import CTA from '../../components/CTA.astro'
+
+// The how-to library. Keep this list in sync with the guide pages in
+// src/pages/guides/ and with public/sitemap.xml.
+const guides = [
+  {
+    slug: 'trace-a-plan',
+    title: 'Trace a plan and set the scale',
+    blurb: 'Load the architect\'s PDF, calibrate the scale once, and draw your first walls.',
+    minutes: 4,
+    accent: 'beme' as const,
+  },
+  {
+    slug: 'set-up-a-wall-type',
+    title: 'Set up a wall type',
+    blurb: 'Pick the block and bond, set the base and top courses, and save it to reuse.',
+    minutes: 5,
+    accent: 'amber' as const,
+  },
+  {
+    slug: 'openings-and-lintels',
+    title: 'Add openings and lintels',
+    blurb: 'Drop in windows and doors, set sill and head heights, let the lintel pick itself.',
+    minutes: 3,
+    accent: 'sky' as const,
+  },
+  {
+    slug: 'export-a-quote',
+    title: 'Export a quote',
+    blurb: 'Split the job by area, check the schedule, and send a branded PDF.',
+    minutes: 3,
+    accent: 'amber' as const,
+  },
+]
+
+function accentText(a: 'beme' | 'amber' | 'sky'): string {
+  if (a === 'amber') return 'text-amber-400'
+  if (a === 'sky') return 'text-sky-400'
+  return 'text-beme-400'
+}
+function accentDot(a: 'beme' | 'amber' | 'sky'): string {
+  if (a === 'amber') return 'var(--color-amber-500, #f59e0b)'
+  if (a === 'sky') return 'var(--color-sky-500, #0ea5e9)'
+  return 'var(--color-beme-500)'
+}
+---
+
+<BaseLayout
+  title="Guides: how to use Beme"
+  description="Short, practical how-to guides: trace a plan, set up a wall type, add openings, and export a quote."
+>
+  <section class="relative overflow-hidden">
+    <SectionGlow color="beme" position="top" />
+    <div class="container-tight text-center relative" style="padding-top: clamp(5rem, 7vw, 8rem); padding-bottom: clamp(2.5rem, 4vw, 4rem);">
+      <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-beme-500/10 border border-beme-500/30 text-beme-300 text-xs font-medium mb-8">
+        <span class="w-1.5 h-1.5 rounded-full bg-beme-500"></span>
+        Guides
+      </div>
+      <h1 class="text-4xl md:text-5xl font-bold text-ink-50 leading-[1.05] tracking-tight max-w-3xl mx-auto">Learn Beme in an afternoon.</h1>
+      <p class="text-lg md:text-xl text-ink-300 mt-7 leading-relaxed max-w-2xl mx-auto">Short, practical walk-throughs of the parts of the app you'll use on every job. Start at the top; each one takes a few minutes.</p>
+    </div>
+  </section>
+
+  <section class="container-tight" style="padding-bottom: clamp(4rem, 7vw, 8rem);">
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+      {
+        guides.map((g, i) => (
+          <a
+            href={`/guides/${g.slug}`}
+            class="group block p-7 md:p-8 rounded-2xl border border-ink-600 bg-ink-800 lift reveal"
+            style={`transition-delay: ${i * 60}ms;`}
+          >
+            <div class="flex items-center justify-between mb-5">
+              <span style={`font-size: 1.75rem; line-height: 1; font-weight: 800; letter-spacing: -0.04em; color: ${accentDot(g.accent)};`}>{String(i + 1).padStart(2, '0')}</span>
+              <span class={`text-xs uppercase tracking-wider font-semibold ${accentText(g.accent)}`}>{g.minutes} min</span>
+            </div>
+            <h2 class="text-lg font-semibold text-ink-50 tracking-tight group-hover:text-beme-300 transition-colors">{g.title}</h2>
+            <p class="text-[15px] text-ink-300 leading-relaxed mt-2.5">{g.blurb}</p>
+            <span class="inline-flex items-center gap-1.5 text-sm font-medium text-ink-200 mt-5 group-hover:gap-2.5 transition-all">
+              Read guide
+              <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+            </span>
+          </a>
+        ))
+      }
+    </div>
+  </section>
+
+  <CTA />
+</BaseLayout>

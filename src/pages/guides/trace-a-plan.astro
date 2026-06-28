@@ -1,0 +1,35 @@
+---
+import GuideLayout from '../../layouts/GuideLayout.astro'
+
+const steps = [
+  {
+    title: 'Load the plan PDF',
+    body: 'Drag the architect\'s PDF straight onto the workspace. It drops in at full resolution as the background you trace over. No exporting to an image or converting first.',
+    mediaLabel: '[ Loading a PDF. Add /guides/trace-01.png ]',
+  },
+  {
+    title: 'Calibrate the scale',
+    body: 'Pick the calibrate tool and click along a dimension you already know, like a 4000mm wall. Type the real length. From that moment every measurement on the plan is true.',
+    mediaLabel: '[ Calibrating the scale. Add /guides/trace-02.png ]',
+  },
+  {
+    title: 'Draw the walls',
+    body: 'Click one end of a wall, then the other. Beme snaps to ends and corners as you go, so runs meet cleanly. Straight walls and curved walls both work the same way.',
+    mediaLabel: '[ Drawing walls. Add /guides/trace-03.png ]',
+  },
+  {
+    title: 'Measure anything with the ruler',
+    body: 'Reach for the ruler any time you want to check a span without committing a wall to it. It is the quickest way to sanity-check the scale before you go further.',
+    mediaLabel: '[ Using the ruler. Add /guides/trace-04.png ]',
+  },
+]
+---
+
+<GuideLayout
+  title="Trace a plan and set the scale"
+  description="Load the architect's PDF, calibrate the scale once, and draw your first walls in Beme."
+  intro="The starting point for every job: get the drawing in, make it measure true, and put your first walls down."
+  minutes={4}
+  steps={steps}
+  mediaBase="/guides/trace"
+/>

@@ -1,7 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro'
 
-// Contact page — three ways to get in touch (email, suppliers chat,
+// Contact page, three ways to get in touch (email, a demo walkthrough,
 // support). Kept as a single short page; no contact form because a
 // form here would just send an email anyway and adds a backend
 // dependency for marginal UX benefit. Mailto links land in the
@@ -11,8 +11,8 @@ const appUrl = 'https://app.beme.com.au'
 ---
 
 <BaseLayout
-  title="Contact — Beme"
-  description="Get in touch with Beme — for questions about the product, a supplier demo, or bug reports."
+  title="Contact"
+  description="Get in touch with Beme for questions about the product, a demo, or bug reports."
 >
   <section
     class="container-tight max-w-3xl mx-auto"
@@ -26,7 +26,7 @@ const appUrl = 'https://app.beme.com.au'
     </h1>
     <p class="text-base md:text-lg text-ink-300 mt-5 leading-relaxed">
       A real person reads every email. We aim to get back to you
-      within one business day — usually faster.
+      within one business day, usually faster.
     </p>
   </section>
 
@@ -35,7 +35,7 @@ const appUrl = 'https://app.beme.com.au'
     style="padding-bottom: clamp(5rem, 8vw, 10rem);"
   >
     <div class="grid md:grid-cols-2 gap-6">
-      {/* General contact — primary card */}
+      {/* General contact, primary card */}
       <div
         class="p-8 rounded-2xl border border-ink-700 bg-ink-800/40 lift reveal md:col-span-2"
       >
@@ -53,33 +53,33 @@ const appUrl = 'https://app.beme.com.au'
         </h2>
         <p class="text-[15px] text-ink-300 mt-3 leading-relaxed">
           Product questions, account help, bug reports, feature
-          requests — anything goes. We read everything.
+          requests, anything goes. We read everything.
         </p>
       </div>
 
-      {/* Suppliers — specific routing */}
+      {/* Walkthrough for anyone weighing it up */}
       <div class="p-8 rounded-2xl border border-ink-700 bg-ink-800/40 lift reveal">
         <div
           class="text-xs uppercase tracking-wider text-beme-400 font-semibold mb-3"
         >
-          For suppliers
+          New to Beme
         </div>
         <h3 class="text-xl font-semibold text-ink-50">
-          Sales-tool demo
+          See it in action
         </h3>
         <p class="text-[15px] text-ink-300 mt-3 leading-relaxed">
-          Want to see Beme in your sales process before signing up?
-          We'll walk you through it.
+          Want a walkthrough before you sign up? We'll show you how it
+          works on a real plan.
         </p>
         <a
-          href="mailto:hello@beme.com.au?subject=Beme for suppliers — demo request"
+          href="mailto:hello@beme.com.au?subject=Beme demo request"
           class="inline-block mt-5 text-sm font-medium text-beme-400 hover:text-beme-300 transition-colors"
         >
           Request a demo →
         </a>
       </div>
 
-      {/* Existing customers — support */}
+      {/* Existing customers, support */}
       <div class="p-8 rounded-2xl border border-ink-700 bg-ink-800/40 lift reveal">
         <div
           class="text-xs uppercase tracking-wider text-beme-400 font-semibold mb-3"
@@ -90,8 +90,8 @@ const appUrl = 'https://app.beme.com.au'
           Support
         </h3>
         <p class="text-[15px] text-ink-300 mt-3 leading-relaxed">
-          Logged in already? The fastest help is from inside the app
-          — your project context comes through automatically.
+          Logged in already? The fastest help is from inside the
+          app, where your project context comes through automatically.
         </p>
         <a
           href={`${appUrl}/settings`}

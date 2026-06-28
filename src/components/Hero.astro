@@ -1,75 +1,54 @@
 ---
-// Above-the-fold hero. Single column on mobile, two columns on
-// desktop with the lede on the left and a hero image on the right.
-// Drop your real screenshot at /public/hero.png and it'll render
-// here. A wide 3D capture from the app works well.
+// Above-the-fold hero. A single centred column, no image: the headline
+// and its caption carry it, with the 3D build tour sitting just below.
 import SectionGlow from './SectionGlow.astro'
-const appUrl = 'https://app.beme.com.au'
 ---
 
 <section class="relative overflow-hidden">
-  <SectionGlow color="beme" position="top-left" />
+  <SectionGlow color="beme" position="top" />
 
-  <div class="container-tight pb-28 md:pb-40 relative" style="padding-top: clamp(5rem, 7vw, 9rem);">
-    <div class="grid md:grid-cols-2 gap-12 lg:gap-20 items-center">
-      <div>
-        <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-beme-500/10 border border-beme-500/30 text-beme-300 text-xs font-medium mb-8">
-          <span class="w-1.5 h-1.5 rounded-full bg-beme-500"></span>
-          Built for brick and block estimators
-        </div>
-
-        <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-ink-50 leading-[1.05] tracking-tight">
-          Estimates that match what you build.
-        </h1>
-
-        <p class="text-lg md:text-xl text-ink-300 mt-8 leading-relaxed max-w-xl">
-          Trace the plan. See the build in 3D. Your input equals the
-          output — every wall you draw is calculated to your
-          specifications, every brick on screen is on the order.
-        </p>
-
-        <div class="flex flex-wrap gap-3 mt-10">
-          <button
-            type="button"
-            data-checkout
-            data-plan="starter"
-            data-source="hero"
-            class="inline-block px-6 py-3 rounded-md bg-beme-500 hover:bg-beme-400 transition-colors font-medium cursor-pointer"
-            style="color: #000;"
-          >
-            Start free
-          </button>
-          <a
-            href="/pricing"
-            class="inline-block px-6 py-3 rounded-md border border-ink-600 text-ink-200 hover:bg-ink-800 transition-colors"
-          >
-            See pricing
-          </a>
-        </div>
-
-        <p class="text-xs text-ink-500 mt-5">
-          No credit card to start. Cancel anytime.
-        </p>
-      </div>
-
-      <div class="relative">
-        {/* Hero image — a 3D capture from the app at /public/hero.png.
-            If the file is missing, the onerror swap hides the broken
-            <img> and falls back to the placeholder div, so the page
-            never renders a broken-image icon. */}
-        <img
-          src="/hero.png"
-          alt="Beme 3D view of a brick wall — every brick on screen is on the supply schedule"
-          class="block w-full h-auto aspect-[4/3] rounded-xl border border-ink-700 shadow-2xl shadow-beme-500/5 object-cover"
-          onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
-        />
-        <div
-          class="aspect-[4/3] rounded-xl border border-ink-700 bg-ink-800 shadow-2xl shadow-beme-500/5 overflow-hidden items-center justify-center text-ink-500 text-sm"
-          style="display: none;"
-        >
-          Drop your hero capture at /public/hero.png
-        </div>
-      </div>
+  <div
+    class="container-tight relative text-center"
+    style="padding-top: clamp(5rem, 9vw, 9rem); padding-bottom: clamp(3.5rem, 6vw, 6rem);"
+  >
+    <div
+      class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-beme-500/10 border border-beme-500/30 text-beme-300 text-xs font-semibold mb-8 tracking-wide uppercase"
+    >
+      <svg width="16" height="9" viewBox="0 0 104 56" aria-hidden="true" style="color: var(--color-beme-500);"><path fill-rule="evenodd" clip-rule="evenodd" fill="currentColor" d="M9 0 H95 A9 9 0 0 1 104 9 V47 A9 9 0 0 1 95 56 H9 A9 9 0 0 1 0 47 V9 A9 9 0 0 1 9 0 Z M15 11 H42 A4 4 0 0 1 46 15 V41 A4 4 0 0 1 42 45 H15 A4 4 0 0 1 11 41 V15 A4 4 0 0 1 15 11 Z M62 11 H89 A4 4 0 0 1 93 15 V41 A4 4 0 0 1 89 45 H62 A4 4 0 0 1 58 41 V15 A4 4 0 0 1 62 11 Z"/></svg>
+      Built for brick and block estimators
     </div>
+
+    <h1 class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-ink-50 leading-[1.05] tracking-tight max-w-4xl mx-auto">
+      Brick and block estimates made easy.
+    </h1>
+
+    <p class="text-lg md:text-xl text-ink-300 mt-7 leading-relaxed max-w-2xl mx-auto">
+      Trace the plan. See the build in 3D. Your input equals the output.
+      Every wall you draw is calculated to your specifications, every
+      brick on screen is on the order.
+    </p>
+
+    <div class="flex flex-wrap gap-3 mt-10 justify-center">
+      <button
+        type="button"
+        data-checkout
+        data-plan="starter"
+        data-source="hero"
+        class="inline-block px-6 py-3 rounded-lg bg-beme-500 hover:bg-beme-400 transition-colors font-semibold cursor-pointer"
+        style="color: #000;"
+      >
+        Start free
+      </button>
+      <a
+        href="/pricing"
+        class="inline-block px-6 py-3 rounded-lg border border-ink-600 text-ink-100 hover:bg-ink-700 transition-colors font-medium font-sans"
+      >
+        See pricing
+      </a>
+    </div>
+
+    <p class="text-xs text-ink-400 mt-5 font-sans">
+      No credit card to start. Cancel anytime.
+    </p>
   </div>
 </section>

@@ -1,0 +1,108 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 900" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif">
+  <!-- Faithful recreation of the Beme app dashboard (bemeapp.app) -->
+  <rect width="1440" height="900" fill="#faf8f3"/>
+
+  <!-- Sidebar -->
+  <rect x="0" y="0" width="226" height="900" fill="#ffffff"/>
+  <line x1="226" y1="0" x2="226" y2="900" stroke="#ebe8e1" stroke-width="1"/>
+
+  <!-- Logo -->
+  <rect x="20" y="24" width="38" height="38" rx="9" fill="#ff7a2d"/>
+  <rect x="29" y="33" width="20" height="20" rx="5" fill="#ffffff"/>
+  <rect x="33" y="37" width="12" height="12" rx="2.5" fill="#ff7a2d"/>
+  <text x="70" y="40" font-size="20" font-weight="800" fill="#16130f">Beme</text>
+  <text x="70" y="56" font-size="10.5" fill="#9ca0a8">Building estimates made easy</text>
+
+  <!-- Nav -->
+  <rect x="14" y="86" width="198" height="40" rx="10" fill="#fff1e5"/>
+  <path d="M30 106 l9-7 9 7 v9 a1 1 0 0 1-1 1h-16a1 1 0 0 1-1-1z" fill="none" stroke="#ff7a2d" stroke-width="1.7" stroke-linejoin="round"/>
+  <text x="58" y="111" font-size="15" font-weight="600" fill="#16130f">Dashboard</text>
+
+  <g stroke="#6d717a" stroke-width="1.7" fill="none" stroke-linecap="round">
+    <line x1="30" y1="150" x2="48" y2="150"/><line x1="30" y1="156" x2="48" y2="156"/><line x1="30" y1="162" x2="48" y2="162"/>
+  </g>
+  <text x="58" y="161" font-size="15" fill="#44474d">Projects</text>
+
+  <path d="M39 190 l10 5 v11 l-10 5 -10-5 v-11z" fill="none" stroke="#6d717a" stroke-width="1.6" stroke-linejoin="round"/>
+  <text x="58" y="205" font-size="15" fill="#44474d">Material library</text>
+
+  <path d="M32 232 h13 a1 1 0 0 1 1 1 v17 l-7.5-4 -7.5 4 v-17 a1 1 0 0 1 1-1z" fill="none" stroke="#6d717a" stroke-width="1.6" stroke-linejoin="round"/>
+  <text x="58" y="249" font-size="15" fill="#44474d">Guide</text>
+
+  <circle cx="39" cy="292" r="4.5" fill="none" stroke="#6d717a" stroke-width="1.6"/>
+  <path d="M39 284 v-3 M39 300 v3 M31 292 h-3 M47 292 h3" stroke="#6d717a" stroke-width="1.6" stroke-linecap="round"/>
+  <text x="58" y="297" font-size="15" fill="#44474d">Settings</text>
+
+  <path d="M44 336 l-6 6 6 6 M36 336 l-6 6 6 6" fill="none" stroke="#9ca0a8" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="58" y="347" font-size="15" fill="#6d717a">Collapse</text>
+
+  <text x="24" y="788" font-size="10.5" letter-spacing="0.6" font-weight="600" fill="#b0b3ba">ACCOUNT</text>
+  <circle cx="42" cy="828" r="18" fill="#ff7a2d"/>
+  <text x="42" y="833" font-size="15" font-weight="700" fill="#ffffff" text-anchor="middle">J</text>
+  <text x="70" y="824" font-size="14.5" font-weight="700" fill="#16130f">joshmillsy06</text>
+  <text x="70" y="841" font-size="11" fill="#9ca0a8">joshmillsy06@gmail.com</text>
+
+  <!-- Main -->
+  <text x="264" y="62" font-size="31" font-weight="800" fill="#16130f">Your dashboard</text>
+  <text x="264" y="90" font-size="15" fill="#6f7178">Track your projects, win rate, and active jobs at a glance.</text>
+  <text x="1400" y="50" font-size="15" fill="#6f7178" text-anchor="end">Good morning, <tspan font-weight="700" fill="#16130f">joshmillsy06</tspan></text>
+  <rect x="1280" y="64" width="120" height="22" rx="11" fill="#ffffff" stroke="#ebe8e1"/>
+  <circle cx="1296" cy="75" r="3" fill="#ff7a2d"/>
+  <text x="1306" y="79" font-size="11.5" fill="#6f7178">Thursday 25 June</text>
+
+  <rect x="264" y="116" width="156" height="40" rx="8" fill="#ff7a2d"/>
+  <text x="342" y="141" font-size="14.5" font-weight="700" fill="#ffffff" text-anchor="middle">+ New estimate</text>
+  <text x="436" y="141" font-size="13.5" fill="#9ca0a8">Block, brick, or both - switch trades inside.</text>
+
+  <!-- Stat tiles -->
+  <g>
+    <rect x="264" y="186" width="272" height="98" rx="12" fill="#ffffff" stroke="#ebe8e1"/>
+    <text x="288" y="216" font-size="11" letter-spacing="0.5" font-weight="600" fill="#9ca0a8">TOTAL PROJECTS</text>
+    <text x="288" y="252" font-size="34" font-weight="800" fill="#16130f">1</text>
+    <text x="288" y="272" font-size="12.5" fill="#9ca0a8">1 in progress</text>
+
+    <rect x="552" y="186" width="272" height="98" rx="12" fill="#ffffff" stroke="#ebe8e1"/>
+    <circle cx="580" cy="208" r="4" fill="#ff7a2d"/>
+    <text x="592" y="212" font-size="11" letter-spacing="0.5" font-weight="600" fill="#9ca0a8">IN PROGRESS</text>
+    <text x="576" y="252" font-size="34" font-weight="800" fill="#ff7a2d">1</text>
+    <text x="576" y="272" font-size="12.5" fill="#9ca0a8">1 active estimate</text>
+
+    <rect x="840" y="186" width="272" height="98" rx="12" fill="#ffffff" stroke="#ebe8e1"/>
+    <circle cx="868" cy="208" r="4" fill="#16a34a"/>
+    <text x="880" y="212" font-size="11" letter-spacing="0.5" font-weight="600" fill="#9ca0a8">WON</text>
+    <text x="864" y="252" font-size="34" font-weight="800" fill="#16a34a">0</text>
+    <text x="864" y="272" font-size="12.5" fill="#9ca0a8">No outcomes yet</text>
+
+    <rect x="1128" y="186" width="272" height="98" rx="12" fill="#ffffff" stroke="#ebe8e1"/>
+    <text x="1152" y="216" font-size="11" letter-spacing="0.5" font-weight="600" fill="#9ca0a8">WIN RATE</text>
+    <text x="1152" y="252" font-size="34" font-weight="800" fill="#16130f">-</text>
+    <text x="1152" y="272" font-size="12.5" fill="#9ca0a8">No outcomes yet</text>
+  </g>
+
+  <!-- Projects header -->
+  <circle cx="270" cy="330" r="4" fill="#ff7a2d"/>
+  <text x="284" y="335" font-size="13" letter-spacing="0.5" font-weight="700" fill="#16130f">YOUR PROJECTS  · 1</text>
+  <rect x="1230" y="318" width="170" height="34" rx="9" fill="#ffffff" stroke="#ebe8e1"/>
+  <circle cx="1252" cy="335" r="5.5" fill="none" stroke="#9ca0a8" stroke-width="1.5"/>
+  <line x1="1256" y1="339" x2="1260" y2="343" stroke="#9ca0a8" stroke-width="1.5" stroke-linecap="round"/>
+  <text x="1270" y="340" font-size="13" fill="#b0b3ba">Search...</text>
+
+  <!-- Project card -->
+  <rect x="264" y="362" width="1136" height="116" rx="14" fill="#ffffff" stroke="#ebe8e1"/>
+  <text x="288" y="402" font-size="18" font-weight="800" fill="#16130f">Maple Court Townhouses</text>
+  <text x="560" y="402" font-size="13" font-weight="600" fill="#9ca0a8">#105800</text>
+  <rect x="620" y="389" width="78" height="20" rx="6" fill="#fef3c7"/>
+  <text x="659" y="403" font-size="11" fill="#92580a" text-anchor="middle">In progress</text>
+  <rect x="706" y="389" width="74" height="20" rx="6" fill="#e9f6ee"/>
+  <text x="743" y="403" font-size="11" fill="#16804a" text-anchor="middle">Mark won</text>
+  <rect x="788" y="389" width="52" height="20" rx="6" fill="#fff1e5"/>
+  <text x="814" y="403" font-size="11" fill="#9a3f08" text-anchor="middle">BLOCK</text>
+  <text x="1376" y="400" font-size="20" font-weight="700" fill="#b0b3ba">...</text>
+  <text x="288" y="428" font-size="14.5" fill="#6f7178">12 Maple Court, Brisbane QLD</text>
+  <text x="288" y="450" font-size="13" fill="#9ca0a8">4 walls · 130.01 m run</text>
+  <text x="288" y="469" font-size="13" fill="#9ca0a8">Updated just now</text>
+
+  <!-- Start another -->
+  <rect x="264" y="494" width="1136" height="56" rx="14" fill="#faf8f3" stroke="#e3dfd6" stroke-dasharray="2 4"/>
+  <text x="832" y="528" font-size="14.5" fill="#8a8782" text-anchor="middle">+ Start another estimate</text>
+</svg>

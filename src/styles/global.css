@@ -6,7 +6,7 @@
 @source "../**/*.{astro,html,js,jsx,ts,tsx,md,mdx}";
 
 /* ────────────────────────────────────────────────────────────────────
-   Beme palette — matches the app's tailwind theme exactly so any
+   Beme palette, matches the app's tailwind theme exactly so any
    class (bg-beme-500, text-ink-200, etc.) reads the same way here as
    it does inside the workspace. Add new shades to BOTH files if you
    ever extend the palette so the brand stays consistent.
@@ -25,7 +25,7 @@
   --color-beme-800: #9a3f08;
   --color-beme-900: #431407;
 
-  /* Neutral / dark chrome — same scale the app's dark mode uses */
+  /* Neutral / dark chrome, same scale the app's dark mode uses */
   --color-ink-50: #f3f3f4;
   --color-ink-100: #d9d9dc;
   --color-ink-200: #b4b4b9;
@@ -42,6 +42,18 @@
   --color-paper-100: #fafaf7;
   --color-paper-200: #efece4;
   --color-paper-300: #e5e2dc;
+
+  /* Type. Sans (Hanken Grotesk) is the UI + headings default, our closest
+     free match to Anthropic's Styrene; the serif is the editorial reading
+     face. Source Serif 4 is the closest free match to Tiempos with deep,
+     legible text weights. Swap the first family below to try another
+     (Inter, Schibsted Grotesk, Space Grotesk for the sans). */
+  --font-sans:
+    'Hanken Grotesk', system-ui, -apple-system, BlinkMacSystemFont,
+    'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  --font-serif:
+    'Source Serif 4', 'Iowan Old Style', 'Palatino Linotype', Palatino,
+    Georgia, Cambria, 'Times New Roman', serif;
 }
 
 /* ── Light mode ─────────────────────────────────────────────────────────
@@ -59,7 +71,7 @@
   --color-ink-600: #e2dfd8;  /* borders */
   --color-ink-700: #f0ede5;
   --color-ink-800: #ffffff;  /* panels / chrome */
-  --color-ink-900: #f7f4ec;  /* page background — warm off-white */
+  --color-ink-900: #f7f4ec;  /* page background, warm off-white */
 }
 
 /* ── Light-mode accent overrides ───────────────────────────────────────
@@ -73,7 +85,7 @@
 }
 :root.light .text-beme-300,
 :root.light .text-beme-400 {
-  color: #9a3f08; /* beme-800 — dark burnt orange, strong contrast on cream */
+  color: #9a3f08; /* beme-800, dark burnt orange, strong contrast on cream */
 }
 :root.light .border-beme-500\/30,
 :root.light .border-beme-500\/40 {
@@ -83,25 +95,66 @@
   color: #c25411; /* beme-700 */
 }
 
-/* Body — uses ink-900 for the page bg and ink-100 for body text.
-   Both flip automatically when the `.light` class is added to <html>. */
+/* Body, uses ink-900 for the page bg and ink-100 for body text. The
+   serif is the site-wide default typeface (the whole site reads in it);
+   put the `font-sans` utility on any element that should read in the sans. */
 html,
 body {
   background: var(--color-ink-900);
   color: var(--color-ink-100);
   transition: background 0.18s ease, color 0.18s ease;
-  font-family:
-    Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI',
-    Roboto, Helvetica, Arial, sans-serif;
+  font-family: var(--font-serif);
+  line-height: 1.6;
+  text-rendering: optimizeLegibility;
+  font-feature-settings: "kern", "liga", "calt";
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+/* ── Type ────────────────────────────────────────────────────────────────
+   The serif (set on body above) is the site-wide voice. Headings get a
+   touch tighter tracking to suit the larger sizes. Use the `font-sans`
+   utility to keep any specific element in the sans. */
+h1, h2, h3, h4 {
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+
+/* ── Anthropic-style chrome ─────────────────────────────────────────
+   The serif carries headlines + prose (set on body). Everything that
+   reads as UI, the nav, buttons, form controls, and the small uppercase
+   labels / eyebrows, switches to the Hanken Grotesk sans. That serif-plus-
+   grotesque split is the pairing to match. Put `font-ui` on any other
+   chrome element to opt it into the sans. */
+button,
+input,
+select,
+textarea,
+.font-ui {
+  font-family: var(--font-sans);
+}
+.uppercase.tracking-wide,
+.uppercase.tracking-wider,
+.uppercase.tracking-widest {
+  font-family: var(--font-sans);
+}
+
+/* Prose measure: keep serif body text to a comfortable column so long
+   paragraphs read like a column, not a banner, on wide screens. Add
+   `measure` to a paragraph or text wrapper; `measure-sm` for tighter
+   intros and standfirsts. */
+.measure {
+  max-width: 62ch;
+}
+.measure-sm {
+  max-width: 54ch;
 }
 
 /* ── Scroll-reveal ──────────────────────────────────────────────────
    Elements with the `.reveal` class start invisible + slightly offset,
    and fade up into place once they scroll into view (toggled by the
    IntersectionObserver script in BaseLayout). `prefers-reduced-motion`
-   respected — users who've asked for less motion see no animation. */
+   respected, users who've asked for less motion see no animation. */
 .reveal {
   opacity: 0;
   transform: translateY(24px);
@@ -124,7 +177,7 @@ body {
 
 /* ── Card hover lift ────────────────────────────────────────────────
    Applied to interactive cards (pillar, audience block image, pricing
-   card) so they tilt up subtly on hover — small affordance that
+   card) so they tilt up subtly on hover, small affordance that
    tells the visitor the page is alive without going overboard. */
 .lift {
   transition:
@@ -143,29 +196,28 @@ body {
   }
 }
 
-/* Container helper — caps content width but lets full-bleed sections
+/* Container helper, caps content width but lets full-bleed sections
    (gradient hero strips, footer band) span edge-to-edge. Generous
    max-width so the page reads as premium / spacious on wide
    monitors; side padding scales up at larger breakpoints so the
    gutter feels deliberate rather than accidental.
-   Bumped from 1280 → 1440px so hero screenshots / 3D captures /
-   product videos have meaningfully more room to breathe on
-   desktop without the text columns becoming unreadably wide
-   (max-w-2xl / max-w-3xl wrappers inside still cap prose). */
+   Set to 1280px: a composed, editorial width that keeps the two-column
+   rows and the prose well-proportioned on desktop. The wider variant
+   below is there for full-bleed visuals that genuinely want more room. */
 .container-tight {
   width: 100%;
-  max-width: 1440px;
+  max-width: 1360px;
   margin: 0 auto;
   /* Same clamp the Nav uses (`padding-inline: clamp(1.5rem, 8vw, 5rem)`)
      so the page content gutters line up with the nav gutters on every
      viewport. Without this, content sits visibly wider than the header
      on typical desktop widths (where the nav caps at 5rem but the old
      container-tight stopped at 3rem). */
-  padding-inline: clamp(1.5rem, 8vw, 5rem);
+  padding-inline: clamp(1.25rem, 3vw, 2.25rem);
 }
 
 /* Wider container variant for sections where the visual itself
-   IS the content — full-width hero screenshots, product demo
+   IS the content, full-width hero screenshots, product demo
    videos, the 3D-view captures the user wants to show off. Use
    sparingly: prose still belongs inside .container-tight. */
 .container-wide {
@@ -174,5 +226,5 @@ body {
   margin: 0 auto;
   /* Same clamp as .container-tight and the Nav so any container,
      wherever it appears, lines up with the others gutter-for-gutter. */
-  padding-inline: clamp(1.5rem, 8vw, 5rem);
+  padding-inline: clamp(1.25rem, 3vw, 2.25rem);
 }

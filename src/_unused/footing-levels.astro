@@ -1,0 +1,35 @@
+---
+import GuideLayout from '../../layouts/GuideLayout.astro'
+
+const steps = [
+  {
+    title: 'Draw a footing zone',
+    body: 'Pick the footing tool and trace the area corner to corner. It snaps onto the corners and edges of zones you have already placed, so stepped areas line up exactly.',
+    mediaLabel: '[ Drawing a footing zone. Add /guides/footing-01.png ]',
+  },
+  {
+    title: 'Set the level',
+    body: 'When you close the zone, a small modal asks for its level. Type it in. No two zones can overlap, so the slab stays consistent.',
+    mediaLabel: '[ Setting a footing level. Add /guides/footing-02.png ]',
+  },
+  {
+    title: 'Add the next zone',
+    body: 'Repeat for each stepped part of the site. Every zone carries its own level. Select any zone on the plan and press delete if you need to start it over.',
+    mediaLabel: '[ Multiple footing zones. Add /guides/footing-03.png ]',
+  },
+  {
+    title: 'See the steps in 3D',
+    body: 'Walls and the slab now sit at their true height, so a stepped site actually looks stepped. The plan still reads across the top of the slab, with concrete sides so nothing looks like it is floating.',
+    mediaLabel: '[ Stepped footings in 3D. Add /guides/footing-04.png ]',
+  },
+]
+---
+
+<GuideLayout
+  title="Set footing levels"
+  description="Draw footing zones for a stepped site, give each one its own level, and see the steps reflected in the 3D model."
+  intro="Real sites step. Mark out the footing zones, set a level for each, and the model stops pretending the whole build sits on one flat pad."
+  minutes={4}
+  steps={steps}
+  mediaBase="/guides/footing"
+/>

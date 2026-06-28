@@ -1,0 +1,79 @@
+---
+import BaseLayout from './BaseLayout.astro'
+import GuideStep from '../components/GuideStep.astro'
+import SectionGlow from '../components/SectionGlow.astro'
+import CTA from '../components/CTA.astro'
+
+interface Step {
+  title: string
+  body: string
+  mediaLabel: string
+  mediaSrc?: string
+}
+
+interface Props {
+  /** Guide heading, e.g. "Trace a plan and set the scale". */
+  title: string
+  /** Meta description for SEO. */
+  description: string
+  /** One-line summary shown under the heading. */
+  intro: string
+  /** Rough time to read/do, in minutes. */
+  minutes: number
+  /** Ordered steps. Number, accent and layout flip are auto-assigned. */
+  steps: Step[]
+  /** One screenshot reused on every step that has no mediaSrc of its own. */
+  media?: string
+  /** Per-step clip base: "/guides/trace" makes step 1 play /guides/trace-01.mp4,
+      step 2 /guides/trace-02.mp4, and so on. A step's own mediaSrc still wins. */
+  mediaBase?: string
+}
+
+const { title, description, intro, minutes, steps, media, mediaBase } = Astro.props
+
+// Cycle the tri-colour accent and alternate the media side so the
+// guide reads with a rhythm without each page having to specify it.
+const accents = ['beme', 'amber', 'sky'] as const
+function pad(i: number): string {
+  return String(i + 1).padStart(2, '0')
+}
+---
+
+<BaseLayout title={`${title} · Beme guides`} description={description}>
+  <section class="relative overflow-hidden">
+    <SectionGlow color="beme" position="top" intensity="subtle" />
+    <div class="container-tight relative" style="padding-top: clamp(4rem, 6vw, 7rem); padding-bottom: clamp(1.5rem, 3vw, 3rem);">
+      <a href="/guides" class="inline-flex items-center gap-2 text-sm text-ink-400 hover:text-ink-100 transition-colors mb-8">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 18 9 12 15 6"></polyline></svg>
+        All guides
+      </a>
+      <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-beme-500/10 border border-beme-500/30 text-beme-300 text-xs font-medium mb-6">
+        <span class="w-1.5 h-1.5 rounded-full bg-beme-500"></span>
+        Guide · {minutes} min
+      </div>
+      <h1 class="text-3xl md:text-4xl lg:text-5xl font-bold text-ink-50 leading-[1.08] tracking-tight max-w-3xl">{title}</h1>
+      <p class="text-lg md:text-xl text-ink-300 mt-6 leading-relaxed max-w-2xl">{intro}</p>
+    </div>
+  </section>
+
+  <section class="container-tight" style="padding-bottom: clamp(2rem, 4vw, 4rem);">
+    {
+      steps.map((s, i) => (
+        <GuideStep
+          n={pad(i)}
+          title={s.title}
+          body={s.body}
+          mediaLabel={s.mediaLabel}
+          mediaSrc={s.mediaSrc ?? (mediaBase ? `${mediaBase}-${pad(i)}.mp4` : media)}
+          accent={accents[i % accents.length]}
+          flip={i % 2 === 1}
+        />
+      ))
+    }
+  </section>
+
+  <CTA
+    title="Put it to work."
+    body="Open a plan you've already quoted and run it through. The trial's free for 14 days, no card to start."
+  />
+</BaseLayout>

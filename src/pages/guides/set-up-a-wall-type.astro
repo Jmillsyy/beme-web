@@ -1,0 +1,35 @@
+---
+import GuideLayout from '../../layouts/GuideLayout.astro'
+
+const steps = [
+  {
+    title: 'Pick the block or brick',
+    body: 'Open the wall\'s setup and choose a unit from the Australian, US or UK library, or one of your own custom blocks. The dimensions come with it, so the coursing is right from the start.',
+    mediaLabel: '[ Choosing a block. Add /guides/wall-01.png ]',
+  },
+  {
+    title: 'Choose the bond',
+    body: 'Stretcher, stack, or your standard makeup. Corners resolve automatically, so you are not hand-counting the extra blocks at every junction.',
+    mediaLabel: '[ Setting the bond. Add /guides/wall-02.png ]',
+  },
+  {
+    title: 'Set the base and top courses',
+    body: 'Tell Beme the bottom course and the finishing course. Odd wall heights get the right course makeup picked for you and the joint above sized to suit, so the wall lands on its real height.',
+    mediaLabel: '[ Base and top courses. Add /guides/wall-03.png ]',
+  },
+  {
+    title: 'Save it for next time',
+    body: 'Save the wall type to your library. Next job, drop it straight onto the plan instead of setting it up again. The setup work you do today is not work you repeat.',
+    mediaLabel: '[ Saving a wall type. Add /guides/wall-04.png ]',
+  },
+]
+---
+
+<GuideLayout
+  title="Set up a wall type"
+  description="Pick the block and bond, set the base and top courses, and save the wall type to reuse on every job."
+  intro="A wall in Beme knows its block, its bond and its trim courses. Set one up the way you actually lay it, then reuse it forever."
+  minutes={5}
+  steps={steps}
+  mediaBase="/guides/wall"
+/>

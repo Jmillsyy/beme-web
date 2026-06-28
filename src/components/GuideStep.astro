@@ -1,0 +1,89 @@
+---
+// One numbered step inside a how-to guide. Full-width and stacked:
+// centred number + title + body, then one large video/screenshot
+// beneath. Big enough that only one step is in view at a time, so the
+// reader watches a single clip per step. Media is a styled placeholder
+// until a real capture is dropped in via `mediaSrc` (a per-step .mp4).
+
+interface Props {
+  /** Two-digit step number, e.g. "01". */
+  n: string
+  /** Step heading. */
+  title: string
+  /** One or two sentences of instruction. */
+  body: string
+  /** Caption shown inside the placeholder media box. */
+  mediaLabel: string
+  /** Real image/gif path once captured (e.g. /guides/trace-01.png). */
+  mediaSrc?: string
+  /** Accent tint for the step number. */
+  accent?: 'beme' | 'amber' | 'sky'
+  /** Flip the layout so media sits on the left. */
+  flip?: boolean
+}
+
+const {
+  n,
+  title,
+  body,
+  mediaLabel,
+  mediaSrc,
+  accent = 'beme',
+  flip = false,
+} = Astro.props
+
+const numColor =
+  accent === 'amber'
+    ? 'var(--color-amber-500, #f59e0b)'
+    : accent === 'sky'
+      ? 'var(--color-sky-500, #0ea5e9)'
+      : 'var(--color-beme-500)'
+
+// Detect a video clip so a guide step can use a short screen recording
+// (mp4 / mov / webm), which autoplays muted and loops, instead of a still.
+const isVideo = mediaSrc ? /\.(mp4|mov|webm)$/i.test(mediaSrc) : false
+---
+
+<section
+  class="flex flex-col items-center justify-center text-center"
+  style="min-height: 100vh; min-height: 100svh; padding-block: clamp(1.5rem, 4vh, 3rem);"
+>
+  <div class="reveal max-w-2xl mx-auto">
+    <div
+      class="mb-3"
+      style={`font-size: 1.5rem; line-height: 1; font-weight: 800; letter-spacing: -0.04em; color: ${numColor};`}
+    >
+      {n}
+    </div>
+    <h2 class="text-2xl md:text-3xl font-bold text-ink-50 tracking-tight">{title}</h2>
+    <p class="text-base md:text-lg text-ink-300 mt-4 leading-relaxed">{body}</p>
+  </div>
+
+  <div class="reveal mt-7 w-full mx-auto" style="max-width: min(1024px, 108vh);">
+    <div class="relative aspect-[19/10] rounded-2xl border border-ink-700 bg-ink-800 shadow-2xl shadow-beme-500/5 overflow-hidden">
+      <span class="absolute inset-0 flex items-center justify-center text-ink-500 text-sm px-6 text-center">{mediaLabel}</span>
+      {
+        mediaSrc &&
+          (isVideo ? (
+            <video
+              src={mediaSrc}
+              class="absolute inset-0 w-full h-full object-cover"
+              autoplay
+              loop
+              muted
+              playsinline
+              onerror="this.style.display='none'"
+            />
+          ) : (
+            <img
+              src={mediaSrc}
+              alt={mediaLabel}
+              class="absolute inset-0 w-full h-full object-cover"
+              loading="lazy"
+              onerror="this.style.display='none'"
+            />
+          ))
+      }
+    </div>
+  </div>
+</section>

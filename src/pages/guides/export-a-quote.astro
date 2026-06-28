@@ -1,0 +1,35 @@
+---
+import GuideLayout from '../../layouts/GuideLayout.astro'
+
+const steps = [
+  {
+    title: 'Tag walls into areas',
+    body: 'Optional, but handy on bigger jobs. Tag walls into ground floor, first floor, garage or shed, and the schedule splits to match. One project, separate quotes when you need them.',
+    mediaLabel: '[ Tagging areas. Add /guides/export-01.png ]',
+  },
+  {
+    title: 'Review the block schedule',
+    body: 'The counts come straight off the model, listed by product code, with cut blocks and special units worked out, whatever shapes your system uses.',
+    mediaLabel: '[ Block schedule. Add /guides/export-02.png ]',
+  },
+  {
+    title: 'Export the PDF',
+    body: 'One branded document with the wall layout, the supply schedule and the 3D view together. It goes out looking like your business, not a raw printout.',
+    mediaLabel: '[ Exporting the PDF. Add /guides/export-03.png ]',
+  },
+  {
+    title: 'Send it',
+    body: 'The client sees the build, the supplier sees the order, and both come off the same drawing. Every job and quote keeps its reference number so you can find it again.',
+    mediaLabel: '[ The finished quote. Add /guides/export-04.png ]',
+  },
+]
+---
+
+<GuideLayout
+  title="Export a quote"
+  description="Split the job by area, check the block schedule, and send a branded PDF with the layout, supply schedule and 3D view."
+  intro="The payoff: a clean document the client and the supplier can both read, generated straight from the drawing you traced."
+  minutes={3}
+  steps={steps}
+  mediaBase="/guides/export"
+/>

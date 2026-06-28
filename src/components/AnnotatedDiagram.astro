@@ -2,7 +2,7 @@
 // Annotated SVG of a brick wall with a window opening. Each
 // annotation pin shows a tooltip on hover.
 //
-// IMPORTANT — Astro's template compiler does a naive scan for `<` and
+// IMPORTANT, Astro's template compiler does a naive scan for `<` and
 // `>` and gets tripped up by comparison operators inside `{...}`
 // blocks (even when they're inside callbacks). All geometry is
 // computed here in the frontmatter (pure TS, never JSX-parsed) and
@@ -18,7 +18,7 @@ const WIN_X_RIGHT = 480
 
 type Brick = { x: number; y: number }
 
-// Body bricks — stretcher bond, carved around the window void.
+// Body bricks, stretcher bond, carved around the window void.
 const bodyBricks: Brick[] = []
 for (let row = 0; row < COURSES; row++) {
   const y = 60 + row * 28
@@ -74,7 +74,7 @@ const MULLION_X = (WIN_X_LEFT + WIN_X_RIGHT) / 2
     role="img"
     aria-label="Annotated diagram of a brick wall with a window, showing bond pattern, lintel, sill course, and supply count"
   >
-    {/* Body bricks — stretcher bond, carved around window. */}
+    {/* Body bricks, stretcher bond, carved around window. */}
     {
       bodyBricks.map((b) => (
         <rect
@@ -90,7 +90,7 @@ const MULLION_X = (WIN_X_LEFT + WIN_X_RIGHT) / 2
       ))
     }
 
-    {/* Soldier course — bricks on end above window. */}
+    {/* Soldier course, bricks on end above window. */}
     {
       soldierBricks.map((x) => (
         <rect
@@ -106,7 +106,7 @@ const MULLION_X = (WIN_X_LEFT + WIN_X_RIGHT) / 2
       ))
     }
 
-    {/* Rowlock sill — bricks tilted, slight overhang. */}
+    {/* Rowlock sill, bricks tilted, slight overhang. */}
     {
       sillBricks.map((x) => (
         <rect
@@ -149,7 +149,7 @@ const MULLION_X = (WIN_X_LEFT + WIN_X_RIGHT) / 2
       stroke-width="2"
     />
 
-    {/* Annotation pins — animated ripple via SMIL <animate>. */}
+    {/* Annotation pins, animated ripple via SMIL <animate>. */}
     <g class="pin" data-pin="1">
       <circle cx="360" cy="91" r="8" fill="var(--color-beme-500)" />
       <circle
@@ -253,7 +253,7 @@ const MULLION_X = (WIN_X_LEFT + WIN_X_RIGHT) / 2
     </g>
   </svg>
 
-  {/* HTML tooltip overlays — positioned to match each pin's SVG
+  {/* HTML tooltip overlays, positioned to match each pin's SVG
       coordinate via percentage offsets. */}
   <div
     class="pin-tip"
@@ -277,7 +277,7 @@ const MULLION_X = (WIN_X_LEFT + WIN_X_RIGHT) / 2
     style="position: absolute; top: 36%; left: 20%; max-width: 240px;"
   >
     <strong>Stretcher bond.</strong>
-    Counted with the bond — half bricks at every corner.
+    Counted with the bond, half bricks at every corner.
   </div>
   <div
     class="pin-tip"

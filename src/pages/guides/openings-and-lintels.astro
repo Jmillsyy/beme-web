@@ -1,0 +1,35 @@
+---
+import GuideLayout from '../../layouts/GuideLayout.astro'
+
+const steps = [
+  {
+    title: 'Drop in a window or door',
+    body: 'Place the opening on the wall where the plan calls for it and set its width. The coursing reflows around it straight away, so the block count stays honest.',
+    mediaLabel: '[ Placing an opening. Add /guides/openings-01.png ]',
+  },
+  {
+    title: 'Set sill and head heights',
+    body: 'Give the opening its sill height and head height. Beme works the courses above and below to suit, the same as you would on the wall.',
+    mediaLabel: '[ Sill and head heights. Add /guides/openings-02.png ]',
+  },
+  {
+    title: 'Let the lintel pick itself',
+    body: 'Add the opening and Beme selects a lintel to suit the span. It lands in the supply schedule automatically, so nothing gets left off the order.',
+    mediaLabel: '[ Lintel selection. Add /guides/openings-03.png ]',
+  },
+  {
+    title: 'Check it in 3D',
+    body: 'Spin the model and confirm the opening sits where it should. It is far cheaper to catch a wrong head height here than on site.',
+    mediaLabel: '[ Opening in 3D. Add /guides/openings-04.png ]',
+  },
+]
+---
+
+<GuideLayout
+  title="Add openings and lintels"
+  description="Drop windows and doors into a wall, set sill and head heights, and let Beme pick the lintel to suit the span."
+  intro="Openings are where a manual takeoff slips. In Beme you place them and the coursing, the lintel and the schedule all keep up."
+  minutes={3}
+  steps={steps}
+  mediaBase="/guides/openings"
+/>

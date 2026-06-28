@@ -10,11 +10,11 @@ const appUrl = 'https://app.beme.com.au'
 // activation messages on amber; brand-aligned points on orange.
 const reasons = [
   { title: 'Compete on more than price and delivery', body: 'Every supplier in your patch is already competing on tonnage and turnaround. Accurate estimation and a 3D view give your reps something the competition can\'t put in front of the customer.', accent: 'sky' as const },
-  { title: 'Win the order in the same conversation', body: 'Customers commit faster when they can see the build. Swap "we\'ll send a quote" for "here\'s exactly what you need, here\'s what it looks like" — without sending the job out to anyone.', accent: 'amber' as const },
+  { title: 'Win the order in the same conversation', body: 'Customers commit faster when they can see the build. Swap "we\'ll send a quote" for "here\'s exactly what you need, here\'s what it looks like", without sending the job out to anyone.', accent: 'amber' as const },
   { title: 'No estimating team needed', body: 'Your existing sales team uses Beme themselves. No new hires, no QS training, no quotes sitting in someone else\'s inbox.', accent: 'beme' as const },
   { title: 'Your branding on every export', body: 'PDFs go out with your logo, your company details, your reference numbers. The customer sees your service, not ours.', accent: 'amber' as const },
   { title: 'Shared library, consistent quotes', body: 'Every estimator on the team draws from the same wall types, supply rates, and lintel catalogue. Three reps quoting the same job land on the same number.', accent: 'beme' as const },
-  { title: 'One dashboard for every job', body: 'See every estimate across the team — who\'s working on what, what\'s been quoted, what\'s landed. One reference number per job, end to end.', accent: 'sky' as const },
+  { title: 'One dashboard for every job', body: 'See every estimate across the team, who\'s working on what, what\'s been quoted, what\'s landed. One reference number per job, end to end.', accent: 'sky' as const },
 ]
 function dotClass(a: 'beme' | 'amber' | 'sky'): string {
   if (a === 'amber') return 'bg-amber-400'
@@ -24,12 +24,12 @@ function dotClass(a: 'beme' | 'amber' | 'sky'): string {
 ---
 
 <BaseLayout
-  title="Beme for suppliers — Estimation as a sales tool"
+  title="Beme for suppliers: estimation as a sales tool"
   description="Add accurate estimation and 3D visualisation to your sales process. Win more orders without setting up an estimating team."
 >
   <section class="relative overflow-hidden">
     {/* Sky glow ties to the "3D walkthrough"/visual sales-tool
-        framing this page leads with — a small cool-coloured nod
+        framing this page leads with, a small cool-coloured nod
         to the feature the page is selling. */}
     <SectionGlow color="sky" position="top-right" intensity="subtle" />
     <div class="container-tight text-center max-w-3xl mx-auto relative" style="padding-top: clamp(5rem, 7vw, 9rem); padding-bottom: clamp(3rem, 5vw, 5rem);">
@@ -43,7 +43,7 @@ function dotClass(a: 'beme' | 'amber' | 'sky'): string {
       Your customers want certainty before they commit. Anyone can
       quote on tonnage. The suppliers who close the order send back
       an accurate brick and block schedule and a 3D walkthrough the
-      same day — with their branding on every page, without setting
+      same day, with their branding on every page, without setting
       up an estimating team. Beme adds that capability to the sales
       process you already run.
     </p>
@@ -59,7 +59,7 @@ function dotClass(a: 'beme' | 'amber' | 'sky'): string {
         Start free trial
       </button>
       <a
-        href="mailto:hello@beme.com.au?subject=Beme for suppliers — chat"
+        href="mailto:hello@beme.com.au?subject=Beme for suppliers, chat"
         class="px-6 py-3 rounded-md border border-ink-600 text-ink-200 hover:bg-ink-800 transition-colors"
       >
         Talk to us

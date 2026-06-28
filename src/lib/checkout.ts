@@ -3,7 +3,7 @@
 // Every "Start free" button on the marketing site routes through this
 // function. It POSTs to the app's create-checkout-session Edge
 // Function, which returns a Stripe Checkout URL. We then navigate
-// the visitor's tab to that URL — Stripe takes it from there.
+// the visitor's tab to that URL, Stripe takes it from there.
 //
 // The endpoint lives in the app's Supabase project. We hit it via the
 // app's domain so the deployed Edge Function URL stays a Supabase
@@ -19,7 +19,7 @@ const CHECKOUT_ENDPOINT =
 const APP_SIGN_IN_URL = 'https://app.beme.com.au'
 
 /** Stripe plan tier the visitor is selecting. Mirrors the four
- *  pricing-page tiers exactly — Starter ($49) and Pro ($199) are the
+ *  pricing-page tiers exactly, Starter ($49) and Pro ($199) are the
  *  Individual-tab plans; Team ($349) is the Organisation default;
  *  Enterprise is contact-sales and never starts a checkout (it routes
  *  to mailto: instead). The app's create-checkout-session Edge Function
@@ -30,7 +30,7 @@ interface StartCheckoutOptions {
   plan: Plan
   /** Where on the marketing site the click came from (analytics). */
   source: string
-  /** Optional email pre-fill — useful if you ever add an email input
+  /** Optional email pre-fill, useful if you ever add an email input
    *  on the marketing site before "Start free". */
   email?: string
 }
@@ -53,7 +53,7 @@ export async function startCheckout(opts: StartCheckoutOptions): Promise<void> {
     window.location.href = url
   } catch (err) {
     console.error('[checkout] failed:', err)
-    // Soft fallback — don't leave the visitor on a broken click. Land
+    // Soft fallback, don't leave the visitor on a broken click. Land
     // them on the app where they can sign in or contact support.
     window.location.href = `${APP_SIGN_IN_URL}?error=checkout`
   }

@@ -1,11 +1,13 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro'
 import Hero from '../components/Hero.astro'
+import BuildTour from '../components/BuildTour.astro'
 import Pillar from '../components/Pillar.astro'
 import AudienceBlock from '../components/AudienceBlock.astro'
 import HowItWorks from '../components/HowItWorks.astro'
 import HomeFaq from '../components/HomeFaq.astro'
 import CTA from '../components/CTA.astro'
+import { homeFaqs, faqJsonLd } from '../data/faqs'
 
 // Inline SVG icons kept here so the Pillar component stays
 // presentational. Outline weight (1.5) reads well at the 40px
@@ -29,21 +31,27 @@ const cubeIcon = `
 `
 ---
 
-<BaseLayout title="Beme — Brick and block estimates that match what you build">
+<BaseLayout
+  title="Beme: Brick and block estimates that match what you build"
+  jsonLd={faqJsonLd(homeFaqs)}
+>
   <Hero />
 
-  {/* Three pillars — the positioning condensed into three cards. */}
+  <BuildTour />
+
+  {/* Three pillars, the positioning condensed into three cards. */}
   <section class="container-tight" style="padding-block: clamp(5rem, 8vw, 10rem);">
     <div class="text-center max-w-2xl mx-auto mb-16">
-      <div class="text-xs uppercase tracking-wider text-beme-400 font-semibold mb-4">
-        Why tradies use Beme
+      <div class="flex items-center justify-center gap-2 text-xs uppercase tracking-wider text-beme-400 font-semibold mb-4">
+        <svg width="16" height="9" viewBox="0 0 104 56" aria-hidden="true" style="color: var(--color-beme-500);"><path fill-rule="evenodd" clip-rule="evenodd" fill="currentColor" d="M9 0 H95 A9 9 0 0 1 104 9 V47 A9 9 0 0 1 95 56 H9 A9 9 0 0 1 0 47 V9 A9 9 0 0 1 9 0 Z M15 11 H42 A4 4 0 0 1 46 15 V41 A4 4 0 0 1 42 45 H15 A4 4 0 0 1 11 41 V15 A4 4 0 0 1 15 11 Z M62 11 H89 A4 4 0 0 1 93 15 V41 A4 4 0 0 1 89 45 H62 A4 4 0 0 1 58 41 V15 A4 4 0 0 1 62 11 Z"/></svg>
+        Why estimators choose Beme
       </div>
       <h2 class="text-3xl md:text-4xl font-bold text-ink-50 tracking-tight">
         Built for brick and block. Nothing else.
       </h2>
       <p class="text-base md:text-lg text-ink-300 mt-5 leading-relaxed">
         Most takeoff tools cover every trade at the surface. Beme
-        goes deep on one — every rule, every quirk, every detail a
+        goes deep on one, every rule, every quirk, every detail a
         brickie or blocklayer memorises over the years, baked into
         the software.
       </p>
@@ -52,7 +60,7 @@ const cubeIcon = `
     <div class="grid md:grid-cols-3 gap-6 lg:gap-8">
       <Pillar
         title="Your input equals the output."
-        body="Every wall you draw is calculated to your specifications — bond, corners, openings, lintels and all. What's on screen is what's on the order. Nothing assumed, nothing rounded."
+        body="Every wall you draw is calculated to your specifications, bond, corners, openings, lintels and all. What's on screen is what's on the order. Nothing assumed, nothing rounded."
         iconSvg={checkIcon}
         iconBg="beme"
       />
@@ -64,35 +72,38 @@ const cubeIcon = `
       />
       <Pillar
         title="A 3D view the customer can read."
-        body="A live model of every wall, opening, lintel and sill — built straight from your trace. Spot the wall you forgot before the order goes out. Show the build before the trucks turn up."
+        body="A live model of every wall, opening, lintel and sill, built straight from your trace. Spot the wall you forgot before the order goes out. Show the build before the trucks turn up."
         iconSvg={cubeIcon}
         iconBg="sky"
       />
     </div>
   </section>
 
-  {/* "How it works" — numbered 3-step process. */}
+  {/* "How it works", numbered 3-step process. */}
   <HowItWorks />
 
-  {/* Audience blocks — one per persona. */}
+  {/* Two feature-led blocks: the workflow, then the 3D view. Framed
+      around what the app does, not who it's for. */}
   <AudienceBlock
-    eyebrow="For tradies"
-    title="Quote more. Win more. Order right the first time."
-    body="Trace the plan, hand the client a 3D view of the build, hand yourself a full supply schedule — all from the laptop or tablet you already carry. Your input equals the output. Every wall calculated to your specifications, every brick accounted for."
-    ctaLabel="For tradies"
-    ctaHref="/for-tradies"
+    eyebrow="The workflow"
+    title="Trace the plan. Get the whole order."
+    body="Trace the architect's PDF, see the build in 3D, and walk away with a full supply schedule, all from the laptop or tablet you already carry. Your input equals the output: every wall calculated to your spec, every brick on the order."
+    ctaLabel="See all features"
+    ctaHref="/features"
+    image="/home-tradies.png"
   />
 
   <AudienceBlock
-    eyebrow="For suppliers"
-    title="Sell with a schedule, not a guess."
-    body="Anyone can quote on tonnage. The suppliers who close the order send back an accurate supply schedule and a 3D walkthrough the same day — without setting up an estimating team. Beme adds that capability to the sales process you already run."
-    ctaLabel="For suppliers"
-    ctaHref="/for-suppliers"
+    eyebrow="See it first"
+    title="Catch the wall you forgot before you order."
+    body="Every wall, opening, lintel and sill renders into a live 3D model as you draw. Spin it, check it, and fix the miss while it's still cheap, before the trucks turn up."
+    ctaLabel="Read the guides"
+    ctaHref="/guides"
+    image="/features/3d.mp4"
     imageRight={false}
   />
 
-  {/* 4 most-asked questions — covers visitors who don't make it to /pricing. */}
+  {/* 4 most-asked questions, covers visitors who don't make it to /pricing. */}
   <HomeFaq />
 
   <CTA />
