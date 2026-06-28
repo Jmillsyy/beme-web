@@ -97,9 +97,12 @@ const appUrl = 'https://app.bemeapp.app'
      on scroll and the logo scales down a touch with it. The whole lockup is
      a single SVG now (matching the app's BemeLogo), so the wordmark scales
      as part of the unit rather than collapsing on its own. */
+  /* Fixed bar height so the nav matches the app's auth header exactly,
+     regardless of how tall the right-side controls (buttons vs a lone
+     gear icon) happen to be. The app's Header.tsx uses the same 68px. */
   .nav-inner {
-    padding-block: 0.95rem;
-    transition: padding 0.25s ease;
+    height: 68px;
+    transition: height 0.25s ease;
   }
   .logo-lockup {
     height: 28px;
@@ -107,7 +110,7 @@ const appUrl = 'https://app.bemeapp.app'
     transition: height 0.25s ease;
   }
   header.is-scrolled .nav-inner {
-    padding-block: 0.55rem;
+    height: 56px;
   }
   header.is-scrolled .logo-lockup {
     height: 26px;
