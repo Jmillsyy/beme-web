@@ -23,27 +23,34 @@ const appUrl = 'https://app.bemeapp.app'
       href="/"
       class="group shrink-0 inline-flex items-center"
     >
-      {/* Horizontal lockup: the two-cell masonry mark leads, the wordmark
-          sits beside it. On scroll (and in tight space) the wordmark
-          collapses to the left, leaving just the mark, so the logo holds
-          up at any size, the way Anthropic's reduces to its symbol. */}
+      {/* Horizontal lockup: the two-block mark + BEME wordmark as ONE inline
+          SVG (viewBox 256x56). The spacing/size/alignment are baked into SVG
+          units, so this renders identically to the app's BemeLogo component -
+          same artwork as the saved /beme-logo.svg asset. Mark is fixed orange;
+          the word uses currentColor (ink-50 here). */}
       <svg
-        viewBox="0 0 104 56"
-        class="logo-block group-hover:brightness-110 transition-all shrink-0"
-        style="color: var(--color-beme-500);"
-        aria-hidden="true"
+        viewBox="0 0 256 56"
+        class="logo-lockup group-hover:brightness-110 transition-all shrink-0 text-ink-50"
+        role="img"
+        aria-label="Beme"
       >
         <path
+          fill="#ff7a2d"
           fill-rule="evenodd"
           clip-rule="evenodd"
-          fill="currentColor"
           d="M9 0 H95 A9 9 0 0 1 104 9 V47 A9 9 0 0 1 95 56 H9 A9 9 0 0 1 0 47 V9 A9 9 0 0 1 9 0 Z M15 11 H42 A4 4 0 0 1 46 15 V41 A4 4 0 0 1 42 45 H15 A4 4 0 0 1 11 41 V15 A4 4 0 0 1 15 11 Z M62 11 H89 A4 4 0 0 1 93 15 V41 A4 4 0 0 1 89 45 H62 A4 4 0 0 1 58 41 V15 A4 4 0 0 1 62 11 Z"
         ></path>
+        <text
+          x="126"
+          y="29"
+          dominant-baseline="central"
+          font-family="'Hanken Grotesk', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif"
+          font-weight="700"
+          font-size="44"
+          letter-spacing="0.88"
+          fill="currentColor"
+        >BEME</text>
       </svg>
-      <span
-        class="logo-word font-bold text-ink-50"
-        style="font-size: 22px; line-height: 1; font-family: var(--font-sans); letter-spacing: 0.02em; text-transform: uppercase;"
-      >Beme</span>
     </a>
 
     <div class="flex items-center gap-5">
@@ -86,39 +93,24 @@ const appUrl = 'https://app.bemeapp.app'
 </header>
 
 <style is:global>
-  /* Horizontal lockup, mark + wordmark. The masonry mark sizes off the
-     bar; the wordmark sits to its right. On scroll the bar tightens and
-     the wordmark collapses leftward, leaving just the mark, so the logo
-     reduces cleanly the way a symbol does at small sizes. */
+  /* Horizontal lockup, mark + wordmark drawn as one SVG. The bar tightens
+     on scroll and the logo scales down a touch with it. The whole lockup is
+     a single SVG now (matching the app's BemeLogo), so the wordmark scales
+     as part of the unit rather than collapsing on its own. */
   .nav-inner {
     padding-block: 0.95rem;
     transition: padding 0.25s ease;
   }
-  .logo-block {
+  .logo-lockup {
     height: 28px;
     width: auto;
     transition: height 0.25s ease;
   }
-  .logo-word {
-    margin-left: 11px;
-    max-width: 220px;
-    overflow: hidden;
-    white-space: nowrap;
-    transition:
-      max-width 0.28s ease,
-      opacity 0.2s ease,
-      margin-left 0.28s ease;
-  }
   header.is-scrolled .nav-inner {
     padding-block: 0.55rem;
   }
-  header.is-scrolled .logo-block {
+  header.is-scrolled .logo-lockup {
     height: 26px;
-  }
-  header.is-scrolled .logo-word {
-    max-width: 0;
-    opacity: 0;
-    margin-left: 0;
   }
 </style>
 
